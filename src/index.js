@@ -1,19 +1,39 @@
 import log from 'log-util';
+import YAML from 'yamljs';
 
 import cfg from '../config.js';
-import fetchList from './fetch-list.js';
 
+import fetchPaths from './fetch-paths.js';
+import fetchPage from './fetch-page.js';
 
 //
 // Fetching source list
 
-log.info('Fetching source list...');
+const paths = fetchPaths(cfg.source.paths);
 
-const list = fetchList(cfg.list);
+log.info('Fetching paths...');
 
-list.then(function (response) {
-    log.debug(response);
+paths.then(function (res) {
+    const pathsObject = YAML.parse(res);
 
-    log.info('Fetching source list done!');
+    log.debug(pathsObject);
+    log.info('Fetching paths done!');
 });
 
+
+//
+// Fetching page content
+
+/*
+
+log.info('Fetching page content...');
+
+const page = fetchPage(cfg.list);
+
+page.then(function (response) {
+    log.debug(response);
+
+    log.info('Fetching page content done!');
+});
+
+*/
