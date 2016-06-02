@@ -1,0 +1,1 @@
+require('./fetch-page-test');

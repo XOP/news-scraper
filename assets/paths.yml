@@ -3,5 +3,5 @@
   title: ''
 
 - url: 'https://css-tricks.com/'
-  link: '.article-card.article > h2 > a'
+  link: 'article.article-card:first-child > h2 > a'
   title: ''
