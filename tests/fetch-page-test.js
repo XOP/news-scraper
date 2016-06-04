@@ -18,7 +18,7 @@ test('Fetch page test', function (t) {
             t.ok(html, 'Parsing success');
         })
         .catch(function (err) {
-            t.notok(err, 'Error occured');
+            t.notok(err, 'Error occurred');
         });
 
     t.end();

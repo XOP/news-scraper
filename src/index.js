@@ -1,3 +1,5 @@
+import path from 'path';
+
 import log from 'log-util';
 import YAML from 'yamljs';
 import Promise from 'bluebird';
@@ -7,7 +9,7 @@ import cfg from '../config.js';
 import fetchPaths from './fetch-paths.js';
 import fetchPage from './fetch-page.js';
 
-const paths = fetchPaths(cfg.source.paths);
+const paths = fetchPaths(path.resolve(__dirname, cfg.assets, cfg.repo, cfg.source));
 
 log.info('Fetching paths...');
 

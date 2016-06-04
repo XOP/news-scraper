@@ -8,3 +8,8 @@ node_modules
 # compilation
 
 /dist
+
+
+# temporary
+
+/assets
