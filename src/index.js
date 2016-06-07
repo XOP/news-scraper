@@ -1,7 +1,6 @@
 import path from 'path';
 
 import log from 'log-util';
-import YAML from 'yamljs';
 import Promise from 'bluebird';
 
 import cfg from '../config.js';
@@ -9,15 +8,26 @@ import cfg from '../config.js';
 import fetchPaths from './fetch-paths.js';
 import fetchPage from './fetch-page.js';
 
-const paths = fetchPaths(path.resolve(__dirname, cfg.assets, cfg.repo, cfg.source));
+const localSrcPath = path.resolve(__dirname, cfg.source.path, cfg.source.file);
+const repoSrcPath = path.resolve(__dirname, cfg.source.path, cfg.repo.name, cfg.repo.file);
+
+const paths = fetchPaths(localSrcPath, repoSrcPath);
 
 log.info('Fetching paths...');
 
 paths
     .then(function (res) {
         log.debug('Fetching paths done!');
+        log.debug(`${Object.keys(res).length} paths fetched`);
 
-        return YAML.parse(res);
+        return Object.keys(res).reduce(
+            function (sources, url) {
+                const source = Object.assign({ url }, res[url]);
+
+                return sources.concat(source);
+            },
+            []
+        );
     })
     .then(function (sources) {
         return Promise.mapSeries(

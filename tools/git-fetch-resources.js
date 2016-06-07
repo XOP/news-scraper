@@ -4,21 +4,21 @@ var Git = require('git-wrapper');
 
 var cfg = require('../config.js');
 
-log.info('Fetching remote ' + cfg.git + '...');
+log.info('Fetching remote ' + cfg.repo.path + '...');
 
 var git = new Git({
-    'C': path.resolve(__dirname, '../', cfg.assets)
+    'C': path.resolve(__dirname, '../', cfg.source.path)
 });
 
 git.exec('clone', [
-    cfg.git
+    cfg.repo.path
 ], function (err) {
     if (err) {
         log.warn(err);
         log.info('Updating remote...');
 
         var git = new Git({
-            'C': path.resolve(__dirname, '../', cfg.assets, cfg.repo)
+            'C': path.resolve(__dirname, '../', cfg.source.path, cfg.repo.name)
         });
 
         git.exec('pull', [
@@ -28,11 +28,11 @@ git.exec('clone', [
                 log.warn(err);
             } else {
                 log.debug('Fetching remote done!');
-                log.debug('Source folder: ' + cfg.assets + '/' + cfg.repo);
+                log.debug('Source folder: ' + cfg.source.path + '/' + cfg.repo.name);
             }
         })
     } else {
         log.debug('Fetching remote done!');
-        log.debug('Source folder: ' + cfg.assets + '/' + cfg.repo);
+        log.debug('Source folder: ' + cfg.source.path + '/' + cfg.repo.name);
     }
 });

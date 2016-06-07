@@ -1,6 +1,6 @@
 {
   "name": "news-scraper",
-  "version": "0.1.9",
+  "version": "0.2.1",
   "description": "news-scraper",
   "main": "index.js",
   "scripts": {
@@ -15,7 +15,8 @@
     "precommit": "npm run lint",
     "prepublish": "npm run precommit",
     "prestart": "npm run servercheck && npm run fetch",
-    "start": "node dist"
+    "start": "node dist",
+    "dev": "node dist"
   },
   "repository": {
     "type": "git",

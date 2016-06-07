@@ -5,11 +5,16 @@ node_modules
 /*.log
 
 
-# compilation
+# js compilation
 
 /dist
 
 
-# temporary
+# scraper source
 
-/assets
+/source/*
+!/source/local.yml
+
+
+# scraper data
+
