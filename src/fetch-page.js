@@ -8,7 +8,7 @@ const wdioOptions = {
     }
 };
 
-const fetchList = function (props) {
+const fetchList = props => {
     log.info(`Fetching page content from ${props.url}...`);
 
     const browser = remote(wdioOptions);

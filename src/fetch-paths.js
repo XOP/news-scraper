@@ -7,9 +7,9 @@ import Promise from 'bluebird';
 
 const readFile = Promise.promisify(fs.readFile);
 
-const fetchPaths = function (repo, local) {
-    if (arguments.length !== 2) {
-        log.error('Wrong number of arguments!');
+const fetchPaths = (repo, local) => {
+    if (!repo || !local) {
+        log.error('Wrong arguments. Check the *.yml files paths.');
         process.exit(1);
     }
 

@@ -8,6 +8,8 @@ import cfg from '../config.js';
 import fetchPaths from './fetch-paths.js';
 import fetchPage from './fetch-page.js';
 
+import sourceObjToArray from './utils/source-obj-to-array.js';
+
 const localSrcPath = path.resolve(__dirname, cfg.source.path, cfg.source.file);
 const repoSrcPath = path.resolve(__dirname, cfg.source.path, cfg.repo.name, cfg.repo.file);
 
@@ -20,14 +22,7 @@ paths
         log.debug('Fetching paths done!');
         log.debug(`${Object.keys(res).length} paths fetched`);
 
-        return Object.keys(res).reduce(
-            function (sources, url) {
-                const source = Object.assign({ url }, res[url]);
-
-                return sources.concat(source);
-            },
-            []
-        );
+        return sourceObjToArray(res);
     })
     .then(function (sources) {
         return Promise.mapSeries(
