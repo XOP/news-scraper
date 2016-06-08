@@ -16,8 +16,31 @@ $ npm install
 
 ```
 $ npm run server
-$ npm build
+$ npm run build
 $ npm start
+```
+
+
+
+## Development mode
+
+In this mode Selenium server is not started.
+
+```
+$ npm run build
+$ npm run dev
+```
+
+
+
+## Running tests
+
+Some tests require Selenium server.  
+Make sure it is running.
+
+```
+$ npm run server
+$ npm test
 ```
 
 

@@ -1,6 +1,8 @@
 var test = require('tape');
 var log = require('log-util');
 
+require('../tools/selenium-check.js');
+
 var fetchPage = require('../dist/fetch-page.js');
 
 var props = {
@@ -23,5 +25,3 @@ test('Fetch page test', function (t) {
 
     t.end();
 });
-
-
