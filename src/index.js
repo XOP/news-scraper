@@ -7,6 +7,7 @@ import cfg from '../config.js';
 
 import fetchPaths from './fetch-paths.js';
 import fetchPage from './fetch-page.js';
+import parseData from './parse-data.js';
 
 import sourceObjToArray from './utils/source-obj-to-array.js';
 
@@ -30,10 +31,11 @@ paths
             fetchPage
         );
     })
-    .then(function (parsedData) {
-        parsedData.map(function (data) {
-            log.debug(data);
-        });
+    .then(function (scrapedData) {
+        console.log(scrapedData);
+        console.log(typeof scrapedData);
+
+        //return scrapedData.map(parseData);
     })
     .catch(function (err) {
         log.error(err);

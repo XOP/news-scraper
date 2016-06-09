@@ -7,7 +7,7 @@ var cfg = require('../config.js');
 log.info('Fetching remote ' + cfg.repo.path + '...');
 
 var git = new Git({
-    'C': path.resolve(__dirname, '../', cfg.source.path)
+    C: path.resolve(__dirname, '../', cfg.source.path)
 });
 
 git.exec('clone', [
@@ -18,7 +18,7 @@ git.exec('clone', [
         log.info('Updating remote...');
 
         var git = new Git({
-            'C': path.resolve(__dirname, '../', cfg.source.path, cfg.repo.name)
+            C: path.resolve(__dirname, '../', cfg.source.path, cfg.repo.name)
         });
 
         git.exec('pull', [
@@ -30,7 +30,7 @@ git.exec('clone', [
                 log.debug('Fetching remote done!');
                 log.debug('Source folder: ' + cfg.source.path + '/' + cfg.repo.name);
             }
-        })
+        });
     } else {
         log.debug('Fetching remote done!');
         log.debug('Source folder: ' + cfg.source.path + '/' + cfg.repo.name);

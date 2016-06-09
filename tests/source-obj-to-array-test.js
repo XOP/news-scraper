@@ -1,14 +1,13 @@
 var test = require('tape');
-var log = require('log-util');
 
 var sourceObjToArray = require('../dist/utils/source-obj-to-array.js');
 
 var source = {
-    'url1': {
+    url1: {
         link: '.link-1',
         title: '.title-1'
     },
-    'url2': {
+    url2: {
         link: '.link-2',
         title: '.title-2'
     }

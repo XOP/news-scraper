@@ -11,7 +11,9 @@
     "build": "babel src --out-dir dist",
     "fetch": "node tools/git-fetch-resources.js",
     "test": "node tests",
-    "lint": "eslint src/",
+    "lint-es5": "eslint tests/ tools/",
+    "lint-es6": "eslint src",
+    "lint": "npm run lint-es5",
     "precommit": "npm run lint",
     "prepublish": "npm run precommit",
     "prestart": "npm run servercheck && npm run fetch",
@@ -42,11 +44,13 @@
     "babel-plugin-add-module-exports": "^0.2.1",
     "babel-preset-es2015": "^6.9.0",
     "eslint": "^2.11.0",
-    "eslint-config-xop": "^1.2.0"
+    "eslint-config-xop": "^1.2.0",
+    "husky": "^0.11.4"
   },
   "dependencies": {
     "bluebird": "^3.4.0",
     "git-wrapper": "^0.1.1",
+    "is": "^3.1.0",
     "log-util": "^1.1.1",
     "selenium-standalone": "^5.1.0",
     "tape": "^4.5.1",
