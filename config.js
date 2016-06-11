@@ -13,6 +13,10 @@ var config = {
         path: HOST_NAME + '/' + REPO_NAME,
         file: 'scraper.yml'
     },
+    output: {
+        path: path.join(__dirname, 'data'),
+        file: 'index.html'
+    },
     limit: 3
 };
 

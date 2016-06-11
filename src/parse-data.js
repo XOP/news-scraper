@@ -1,6 +1,3 @@
-//import fs from 'fs';
-//import path from 'path';
-
 import is from 'is';
 import log from 'log-util';
 
@@ -15,8 +12,6 @@ const parseData = (data) => {
         process.exit(1);
     }
 
-    console.log(data);
-
     let parseResult = data.reduce((arr, dataItem) => {
         let item = dataItem;
 
@@ -24,12 +19,12 @@ const parseData = (data) => {
             item = dataItem[0]; // todo: limit
         }
 
+        log.info(`New link parsed: ${item}`);
+
         return arr.concat(item);
     }, []);
 
-    console.log(parseResult);
-
-    return parseResult;
+    return parseResult.join('<br/>');
 };
 
 export default parseData;

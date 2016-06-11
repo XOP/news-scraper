@@ -8,6 +8,7 @@ import cfg from '../config.js';
 import fetchPaths from './fetch-paths.js';
 import fetchPage from './fetch-page.js';
 import parseData from './parse-data.js';
+import renderOutput from './render-output.js';
 
 import sourceObjToArray from './utils/source-obj-to-array.js';
 
@@ -19,23 +20,17 @@ const paths = fetchPaths(localSrcPath, repoSrcPath);
 log.info('Fetching paths...');
 
 paths
-    .then(function (res) {
+    .then((res) => {
         log.debug('Fetching paths done!');
         log.debug(`${Object.keys(res).length} paths fetched`);
 
         return sourceObjToArray(res);
     })
-    .then(function (sources) {
-        return Promise.mapSeries(
-            sources,
-            fetchPage
-        );
-    })
-    .then(function (scrapedData) {
-        console.log(scrapedData);
-        console.log(typeof scrapedData);
-
-        //return scrapedData.map(parseData);
+    .then((sources) => Promise.mapSeries(sources, fetchPage))
+    .then((scrapedData) => parseData(scrapedData))
+    .then((output) => renderOutput(output))
+    .then(() => {
+        log.debug('Output render success!');
     })
     .catch(function (err) {
         log.error(err);

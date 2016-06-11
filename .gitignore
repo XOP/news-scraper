@@ -18,3 +18,5 @@ node_modules
 
 # scraper data
 
+/data/*.html
+/data/*.json
