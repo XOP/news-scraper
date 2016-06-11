@@ -13,17 +13,16 @@ const fetchList = props => {
 
     const browser = remote(wdioOptions);
 
-    return new Promise(function(resolve){
-        browser
-            .init()
-            .url(props.url)
-            .getHTML(props.link, true).then(function (data) {
-                log.debug(`Fetching page content from ${props.url} done!`);
+    return new Promise((resolve) => browser
+        .init()
+        .url(props.url)
+        .getHTML(props.link, true).then(data => {
+            log.debug(`Fetching page content from ${props.url} done!`);
 
-                resolve(data);
-            })
-            .end();
-    });
+            resolve(data);
+        })
+        .end()
+    );
 };
 
 export default fetchList;

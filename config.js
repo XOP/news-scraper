@@ -15,9 +15,12 @@ var config = {
     },
     output: {
         path: path.join(__dirname, 'data'),
-        file: 'index.html'
+        fileName: '',
+        fileDate: true,
+        fileExt: 'html'
     },
-    limit: 3
+    limit: 3,
+    localOnly: false
 };
 
 module.exports = config;

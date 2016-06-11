@@ -19,10 +19,12 @@ const parseData = (data) => {
             item = dataItem[0]; // todo: limit
         }
 
-        log.info(`New link parsed: ${item}`);
+        log.debug(`New link parsed: ${item}`);
 
         return arr.concat(item);
     }, []);
+
+    log.info('All links parsed!');
 
     return parseResult.join('<br/>');
 };

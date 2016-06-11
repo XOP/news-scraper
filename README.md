@@ -24,7 +24,7 @@ $ npm start
 
 ## Development mode
 
-In this mode Selenium server is not started.
+In this mode Selenium Server Check and Repository Update are skipped.
 
 ```
 $ npm run build
