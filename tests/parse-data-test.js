@@ -3,15 +3,24 @@ var test = require('tape');
 var parseData = require('../dist/parse-data.js');
 
 var scrapedData = [
-    '<a href="https://davidwalsh.name/javascript-sleep-function" itemprop="url">JavaScript sleep&nbsp;Function</a>',
-    '<a href="https://css-tricks.com/use-airtable-front-end-developer/" class="read-article" rel="nofollow">\n      How To Use Airtable as a Front End Developer    </a>'
+    '<a href="#1">Link 1</a>',
+    '<a href="#2">Link 2</a>',
+    [
+        '<a href="#3-1">Link 3-1</a>',
+        '<a href="#3-2">Link 3-2</a>',
+        '<a href="#3-3">Link 3-3</a>'
+    ]
 ];
 
 test('Source object conversion test', function (t) {
-    t.equal(
+    t.deepEqual(
         parseData(scrapedData),
-        scrapedData,
-        'Should log and return scrapedData'
+        [
+            '<a href="#1">Link 1</a>',
+            '<a href="#2">Link 2</a>',
+            '<a href="#3-1">Link 3-1</a>'
+        ],
+        'Should return reduced Array to the limit'
     );
 
     t.end();

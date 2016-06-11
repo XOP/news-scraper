@@ -15,9 +15,21 @@ const parseData = (data) => {
         process.exit(1);
     }
 
-    log.debug(data);
+    console.log(data);
 
-    return data;
+    let parseResult = data.reduce((arr, dataItem) => {
+        let item = dataItem;
+
+        if (is.array(dataItem)) {
+            item = dataItem[0]; // todo: limit
+        }
+
+        return arr.concat(item);
+    }, []);
+
+    console.log(parseResult);
+
+    return parseResult;
 };
 
 export default parseData;
