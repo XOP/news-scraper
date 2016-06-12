@@ -21,6 +21,23 @@ $ npm start
 ```
 
 
+## Configuration
+
+`config.js`
+
+`limit: 3`  
+maximum number of links parsed from each resource
+
+`localOnly: true`  
+perform scraping using `source/local.yml` data only
+
+`debug: false`  
+debug mode results in tons of messages during the process
+
+`silent: false`  
+in silent mode there are only errors displayed in console
+
+
 
 ## Development mode
 

@@ -8,9 +8,12 @@ let logWrapper = {
     debug: (name, msg) => {
         log.debug('debug start -----------------');
 
-        msg ?
-            console.log(`${name}: `, msg) :
+        if (msg) {
+            console.log(`${name}: `);
+            console.log(msg);
+        } else {
             console.log(name);
+        }
 
         log.debug('debug end -------------------');
     },

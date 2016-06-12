@@ -10,7 +10,7 @@ const wdioOptions = {
 
 const fetchPage = props => {
     log.verbose(`Fetching page content from ${props.url}...`);
-    log.debug(`props: ${props}`);
+    log.debug('props', props);
 
     const browser = remote(wdioOptions);
 
@@ -19,7 +19,7 @@ const fetchPage = props => {
         .url(props.url)
         .getHTML(props.link, true).then(data => {
             log.verbose(`Fetching page content from ${props.url} done!`);
-            log.debug(`data: ${data}`);
+            log.debug('data', data);
 
             resolve(data);
         })
