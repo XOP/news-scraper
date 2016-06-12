@@ -1,32 +1,37 @@
 import is from 'is';
 import log from './utils/log-wrapper.js';
 
-const parseData = (data) => {
-    if (!data) {
-        log.error('No data provided. Check parseData params.');
+import cfg from '../config.js';
+
+const parseData = (pages) => {
+    if (!pages) {
+        log.error('No pages data provided. Check parseData params.');
         process.exit(1);
     }
 
-    if (!is.array(data)) {
-        log.error('Data type is not Array. Exiting...');
+    if (!is.array(pages)) {
+        log.error('Pages type is not Array. Exiting...');
         process.exit(1);
     }
 
-    let parseResult = data.reduce((arr, dataItem) => {
-        let item = dataItem;
+    let parseResult = [];
 
-        if (is.array(dataItem)) {
-            item = dataItem[0];
-        }
+    pages.forEach(page => {
+        let pageContent = '';
+        const limit = page.limit || cfg.limit;
 
-        log.verbose(`New link parsed: ${item}`);
+        let links = page.data.splice(0, limit);
+        links = links.join('');
 
-        return arr.concat(item);
-    }, []);
+        pageContent += `<h2>${page.url}</h2>`;
+        pageContent += `<article>${links}</article>`;
+
+        parseResult.push(pageContent.trim());
+    });
 
     log.info('All links parsed!');
 
-    return parseResult.join('<br/>');
+    return parseResult.join('');
 };
 
 export default parseData;

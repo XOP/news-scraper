@@ -1,3 +1,13 @@
+'https://davidwalsh.name/':
+  link: '#main > ul > li > div.preview > h2 > a'
+  title: ''
+
+'https://css-tricks.com/':
+  link: '.main-col article.article-card > h2 > a'
+  title: ''
+  limit: 6
+
 'https://www.smashingmagazine.com/':
   link: '#content > article.post > h2 > a'
   title: ''
+  limit: 6

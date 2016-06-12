@@ -20,6 +20,10 @@ let logWrapper = {
     error: (msg) => log.error(msg)
 };
 
+if (!cfg.debug) {
+    logWrapper.debug = () => null;
+}
+
 if (cfg.silent) {
     logWrapper.verbose = () => null;
     logWrapper.info = () => null;

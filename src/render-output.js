@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 
+import is from 'is';
 import log from './utils/log-wrapper.js';
 import Promise from 'bluebird';
 import dateFormat from 'date-format';
@@ -21,6 +22,11 @@ const file = formatFilename(
 const renderOutput = (input, filePath = file) => {
     if (!input) {
         log.error('No render input data. Check renderOutput params.');
+        process.exit(1);
+    }
+
+    if (!is.string(input)) {
+        log.error('Data has incorrect format. Check renderOutput params.');
         process.exit(1);
     }
 

@@ -19,9 +19,11 @@ const fetchPage = props => {
         .url(props.url)
         .getHTML(props.link, true).then(data => {
             log.verbose(`Fetching page content from ${props.url} done!`);
+            log.info(`${data.length} links scraped`);
             log.debug('data', data);
 
-            resolve(data);
+            props.data = data;
+            resolve(props);
         })
         .end()
     );

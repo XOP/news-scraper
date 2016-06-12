@@ -32,17 +32,17 @@ paths
     .then(sources => {
         log.debug('sources', sources);
 
-        Promise.mapSeries(sources, fetchPage);
+        return Promise.mapSeries(sources, fetchPage);
     })
     .then(scrapedData => {
         log.debug('scraped data', scrapedData);
 
-        parseData(scrapedData);
+        return parseData(scrapedData);
     })
     .then(parsedData => {
         log.debug('parsed data', parsedData);
 
-        renderOutput(parsedData);
+        return renderOutput(parsedData);
     })
     .then(() => {
         log.info('Output render success!');
