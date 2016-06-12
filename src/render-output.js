@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 
-import log from 'log-util';
+import log from './utils/log-wrapper.js';
 import Promise from 'bluebird';
 import dateFormat from 'date-format';
 

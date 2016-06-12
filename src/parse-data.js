@@ -1,5 +1,5 @@
 import is from 'is';
-import log from 'log-util';
+import log from './utils/log-wrapper.js';
 
 const parseData = (data) => {
     if (!data) {
@@ -16,10 +16,10 @@ const parseData = (data) => {
         let item = dataItem;
 
         if (is.array(dataItem)) {
-            item = dataItem[0]; // todo: limit
+            item = dataItem[0];
         }
 
-        log.debug(`New link parsed: ${item}`);
+        log.verbose(`New link parsed: ${item}`);
 
         return arr.concat(item);
     }, []);

@@ -1,6 +1,6 @@
 import path from 'path';
 
-import log from 'log-util';
+import log from './utils/log-wrapper.js';
 import Promise from 'bluebird';
 
 import cfg from '../config.js';
@@ -19,20 +19,33 @@ const paths = cfg.localOnly ?
     fetchPaths(localSrcPath) :
     fetchPaths(repoSrcPath, localSrcPath);
 
-log.info('Fetching paths...');
+log.verbose('Fetching paths...');
 
 paths
     .then((res) => {
-        log.debug('Fetching paths done!');
-        log.debug(`${Object.keys(res).length} paths fetched`);
+        log.verbose('Fetching paths done!');
+        log.info(`${Object.keys(res).length} paths fetched`);
+        log.debug(res);
 
         return sourceObjToArray(res);
     })
-    .then(sources => Promise.mapSeries(sources, fetchPage))
-    .then(scrapedData => parseData(scrapedData))
-    .then(output => renderOutput(output))
+    .then(sources => {
+        log.debug('sources', sources);
+
+        Promise.mapSeries(sources, fetchPage);
+    })
+    .then(scrapedData => {
+        log.debug('scraped data', scrapedData);
+
+        parseData(scrapedData);
+    })
+    .then(parsedData => {
+        log.debug('parsed data', parsedData);
+
+        renderOutput(parsedData);
+    })
     .then(() => {
-        log.debug('Output render success!');
+        log.info('Output render success!');
     })
     .catch(err => {
         log.error(err);

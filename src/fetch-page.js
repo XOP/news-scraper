@@ -1,4 +1,4 @@
-import log from 'log-util';
+import log from './utils/log-wrapper.js';
 import Promise from 'bluebird';
 import { remote } from 'webdriverio';
 
@@ -8,8 +8,9 @@ const wdioOptions = {
     }
 };
 
-const fetchList = props => {
-    log.info(`Fetching page content from ${props.url}...`);
+const fetchPage = props => {
+    log.verbose(`Fetching page content from ${props.url}...`);
+    log.debug(`props: ${props}`);
 
     const browser = remote(wdioOptions);
 
@@ -17,7 +18,8 @@ const fetchList = props => {
         .init()
         .url(props.url)
         .getHTML(props.link, true).then(data => {
-            log.debug(`Fetching page content from ${props.url} done!`);
+            log.verbose(`Fetching page content from ${props.url} done!`);
+            log.debug(`data: ${data}`);
 
             resolve(data);
         })
@@ -25,4 +27,4 @@ const fetchList = props => {
     );
 };
 
-export default fetchList;
+export default fetchPage;

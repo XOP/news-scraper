@@ -20,7 +20,9 @@ var config = {
         fileExt: 'html'
     },
     limit: 3,
-    localOnly: false
+    localOnly: true,
+    debug: true,
+    silent: false
 };
 
 module.exports = config;
