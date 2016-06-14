@@ -3,6 +3,9 @@
   "version": "0.3.3",
   "description": "news-scraper",
   "main": "index.js",
+  "config": {
+    "domain": "xop-news-scraper.surge.sh"
+  },
   "scripts": {
     "postinstall": "./node_modules/.bin/selenium-standalone install",
     "server": "./node_modules/.bin/selenium-standalone start",
@@ -18,7 +21,8 @@
     "prepublish": "npm run precommit",
     "prestart": "npm run servercheck && npm run fetch",
     "start": "node dist",
-    "dev": "node dist"
+    "dev": "node dist",
+    "deploy": "surge data $npm_package_config_domain"
   },
   "repository": {
     "type": "git",

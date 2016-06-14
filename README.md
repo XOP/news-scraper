@@ -21,6 +21,28 @@ $ npm start
 ```
 
 
+
+## Deployment
+
+Deploy process is extremely straightforward.
+
+In `package.json` specify `config > domain` variable.  
+After that all you have to do is execute 
+
+```
+$ npm run deploy
+```
+
+Deployment uses [surge.sh](http://surge.sh/), so you have to be logged in.  
+You can do it before deployment or manually by running
+
+```
+$ surge login
+```
+
+
+
+
 ## Configuration
 
 `config.js`
@@ -70,3 +92,4 @@ $ npm test
 
 - [webdriver.io](http://webdriver.io/)
 - [Cheerio](http://cheeriojs.github.io/cheerio/)
+- [surge.sh](http://surge.sh/)
