@@ -1,5 +1,4 @@
 var test = require('tape');
-var log = require('log-util');
 
 require('../tools/selenium-check.js');
 
@@ -15,7 +14,7 @@ var pagePromise = fetchPage(props);
 test('Fetch page test', function (t) {
     pagePromise
         .then(function (html) {
-            log.debug(html);
+            console.log(html);
 
             t.ok(html, 'Parsing success');
         })
