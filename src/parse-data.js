@@ -23,7 +23,7 @@ const parseData = (pages) => {
         let links = page.data.splice(0, limit);
         links = links.join('');
 
-        pageContent += `<h2>${page.url}</h2>`;
+        pageContent += `<h2>${page.title}</h2>`;
         pageContent += `<article>${links}</article>`;
 
         parseResult.push(pageContent.trim());

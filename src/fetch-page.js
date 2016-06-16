@@ -17,7 +17,7 @@ const fetchPage = props => {
     return new Promise((resolve) => browser
         .init()
         .url(props.url)
-        .getHTML(props.link, true).then(data => {
+        .getHTML(props.elem, true).then(data => {
             log.verbose(`Fetching page content from ${props.url} done!`);
             log.info(`${data.length} links scraped`);
             log.debug('data', data);

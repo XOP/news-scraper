@@ -1,26 +1,32 @@
-// TODO: FIX TEST
-
 var test = require('tape');
 
 var parseData = require('../dist/parse-data.js');
 
 var scrapedData = [
-    '<a href="#1">Link 1</a>',
-    '<a href="#2">Link 2</a>',
-    [
-        '<a href="#3-1">Link 3-1</a>',
-        '<a href="#3-2">Link 3-2</a>',
-        '<a href="#3-3">Link 3-3</a>'
-    ]
+    {
+        title: 'Title 1',
+        data: [
+            '<a href="#1-1">Link 1-1</a>',
+            '<a href="#1-2">Link 1-2</a>'
+        ]
+    },
+    {
+        title: 'Title 2',
+        data: [
+            '<a href="#2-1">Link 2-1</a>',
+            '<a href="#2-2">Link 2-2</a>'
+        ]
+    }
 ];
 
 test('Source object conversion test', function (t) {
     t.deepEqual(
         parseData(scrapedData),
 
-        '<a href="#1">Link 1</a><br/>' +
-        '<a href="#2">Link 2</a><br/>' +
-        '<a href="#3-1">Link 3-1</a>',
+        '<h2>Title 1</h2>' +
+        '<article><a href="#1-1">Link 1-1</a><a href="#1-2">Link 1-2</a></article>' +
+        '<h2>Title 2</h2>' +
+        '<article><a href="#2-1">Link 2-1</a><a href="#2-2">Link 2-2</a></article>',
 
         'Should return HTML'
     );
