@@ -3,13 +3,13 @@ var test = require('tape');
 var sourceObjToArray = require('../dist/utils/source-obj-to-array.js');
 
 var source = {
-    url1: {
-        link: '.link-1',
-        title: '.title-1'
+    title1: {
+        url: 'url-1',
+        elem: '.elem-1'
     },
-    url2: {
-        link: '.link-2',
-        title: '.title-2'
+    title2: {
+        url: 'url-2',
+        elem: '.elem-2'
     }
 };
 
@@ -18,42 +18,42 @@ test('Source object conversion test', function (t) {
         sourceObjToArray(source),
         [
             {
-                url: 'url1',
-                link: '.link-1',
-                title: '.title-1'
+                url: 'url-1',
+                elem: '.elem-1',
+                title: 'title1'
             },
             {
-                url: 'url2',
-                link: '.link-2',
-                title: '.title-2'
+                url: 'url-2',
+                elem: '.elem-2',
+                title: 'title2'
             }
         ],
-        'Should produce collections of objects {url, link, title, ...}'
+        'Should produce collections of objects {url, elem, title, ...}'
     );
 
     t.deepEqual(
         sourceObjToArray(source, [
             {
-                url: 'url3',
-                link: '.link-3',
-                title: '.title-3'
+                url: 'url-3',
+                elem: '.elem-3',
+                title: 'title3'
             }
         ]),
         [
             {
-                url: 'url3',
-                link: '.link-3',
-                title: '.title-3'
+                url: 'url-3',
+                elem: '.elem-3',
+                title: 'title3'
             },
             {
-                url: 'url1',
-                link: '.link-1',
-                title: '.title-1'
+                url: 'url-1',
+                elem: '.elem-1',
+                title: 'title1'
             },
             {
-                url: 'url2',
-                link: '.link-2',
-                title: '.title-2'
+                url: 'url-2',
+                elem: '.elem-2',
+                title: 'title2'
             }
         ],
         'Should add items to initial collection'
@@ -62,26 +62,26 @@ test('Source object conversion test', function (t) {
     t.deepEqual(
         sourceObjToArray(source, [
             {
-                url: 'url1',
-                link: '.link-1',
-                title: '.title-1'
+                url: 'url-1',
+                elem: '.elem-1',
+                title: 'title1'
             }
         ]),
         [
             {
-                url: 'url1',
-                link: '.link-1',
-                title: '.title-1'
+                url: 'url-1',
+                elem: '.elem-1',
+                title: 'title1'
             },
             {
-                url: 'url1',
-                link: '.link-1',
-                title: '.title-1'
+                url: 'url-1',
+                elem: '.elem-1',
+                title: 'title1'
             },
             {
-                url: 'url2',
-                link: '.link-2',
-                title: '.title-2'
+                url: 'url-2',
+                elem: '.elem-2',
+                title: 'title2'
             }
         ],
         'Should not overwrite existing items'
