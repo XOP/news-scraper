@@ -7,6 +7,7 @@ import Promise from 'bluebird';
 import dateFormat from 'date-format';
 
 import formatFilename from './utils/format-file-name.js';
+import html from './utils/html.js';
 import cfg from '../config.js';
 
 const writeFile = Promise.promisify(fs.writeFile);
@@ -32,27 +33,8 @@ const renderOutput = (input, filePath = file) => {
 
     log.info(`Writing file to ${filePath}...`);
 
-    const output = `<!doctype html>
-    <html>
-        <head>
-            <title>Scraped links for: ${date}</title>
-            <style>
-                body {
-                    font: 16px/1.5 sans-serif;
-                }
-                a {
-                    display: block;
-                    padding: .5rem;
-                    color: #333;
-                }
-                a:hover {
-                    color: #fff;
-                    background: #666;
-                }
-            </style>
-        </head>
-        <body>${input}</body>
-    </html>`;
+    const title = `Scraped links for: ${date}`;
+    const output = html(title, input);
 
     return writeFile(filePath, output, 'utf8');
 };
