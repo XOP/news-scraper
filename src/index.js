@@ -9,6 +9,7 @@ import fetchPaths from './fetch-paths.js';
 import fetchPage from './fetch-page.js';
 import parseData from './parse-data.js';
 import renderOutput from './render-output.js';
+import renderIndex from './render-index.js';
 
 import sourceObjToArray from './utils/source-obj-to-array.js';
 
@@ -46,6 +47,11 @@ paths
     })
     .then(() => {
         log.info('Output render success!');
+
+        return renderIndex(cfg.output.path);
+    })
+    .then(() => {
+        log.info('Index render success!');
     })
     .catch(err => {
         log.error(err);

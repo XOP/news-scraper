@@ -1,4 +1,4 @@
-var log = require('log-util');
+var log = require('../dist/utils/log-wrapper');
 var selenium = require('selenium-standalone');
 
 log.warn('Checking Selenium Server...');
