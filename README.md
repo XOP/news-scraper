@@ -1,12 +1,12 @@
-# News scraper
+# NewScraper
 
 
 ## Prerequisites
 
 Application is designed for Node.js, so go ahead and [install](https://nodejs.org/) it.
 
-Also, for easy deployment process it's better to have [surge](http://surge.sh/) installed globally.
-
+Also, for easy deployment process it's better to have [surge](http://surge.sh/) installed globally.  
+It is not necessary, though. For test scraping and saving results locally you can proceed without it. 
 
 
 
@@ -18,6 +18,28 @@ It will install [Selenium standalone server](https://www.npmjs.com/package/selen
 ```
 $ npm install
 ```
+
+
+
+## Setup
+
+NewScraper utilizes `*.yml` files as parsing directives.  
+Source data can be presented in JS or JSON file, 
+[YAML](http://docs.ansible.com/ansible/YAMLSyntax.html) is only used for cleaner code.
+
+Example:
+
+```
+'CSS tricks':
+  url: 'http://css-tricks.com/'
+  elem: '#page-wrap .main-col .article-card > h2 > a.read-article'
+  limit: 6
+```
+
+`'CSS tricks'` - name of the resource  
+`url` - source url for the NewScraper
+`elem` - CSS selector of the link (<a href="">...</a>) element
+`limit` - how many `elem`-s from the `url` will be scraped, maximum
 
 
 
