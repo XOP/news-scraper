@@ -59,8 +59,8 @@ Source data can be presented in JS, JSON or whatever file,
 ```
 
 `'CSS tricks'` - name of the resource  
-`url` - source url for the NewScraper
-`elem` - CSS selector of the link (<a href="">...</a>) element
+`url` - source url for the NewScraper  
+`elem` - CSS selector of the link (<a href="">...</a>) element  
 `limit` - how many `elem`-s from the `url` will be scraped, maximum
 
 
