@@ -12,7 +12,10 @@ import cfg from '../config.js';
 
 const writeFile = Promise.promisify(fs.writeFile);
 
-const date = dateFormat('dd-MM-yyyy', new Date());
+let date = dateFormat('dd-MM-yyyy', new Date());
+date += '@';
+date += new Date().getTime();
+
 const file = formatFilename(
     cfg.output.path,
     cfg.output.fileName,

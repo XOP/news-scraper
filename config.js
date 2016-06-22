@@ -20,7 +20,7 @@ var config = {
         fileExt: 'html'
     },
     limit: 3,
-    localOnly: true,
+    localOnly: false,
     debug: false,
     silent: false
 };
