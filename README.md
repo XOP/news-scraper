@@ -21,6 +21,12 @@ Daily digital digest, manually (for now) controlled.
 
 
 
+## Support
+
+:warning: NewScraper is being designed for the handful of platforms, however so far there are some [issues](https://github.com/XOP/news-scraper/issues/1) with full Windows support.
+
+
+
 ## Prerequisites
 
 NewScraper is designed for Node.js, so go ahead and [install](https://nodejs.org/) it.
