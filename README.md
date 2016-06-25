@@ -31,6 +31,16 @@ Daily digital digest, manually (for now) controlled.
 
 NewScraper is designed for Node.js, so go ahead and [install](https://nodejs.org/) it.
 
+Next - install latest [Java SDK](http://www.oracle.com/technetwork/java/javase/downloads/index.html).
+
+Make sure it is present in the `$PATH`:  
+Check the following:
+
+```
+$ java -version     # build 1.8...
+$ javac -version    # build 1.8...
+```
+
 Also, for easy deployment process it's better to have [surge](http://surge.sh/) installed globally.  
 It is not necessary, though. For test scraping and saving results locally you can proceed without it. 
 
