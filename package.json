@@ -1,6 +1,6 @@
 {
   "name": "news-scraper",
-  "version": "0.3.5",
+  "version": "0.3.6",
   "description": "news-scraper",
   "main": "index.js",
   "config": {
@@ -10,7 +10,7 @@
     "postinstall": "./node_modules/.bin/selenium-standalone install",
     "server": "./node_modules/.bin/selenium-standalone start",
     "servercheck": "node tools/selenium-check.js",
-    "prebuild": "rm -rf dist && mkdir dist",
+    "prebuild": "trash dist && mkdir dist",
     "build": "babel src --out-dir dist",
     "fetch": "node tools/git-fetch-resources.js",
     "test": "node tests",
@@ -60,6 +60,7 @@
     "log-util": "^1.1.1",
     "selenium-standalone": "^5.1.0",
     "tape": "^4.5.1",
+    "trash-cli": "^1.3.0",
     "webdriverio": "^4.0.9",
     "yamljs": "^0.2.7"
   }
