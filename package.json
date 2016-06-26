@@ -22,6 +22,7 @@
     "prestart": "npm run servercheck && npm run fetch",
     "start": "node dist",
     "dev": "node dist",
+    "debug": "DEBUG=true node dist",
     "index": "node tools/re-render-index.js",
     "deploy": "surge data $npm_package_config_domain"
   },

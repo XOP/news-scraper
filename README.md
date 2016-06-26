@@ -143,9 +143,6 @@ maximum number of links parsed from each resource
 `localOnly: true`  
 perform scraping using `source/local.yml` data only
 
-`debug: false`  
-debug mode results in tons of messages during the process
-
 `silent: false`  
 in silent mode there are only errors displayed in console
 
@@ -160,6 +157,16 @@ $ npm run build
 $ npm run dev
 ```
 
+
+### Debug
+
+Debug mode is the development mode with DEBUG flag.  
+It results in multiple helpful data output throughout the process.
+
+```
+$ npm run build
+$ npm run debug
+```
 
 
 ## Running tests

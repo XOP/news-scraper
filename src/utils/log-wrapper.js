@@ -1,6 +1,10 @@
 import log from 'log-util';
 import cfg from '../../config.js';
 
+const debug = process.env.DEBUG;
+
+console.log('DEBUG mode', (debug ? 'ON' : 'OFF'));
+
 let logWrapper = {
     info: (msg) => log.info(msg),
     verbose: (msg) => log.verbose(msg),
@@ -20,7 +24,7 @@ let logWrapper = {
     error: (msg) => log.error(msg)
 };
 
-if (!cfg.debug) {
+if (!debug) {
     logWrapper.debug = () => null;
 }
 

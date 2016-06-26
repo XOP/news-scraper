@@ -21,7 +21,6 @@ var config = {
     },
     limit: 3,
     localOnly: false,
-    debug: false,
     silent: false
 };
 
