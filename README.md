@@ -61,9 +61,8 @@ It will install [Selenium standalone server](https://www.npmjs.com/package/selen
 
 ## Setup
 
-NewScraper utilizes `*.yml` files as the _parsing directives_.  
-Source data can be presented in JS, JSON or whatever file, 
-[YAML](http://docs.ansible.com/ansible/YAMLSyntax.html) here is used for cleaner code only.
+NewScraper utilizes source files as the _parsing directives_.  
+Source data can be presented in JSON or [YAML](http://docs.ansible.com/ansible/YAMLSyntax.html) files, choose whatever suits your needs.
 
 `*.yml` example:
 
