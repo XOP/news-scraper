@@ -33,8 +33,9 @@ NewScraper is designed for Node.js, so go ahead and [install](https://nodejs.org
 
 Next - install latest [Java SDK](http://www.oracle.com/technetwork/java/javase/downloads/index.html).
 
-Make sure it is present in the `$PATH`:  
-Check the following:
+Make sure it is present in the `$PATH`.
+
+And check the following:
 
 ```
 $ java -version     # build 1.8...
