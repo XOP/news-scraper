@@ -115,20 +115,20 @@ $ npm run index
 
 ## Deployment
 
-Deploy process is extremely straightforward.
-
-In `package.json` specify `config > domain` variable.  
-After that all you have to do is execute 
-
-```
-$ npm run deploy
-```
-
 Deployment uses [surge.sh](http://surge.sh/), so you have to be logged in.  
-You can do it before deployment or manually by running
+To do this, run the following:
 
 ```
 $ surge login
+```
+
+Then you have to customize local `.env` file.  
+Simply rename the `.env-example` and correct `SURGE_DOMAIN` variable.
+
+After this procedure you will be able to deploy to your domain with one command:
+
+```
+$ npm run deploy
 ```
 
 

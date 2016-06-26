@@ -1,11 +1,8 @@
 {
   "name": "news-scraper",
-  "version": "0.3.7",
+  "version": "0.3.8",
   "description": "news-scraper",
   "main": "index.js",
-  "config": {
-    "domain": "xop-news-scraper.surge.sh"
-  },
   "scripts": {
     "postinstall": "./node_modules/.bin/selenium-standalone install",
     "server": "./node_modules/.bin/selenium-standalone start",
@@ -22,9 +19,9 @@
     "prestart": "npm run servercheck && npm run fetch",
     "start": "node dist",
     "dev": "node dist",
-    "debug": "DEBUG=true node dist",
+    "debug": "cross-env DEBUG=true node dist",
     "index": "node tools/re-render-index.js",
-    "deploy": "surge data $npm_package_config_domain"
+    "deploy": "node tools/deploy.js"
   },
   "repository": {
     "type": "git",
@@ -55,7 +52,9 @@
   },
   "dependencies": {
     "bluebird": "^3.4.0",
+    "cross-env": "^1.0.8",
     "date-format": "0.0.2",
+    "dotenv": "^2.0.0",
     "git-wrapper": "^0.1.1",
     "is": "^3.1.0",
     "log-util": "^1.1.1",

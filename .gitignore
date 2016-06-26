@@ -19,3 +19,8 @@ node_modules
 
 /data/*.html
 /data/*.json
+
+
+# user data
+
+.env
