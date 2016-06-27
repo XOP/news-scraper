@@ -21,7 +21,7 @@
     "dev": "node dist",
     "debug": "cross-env DEBUG=true node dist",
     "index": "node tools/re-render-index.js",
-    "deploy": "node tools/deploy.js"
+    "deploy": "$(./bin/deploy.js)"
   },
   "repository": {
     "type": "git",
