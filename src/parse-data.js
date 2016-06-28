@@ -1,5 +1,7 @@
 import is from 'is';
+
 import log from './utils/log-wrapper.js';
+import sectionTemplate from './utils/section-tpl.js';
 
 import cfg from '../config.js';
 
@@ -23,9 +25,7 @@ const parseData = (pages) => {
         let links = page.data.splice(0, limit);
         links = links.join('');
 
-        pageContent += `<h2>${page.title}</h2>`;
-        pageContent += `<article>${links}</article>`;
-
+        pageContent += sectionTemplate(page.title, links);
         parseResult.push(pageContent.trim());
     });
 

@@ -1,7 +1,7 @@
 import is from 'is';
 import log from './log-wrapper.js';
 
-const html = function(title, body) {
+const pageTemplate = function(title, body) {
     if (!body) {
         log.error('No render body data. Check html params.');
         process.exit(1);
@@ -35,4 +35,4 @@ const html = function(title, body) {
     </html>`;
 };
 
-export default html;
+export default pageTemplate;
