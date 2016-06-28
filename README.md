@@ -123,8 +123,7 @@ To do this, run the following:
 $ surge login
 ```
 
-Then you have to customize local `.env` file.  
-Simply rename the `.env-example` and correct `SURGE_DOMAIN` variable.
+Then you have to customize local settings. To do this simply rename `user-example.json` to `user.json` and edit existing config.
 
 After this procedure you will be able to deploy to your domain with one command:
 
