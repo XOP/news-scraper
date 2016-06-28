@@ -189,3 +189,4 @@ $ npm test
 
 - [webdriver.io](http://webdriver.io/)
 - [surge.sh](http://surge.sh/)
+- [cheerio](https://github.com/cheeriojs/cheerio)
