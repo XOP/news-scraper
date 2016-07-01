@@ -1,7 +1,7 @@
 import fs from 'fs';
 
 import log from './utils/log-wrapper.js';
-import html from './utils/html.js';
+import pageTemplate from './utils/page-tpl.js';
 import sortNames from './utils/sort-names.js';
 import Promise from 'bluebird';
 
@@ -35,7 +35,7 @@ const renderIndex = function (filePath) {
             ).join('')
         })
         .then(data => {
-            const output = html('Scraped index', data);
+            const output = pageTemplate('Scraped index', data);
 
             return writeFile(`${filePath}/index.html`, output, 'utf8');
         })
