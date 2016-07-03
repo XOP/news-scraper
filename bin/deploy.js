@@ -7,4 +7,4 @@ var userCfg = require('../user.json');
 var dataDir = cfg.output.path;
 var domain = userCfg.surgeDomain;
 
-process.stdout.write('surge', dataDir, domain);
+console.log('surge', dataDir, domain);
