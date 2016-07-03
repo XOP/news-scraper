@@ -1,17 +1,18 @@
 import path from 'path';
 
-import log from './utils/log-wrapper.js';
 import Promise from 'bluebird';
-
-import cfg from '../config.js';
 
 import fetchPaths from './fetch-paths.js';
 import fetchPage from './fetch-page.js';
-import parseData from './parse-data.js';
-import renderOutput from './render-output.js';
+import limitData from './limit-data.js';
+import refineData from './refine-data.js';
+import renderPage from './render-page.js';
 import renderIndex from './render-index.js';
 
+import log from './utils/log-wrapper.js';
 import sourceObjToArray from './utils/source-obj-to-array.js';
+
+import cfg from '../config.js';
 
 const localSrcPath = path.resolve(__dirname, cfg.source.path, cfg.source.file);
 const repoSrcPath = path.resolve(__dirname, cfg.source.path, cfg.repo.name, cfg.repo.file);
@@ -38,15 +39,20 @@ paths
     .then(scrapedData => {
         log.debug('scraped data', scrapedData);
 
-        return parseData(scrapedData);
+        return limitData(scrapedData, cfg.limit);
     })
-    .then(parsedData => {
-        log.debug('parsed data', parsedData);
+    .then(limitedData => {
+        log.debug('limited data', limitedData);
 
-        return renderOutput(parsedData);
+        return refineData(limitedData);
+    })
+    .then(refinedData => {
+        log.debug('refined data', refinedData);
+
+        return renderPage(refinedData);
     })
     .then(() => {
-        log.info('Output render success!');
+        log.info('Page render success!');
 
         return renderIndex(cfg.output.path);
     })

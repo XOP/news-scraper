@@ -1,9 +1,7 @@
 'Smashing magazine':
   url: 'http://www.smashingmagazine.com/'
   elem: '#content > article.post > h2 > a'
-  limit: 6
 
 'CSS tricks':
   url: 'http://css-tricks.com/'
   elem: '#page-wrap .main-col .article-card > h2 > a.read-article'
-  limit: 6

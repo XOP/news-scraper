@@ -16,10 +16,19 @@ const pageTemplate = function(title, body) {
     <html>
         <head>
             <title>${title}</title>
+            <meta name="viewport" content="width=device-width, initial-scale=1">
             <style>
                 body {
+                    margin: 0;
                     font: 16px/1.5 sans-serif;
                 }
+
+                section {
+                    max-width: 40rem;
+                    margin: 0 auto;
+                    margin-bottom: 2rem;
+                }
+
                 a {
                     display: block;
                     padding: .5rem;

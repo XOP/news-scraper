@@ -16,6 +16,8 @@ const refineData = (pages) => {
         process.exit(1);
     }
 
+    log.verbose('Refining data...');
+
     const refinedData = pages.reduce(
         (initialData, page) => {
             page.data = page.data.reduce(
@@ -42,7 +44,7 @@ const refineData = (pages) => {
         []
     );
 
-    log.info('All data refined!');
+    log.verbose('Refining operation complete');
 
     return refinedData;
 };

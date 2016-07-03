@@ -11,6 +11,8 @@ const writeFile = Promise.promisify(fs.writeFile);
 const renderIndex = function (filePath) {
     let input = [];
 
+    log.verbose('Starting index render...');
+
     return readDir(filePath)
         .then(fileNames => {
             fileNames = sortNames(fileNames);
@@ -36,6 +38,9 @@ const renderIndex = function (filePath) {
         })
         .then(data => {
             const output = pageTemplate('Scraped index', data);
+
+            log.verbose('Rendering index to a file: ');
+            log.verbose(`${filePath}/index.html`);
 
             return writeFile(`${filePath}/index.html`, output, 'utf8');
         })

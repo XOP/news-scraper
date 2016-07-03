@@ -2,7 +2,7 @@ import is from 'is';
 import log from './log-wrapper.js';
 import YAML from 'yamljs';
 
-const parseFile = function(fileData, format = 'json') {
+const parseFile = ((fileData, format = 'json') => {
     if (!fileData) {
         log.error('No file data provided. Check parseFile arguments.');
         process.exit(1);
@@ -26,6 +26,6 @@ const parseFile = function(fileData, format = 'json') {
     log.debug('Parsed fileData', parsedFileData);
 
     return parsedFileData;
-};
+});
 
 export default parseFile;
