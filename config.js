@@ -20,6 +20,7 @@ var config = {
         fileExt: 'html'
     },
     limit: 3,
+    absLimit: 50,
     localOnly: false,
     silent: false
 };
