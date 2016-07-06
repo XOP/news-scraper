@@ -46,19 +46,54 @@ var schema = {
 
 log.verbose('Starting sources fill dialog...');
 
+var newSources = [];
+
 prompt.start();
 
-prompt.get(schema, function (err, result) {
-    if (err) {
-        log.error(err);
-        return;
-    }
+var addSourceDialog = function () {
+    prompt.get(schema, function (err, result) {
+        if (err) {
+            log.error(err);
+            return;
+        }
 
-    log.verbose('New Source has been added:');
-    log.info('\n' +
-        result.title + '\n' +
-        '    ' + 'url: ' + result.url + '\n' +
-        '    ' + 'elem: ' + result.elem + '\n' +
-        '    ' + 'limit: ' + result.limit
-    );
-});
+        log.verbose('New Source has been added:');
+        log.info('\n' +
+            result.title + '\n' +
+            '    ' + 'url: ' + result.url + '\n' +
+            '    ' + 'elem: ' + result.elem + '\n' +
+            '    ' + 'limit: ' + result.limit
+        );
+
+        newSources.length++;
+
+        prompt.get({
+            properties: {
+                'add another source?': {
+                    type: 'string',
+                    required: true,
+                    message: 'Add another source? Type "y" or "n"',
+                    conform: function (value) {
+                        return value === 'y' || value === 'n';
+                    }
+                }
+            }
+        }, function (err, result) {
+            if (err) {
+                log.error(err);
+                return;
+            }
+
+            if (result['add another source?'] === 'y') {
+                addSourceDialog();
+            } else {
+                log.info('Number of sources added: ' + newSources.length);
+                log.verbose('Sources fill dialog now terminates');
+
+                return false;
+            }
+        });
+    });
+};
+
+addSourceDialog();
