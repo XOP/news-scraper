@@ -3,9 +3,7 @@ import path from 'path';
 
 import log from './utils/log-wrapper.js';
 import parseFile from './utils/parse-file.js';
-import Promise from 'bluebird';
-
-const readFile = Promise.promisify(fs.readFile);
+import { readFile } from './utils/file-ops.js';
 
 const fetchPaths = (local, repo) => {
     if (!repo) {

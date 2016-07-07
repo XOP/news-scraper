@@ -14,6 +14,7 @@ const fetchPage = props => {
 
     const browser = remote(wdioOptions);
 
+    // todo: catch browser errors
     return new Promise((resolve) => browser
         .init()
         .url(props.url)

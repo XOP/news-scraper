@@ -2,17 +2,15 @@ import fs from 'fs';
 import path from 'path';
 
 import is from 'is';
-import log from './utils/log-wrapper.js';
-import Promise from 'bluebird';
 import dateFormat from 'date-format';
 
+import log from './utils/log-wrapper.js';
+import { writeFile } from './utils/file-ops.js';
 import formatFilename from './utils/format-file-name.js';
 import sectionTemplate from './utils/section-tpl.js';
 import pageTemplate from './utils/page-tpl.js';
 
 import cfg from '../config.js';
-
-const writeFile = Promise.promisify(fs.writeFile);
 
 let date = dateFormat('dd-MM-yyyy', new Date());
 date += '@';

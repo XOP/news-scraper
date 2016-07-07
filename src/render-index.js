@@ -3,10 +3,7 @@ import fs from 'fs';
 import log from './utils/log-wrapper.js';
 import pageTemplate from './utils/page-tpl.js';
 import sortNames from './utils/sort-names.js';
-import Promise from 'bluebird';
-
-const readDir = Promise.promisify(fs.readdir);
-const writeFile = Promise.promisify(fs.writeFile);
+import { readDir, writeFile } from './utils/file-ops.js';
 
 const renderIndex = function (filePath) {
     let input = [];

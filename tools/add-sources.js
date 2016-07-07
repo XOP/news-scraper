@@ -1,14 +1,12 @@
-var fs = require('fs');
 var path = require('path');
 
 var log = require('log-util');
 var prompt = require('prompt');
-var Promise = require('bluebird');
 
 var cfg = require('../config.js');
 
-// var readFile = Promise.promisify(fs.readFile);
-var writeFile = Promise.promisify(fs.writeFile);
+// var readFile = require('../dist/utils/file-ops.js').readFile;
+var writeFile = require('../dist/utils/file-ops.js').writeFile;
 
 // Regular Expression for URL validation
 // Copyright (c) 2010-2013 Diego Perini (http://www.iport.it)
