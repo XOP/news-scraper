@@ -1,7 +1,14 @@
+var fs = require('fs');
+var path = require('path');
+
 var log = require('log-util');
 var prompt = require('prompt');
+var Promise = require('bluebird');
 
 var cfg = require('../config.js');
+
+// var readFile = Promise.promisify(fs.readFile);
+var writeFile = Promise.promisify(fs.writeFile);
 
 // Regular Expression for URL validation
 // Copyright (c) 2010-2013 Diego Perini (http://www.iport.it)
@@ -47,6 +54,7 @@ var schema = {
 log.verbose('Starting sources fill dialog...');
 
 var newSources = [];
+var filePath = path.resolve(__dirname, cfg.source.path, 'custom.json');
 
 prompt.start();
 
@@ -58,6 +66,12 @@ var addSourceDialog = function () {
         }
 
         log.verbose('New Source has been added:');
+
+        var title = result.title;
+        var url = result.url;
+        var elem = result.elem;
+        var limit = result.limit;
+
         log.info('\n' +
             result.title + '\n' +
             '    ' + 'url: ' + result.url + '\n' +
@@ -65,7 +79,15 @@ var addSourceDialog = function () {
             '    ' + 'limit: ' + result.limit
         );
 
-        newSources.length++;
+        var source = {};
+
+        source[title] = {
+            url: url,
+            elem: elem,
+            limit: limit
+        };
+
+        newSources = newSources.concat(source);
 
         prompt.get({
             properties: {
@@ -88,7 +110,16 @@ var addSourceDialog = function () {
                 addSourceDialog();
             } else {
                 log.info('Number of sources added: ' + newSources.length);
-                log.verbose('Sources fill dialog now terminates');
+
+                writeFile(filePath, JSON.stringify(newSources), 'utf8')
+                    .then(function () {
+                        log.verbose('New sources were added to:');
+                        log.verbose(filePath);
+                        log.verbose('Sources fill dialog now terminates');
+                    })
+                    .catch(function (err) {
+                        log.error(err);
+                    });
 
                 return false;
             }
