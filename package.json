@@ -22,7 +22,7 @@
     "debug": "cross-env DEBUG=true node dist",
     "index": "node tools/re-render-index.js",
     "deploy": "$(./bin/deploy.js)",
-    "add": "node tools/add-sources.js"
+    "add": "node tools/add-sources"
   },
   "repository": {
     "type": "git",

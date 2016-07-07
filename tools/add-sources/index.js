@@ -3,10 +3,10 @@ var path = require('path');
 var log = require('log-util');
 var prompt = require('prompt');
 
-var cfg = require('../config.js');
+var cfg = require('../../config.js');
 
-// var readFile = require('../dist/utils/file-ops.js').readFile;
-var writeFile = require('../dist/utils/file-ops.js').writeFile;
+// var readFile = require('../../dist/utils/file-ops.js').readFile;
+var writeFile = require('../../dist/utils/file-ops.js').writeFile;
 
 // Regular Expression for URL validation
 // Copyright (c) 2010-2013 Diego Perini (http://www.iport.it)
@@ -112,7 +112,7 @@ var addSourceDialog = function () {
                 writeFile(filePath, JSON.stringify(newSources), 'utf8')
                     .then(function () {
                         log.verbose('New sources were added to:');
-                        log.verbose(filePath);
+                        log.info(filePath);
                         log.verbose('Sources fill dialog now terminates');
                     })
                     .catch(function (err) {
