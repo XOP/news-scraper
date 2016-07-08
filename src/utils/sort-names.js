@@ -28,9 +28,11 @@ const sortNames = (names, divider = '@') =>
         if (a.indexOf(divider) > -1 && b.indexOf(divider) > -1) {
             let aValue = a.split(divider)[1];
             aValue = aValue.split('.html')[0];
+            aValue = parseInt(aValue, 10);
 
             let bValue = b.split(divider)[1];
             bValue = bValue.split('.html')[0];
+            bValue = parseInt(bValue, 10);
 
             if (aValue < bValue) {
                 return 1;
