@@ -12,21 +12,16 @@ const renderIndex = function (filePath) {
 
     return readDir(filePath)
         .then(fileNames => {
+            // sorting by date; desc order
             fileNames = sortNames(fileNames);
+
+            // filtering files with creation postfix
+            fileNames = fileNames.filter(fileName => fileName.indexOf('@') > -1);
 
             return fileNames.reduce(
                 (links, fileName) => {
-                    // todo: remove unused elements
-
-                    if (
-                        ~fileName.indexOf('git') ||
-                        ~fileName.indexOf('index')
-                    ) {
-                        return links;
-                    }
-
                     const linkHref = `/${fileName}`;
-                    const linkName = `${fileName.split('.html')[0]}`;
+                    const linkName = `${fileName.split('@')[0]}`;
                     const link = `<a href="${linkHref}" title="${linkName}">${linkName}</a>`;
 
                     return links.concat(link);
