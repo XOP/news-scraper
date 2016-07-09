@@ -7,22 +7,23 @@
  * It is file creation date value here
  *
  * @param names
+ * @param desc
  * @param divider
  */
-const sortNames = (names, divider = '@') =>
+const sortNames = (names, desc = true, divider = '@') =>
     names.sort((a, b) => {
         if (a.indexOf(divider) == -1 && b.indexOf(divider) == -1) {
             if (a > b) {
-                return -1;
+                return desc ? -1 : 1;
             } else if (a < b) {
-                return 1;
+                return desc ? 1 : -1;
             } else {
                 return 0;
             }
         }
 
         if (a.indexOf(divider) == -1 && b.indexOf(divider) > -1) {
-            return 1;
+            return desc ? 1 : -1;
         }
 
         if (a.indexOf(divider) > -1 && b.indexOf(divider) > -1) {
@@ -35,9 +36,9 @@ const sortNames = (names, divider = '@') =>
             bValue = parseInt(bValue, 10);
 
             if (aValue < bValue) {
-                return 1;
+                return desc ? 1 : -1;
             } else if (aValue > bValue) {
-                return -1;
+                return desc ? -1 : 1;
             } else {
                 return 0;
             }
