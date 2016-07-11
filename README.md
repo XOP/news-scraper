@@ -56,7 +56,7 @@ $ npm install
 ```
 
 _Note_: Mind the `postinstall` process!  
-It will install [Selenium standalone server](https://www.npmjs.com/package/selenium-standalone). The one is used here for web scraping.
+It will automatically install [Selenium standalone server](https://www.npmjs.com/package/selenium-standalone). The one is used here for web scraping.
 
 
 
@@ -80,19 +80,51 @@ Source data can be presented in JSON or [YAML](http://docs.ansible.com/ansible/Y
 `limit` - how many `elem`-s from the `url` will be scraped, maximum
 
 
+### Adding directives
+
+There are several ways to add (custom) directives.
+
+
+#### Git repository
+
+Create a git repository, similar to [this](https://github.com/XOP/my-favourite-front-end-resources). There you can add files with desired resources in YAML or JSON format - take [scraper.yml](https://github.com/XOP/my-favourite-front-end-resources/blob/master/scraper.yml) as an example. Then specify the properties of the repo in `config.js` and you are good to go.
+
+
+#### Custom files 
+
+Second option is to manually create directives files (YAML or JSON format) and put them into the `/source` directory. Then adjust the `config.js` so scraper would know what directives to use.
+
+
+#### Adding dialog
+
+Dialog option is probably the simplest way to test something relatively quick.
+
+All you need to do is run
+
+```
+$ npm run add
+```
+
+and follow the prompts.  
+The result will be stored in the `custom.json` file in the `/source` directory and utilized in scraping procedure.
+
+By default, `custom.json` is used as the source file, so there is no need to tweak `config.js`.
+
+
 
 ## Up and running
 
-First run the server and let it run in parallel process:
-
-```
-$ npm run server
-```
-
-Then you have to build the project:
+First you have to build the project.  
+This has to be done **only once**, unless you are making changes in the `/src` directory:
 
 ```
 $ npm run build
+```
+
+Then run the server and let it operate in parallel process:
+
+```
+$ npm run server
 ```
 
 After that starting is pretty straightforward:
@@ -188,5 +220,5 @@ $ npm test
 ## Useful links
 
 - [webdriver.io](http://webdriver.io/)
-- [surge.sh](http://surge.sh/)
 - [cheerio](https://github.com/cheeriojs/cheerio)
+- [surge.sh](http://surge.sh/)
