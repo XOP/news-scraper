@@ -23,7 +23,7 @@ var writeResult = function (result, filePath) {
 
         readFile(filePath.path, 'utf8')
             .then(function (fileContent) {
-                var updatedResult = parseFile(fileContent).concat(result);
+                var updatedResult = Object.assign({}, parseFile(fileContent), result);
 
                 writeResult(updatedResult);
             })

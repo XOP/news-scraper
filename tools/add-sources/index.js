@@ -7,7 +7,7 @@ var cfg = require('../../config.js');
 var schema = require('./schema.js')(cfg);
 var writeResult = require('./write-result.js');
 
-var newSources = [];
+var newSources = {};
 
 var customFilename = 'custom';
 var filePath = function (fileName) {
@@ -44,15 +44,11 @@ var addSourceDialog = function () {
             '    ' + 'limit: ' + result.limit
         );
 
-        var source = {};
-
-        source[title] = {
+        newSources[title] = {
             url: url,
             elem: elem,
             limit: limit
         };
-
-        newSources = newSources.concat(source);
 
         prompt.get({
             properties: {
