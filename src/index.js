@@ -1,5 +1,6 @@
 import path from 'path';
 
+import is from 'is';
 import Promise from 'bluebird';
 
 import fetchPaths from './fetch-paths.js';
@@ -14,9 +15,25 @@ import sourceObjToArray from './utils/source-obj-to-array.js';
 
 import cfg from '../config.js';
 
-const localSrcPath = path.resolve(__dirname, cfg.source.path, cfg.source.file);
-const repoSrcPath = path.resolve(__dirname, cfg.source.path, cfg.repo.name, cfg.repo.file);
+// local sources
+let localSrc = cfg.source.file;
 
+if (!is.array(localSrc)) {
+    localSrc = [localSrc];
+}
+
+const localSrcPath = localSrc.map(src => path.resolve(__dirname, cfg.source.path, src));
+
+// repo sources
+let repoSrc = cfg.repo.file;
+
+if (!is.array(repoSrc)) {
+    repoSrc = [repoSrc];
+}
+
+const repoSrcPath = repoSrc.map(src => path.resolve(__dirname, cfg.source.path, cfg.repo.name, src));
+
+// fetch paths depending on the config
 const paths = cfg.localOnly ?
     fetchPaths(localSrcPath) :
     fetchPaths(repoSrcPath, localSrcPath);

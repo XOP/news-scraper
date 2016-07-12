@@ -13,7 +13,7 @@ var REPO_NAME = 'my-favourite-front-end-resources';
 // Directives
 // ==================================================
 
-var LOCAL_FILES = 'local.yml';
+var LOCAL_FILES = ['local.yml', 'custom.json'];
 var REPO_FILES = 'scraper.yml';
 
 
@@ -39,7 +39,7 @@ var config = {
     },
     limit: 3,
     absLimit: 50,
-    localOnly: false,
+    localOnly: true,
     silent: false
 };
 
