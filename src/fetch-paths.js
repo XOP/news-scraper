@@ -30,46 +30,29 @@ const fetchPaths = (local, repo) => {
 
     const extractFormat = name => path.extname(name).split('.')[1];
 
-    let paths;
+    const sources = repo ? local.concat(repo) : local;
 
-    if (!repo) {
-        paths = Promise.mapSeries(local, (localItem) => {
-            const localFormat = extractFormat(localItem);
+    return Promise.mapSeries(sources, (srcItem) => {
+        const itemFormat = extractFormat(srcItem);
 
-            return readFile(localItem, 'utf8')
-                .then(localPaths => parseFile(localPaths, localFormat))
-                .catch(err => {
-                    log.error(err);
-                });
-            })
-            .then(result =>
-                result.reduce(
-                    (a, b) => Object.assign({}, a, b)
-                )
-            )
+        return readFile(srcItem, 'utf8')
+            .then(itemPaths => parseFile(itemPaths, itemFormat))
             .catch(err => {
                 log.error(err);
             });
-    } else {
-        // todo
-
-        //    paths = readFile(repo, 'utf8')
-        //        .then(repoPaths => readFile(local, 'utf8')
-        //            .then(localPaths => Object.assign({},
-        //                    parseFile(localPaths, localFormat),
-        //                    parseFile(repoPaths, repoFormat)
-        //                )
-        //            )
-        //            .catch(err => {
-        //                log.error(err);
-        //            })
-        //        )
-        //        .catch(err => {
-        //            log.error(err);
-        //        });
-    }
-
-    return paths;
+        })
+        .then(result =>
+            // merging collections into one object
+            // { {1, 2}, {3, 4}, ... } >>> {1, 2, 3, 4, ...}
+            result.reduce(
+                // this strategy implies replacement of item values
+                // if there are same keys in subsequent objects
+                (a, b) => Object.assign({}, a, b)
+            )
+        )
+        .catch(err => {
+            log.error(err);
+        });
 };
 
 export default fetchPaths;

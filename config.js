@@ -13,8 +13,10 @@ var REPO_NAME = 'my-favourite-front-end-resources';
 // Directives
 // ==================================================
 
-var LOCAL_FILES = ['local.yml', 'custom.json'];
-var REPO_FILES = 'scraper.yml';
+// todo: if there is no array data specified parse directory and utilize directives by alphabet order
+
+var LOCAL_FILES = 'local.yml';
+var REPO_FILES = ['scraper.yml', 'blogs.yml'];
 
 
 // ==================================================
@@ -39,7 +41,7 @@ var config = {
     },
     limit: 3,
     absLimit: 50,
-    localOnly: true,
+    localOnly: false,
     silent: false
 };
 
