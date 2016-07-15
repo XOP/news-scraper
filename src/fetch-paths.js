@@ -35,6 +35,7 @@ const fetchPaths = (local, repo) => {
     return Promise.mapSeries(sources, (srcItem) => {
         const itemFormat = extractFormat(srcItem);
 
+        // fixme: reconsider async logic for merging objects properly
         return readFile(srcItem, 'utf8')
             .then(itemPaths => parseFile(itemPaths, itemFormat))
             .catch(err => {
