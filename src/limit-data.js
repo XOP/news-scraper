@@ -27,6 +27,8 @@ const limitData = (pages, defaultLimit) => {
     pages.forEach(page => {
         const limit = page.limit || defaultLimit;
 
+        log.debug('page data', page.data);
+
         if (limit && limit > 0) {
             page.data = page.data.splice(0, limit);
         }

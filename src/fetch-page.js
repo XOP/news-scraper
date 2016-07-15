@@ -1,6 +1,8 @@
-import log from './utils/log-wrapper.js';
+import is from 'is';
 import Promise from 'bluebird';
 import { remote } from 'webdriverio';
+
+import log from './utils/log-wrapper.js';
 
 const wdioOptions = {
     desiredCapabilities: {
@@ -22,6 +24,10 @@ const fetchPage = props => {
             log.verbose(`Fetching page content from ${props.url} done!`);
             log.info(`${data.length} links scraped`);
             log.debug('data', data);
+
+            if (!is.array(data)) {
+                data = [data];
+            }
 
             props.data = data;
             resolve(props);
