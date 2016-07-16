@@ -200,6 +200,25 @@ $ npm run build
 $ npm run debug
 ```
 
+To limit the debugging stage up to the certain process you can use env variables,  
+for instance:
+
+```
+$ STAGE=refine npm run debug
+```
+
+This command will start the debugging mode and end it **after** the refining procedure.
+
+Available `STAGE` values:
+- `paths`
+- `sources`
+- `data`
+- `limit`
+- `refine`
+- `render`
+
+
+
 
 ## Running tests
 
