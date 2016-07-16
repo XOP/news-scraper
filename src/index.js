@@ -40,7 +40,8 @@ const paths = cfg.localOnly ?
 
 log.verbose('Fetching paths...');
 
-paths
+// preparing directives
+const sources = paths
     .then((res) => {
         log.verbose('Fetching paths done!');
         log.info(`${Object.keys(res).length} paths fetched`);
@@ -48,26 +49,56 @@ paths
 
         return sourceObjToArray(res);
     })
+    .catch(err => {
+        log.error(err);
+    });
+
+// scraping data
+const scrapedData = sources
     .then(sources => {
         log.debug('sources', sources);
 
         return Promise.mapSeries(sources, fetchPage);
     })
+    .catch(err => {
+        log.error(err);
+    });
+
+// limit the data
+const limitedData = scrapedData
     .then(scrapedData => {
         log.debug('scraped data', scrapedData);
 
         return limitData(scrapedData, cfg.limit);
     })
+    .catch(err => {
+        log.error(err);
+    });
+
+// refine the data
+const refinedData = limitedData
     .then(limitedData => {
         log.debug('limited data', limitedData);
 
         return refineData(limitedData);
     })
+    .catch(err => {
+        log.error(err);
+    });
+
+// render the page
+const renderedPage = refinedData
     .then(refinedData => {
         log.debug('refined data', refinedData);
 
         return renderPage(refinedData);
     })
+    .catch(err => {
+        log.error(err);
+    });
+
+// render the index
+const renderedIndex = renderedPage
     .then(() => {
         log.info('Page render success!');
 
