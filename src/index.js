@@ -15,6 +15,10 @@ import sourceObjToArray from './utils/source-obj-to-array.js';
 
 import cfg from '../config.js';
 
+// launch params
+const debug = process.env.DEBUG;
+const debugStage = debug && process.env.STAGE;
+
 // local sources
 let localSrc = cfg.source.file;
 
@@ -40,73 +44,90 @@ const paths = cfg.localOnly ?
 
 log.verbose('Fetching paths...');
 
-// preparing directives
-const sources = paths
-    .then((res) => {
-        log.verbose('Fetching paths done!');
-        log.info(`${Object.keys(res).length} paths fetched`);
-        log.debug(res);
+const SCRAPER = (stage) => {
 
-        return sourceObjToArray(res);
-    })
-    .catch(err => {
-        log.error(err);
-    });
+    if (stage === 'paths') return;
 
-// scraping data
-const scrapedData = sources
-    .then(sources => {
-        log.debug('sources', sources);
+    // preparing directives
+    const sources = paths
+            .then((res) => {
+                log.verbose('Fetching paths done!');
+                log.info(`${Object.keys(res).length} paths fetched`);
+                log.debug(res);
 
-        return Promise.mapSeries(sources, fetchPage);
-    })
-    .catch(err => {
-        log.error(err);
-    });
+                return sourceObjToArray(res);
+            })
+            .catch(err => {
+                log.error(err);
+            });
 
-// limit the data
-const limitedData = scrapedData
-    .then(scrapedData => {
-        log.debug('scraped data', scrapedData);
+    if (stage === 'sources') return;
 
-        return limitData(scrapedData, cfg.limit);
-    })
-    .catch(err => {
-        log.error(err);
-    });
+    // scraping data
+    const scrapedData = debugStage !== 'sources' && sources
+            .then(sources => {
+                log.debug('sources', sources);
 
-// refine the data
-const refinedData = limitedData
-    .then(limitedData => {
-        log.debug('limited data', limitedData);
+                return Promise.mapSeries(sources, fetchPage);
+            })
+            .catch(err => {
+                log.error(err);
+            });
 
-        return refineData(limitedData);
-    })
-    .catch(err => {
-        log.error(err);
-    });
+    if (stage === 'data') return;
 
-// render the page
-const renderedPage = refinedData
-    .then(refinedData => {
-        log.debug('refined data', refinedData);
+    // limit the data
+    const limitedData = scrapedData
+        .then(scrapedData => {
+            log.debug('scraped data', scrapedData);
 
-        return renderPage(refinedData);
-    })
-    .catch(err => {
-        log.error(err);
-    });
+            return limitData(scrapedData, cfg.limit);
+        })
+        .catch(err => {
+            log.error(err);
+        });
 
-// render the index
-const renderedIndex = renderedPage
-    .then(() => {
-        log.info('Page render success!');
+    if (stage === 'limit') return;
 
-        return renderIndex(cfg.output.path);
-    })
-    .then(() => {
-        log.info('Index render success!');
-    })
-    .catch(err => {
-        log.error(err);
-    });
+    // refine the data
+    const refinedData = limitedData
+        .then(limitedData => {
+            log.debug('limited data', limitedData);
+
+            return refineData(limitedData);
+        })
+        .catch(err => {
+            log.error(err);
+        });
+
+    if (stage === 'refine') return;
+
+    // render the page
+    const renderedPage = refinedData
+        .then(refinedData => {
+            log.debug('refined data', refinedData);
+
+            return renderPage(refinedData);
+        })
+        .catch(err => {
+            log.error(err);
+        });
+
+    if (stage === 'render') return;
+
+    // render the index
+    const renderedIndex = renderedPage
+        .then(() => {
+            log.info('Page render success!');
+
+            return renderIndex(cfg.output.path);
+        })
+        .then(() => {
+            log.info('Index render success!');
+        })
+        .catch(err => {
+            log.error(err);
+        });
+};
+
+SCRAPER(debugStage);
