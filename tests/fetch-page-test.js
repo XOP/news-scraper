@@ -1,26 +1,31 @@
 var test = require('tape');
 
-require('../tools/selenium-check.js');
-
+var seleniumCheck = require('../tools/selenium-check.js')();
 var fetchPage = require('../dist/fetch-page.js');
 
 var props = {
-    url: 'https://davidwalsh.name/',
-    link: '#main > ul > li.vert + li > div.preview > h2 > a'
+    url: 'http://css-tricks.com/',
+    elem: '#page-wrap .main-col .article-card > h2 > a.read-article'
 };
 
-var pagePromise = fetchPage(props);
+seleniumCheck
+    .then(function () {
+        var pagePromise = fetchPage(props);
 
-test('Fetch page test', function (t) {
-    pagePromise
-        .then(function (html) {
-            console.log(html);
+        test('Fetch page test', function (t) {
+            pagePromise
+                .then(function (result) {
+                    console.log(result.data);
 
-            t.ok(html, 'Parsing success');
-        })
-        .catch(function (err) {
-            t.notok(err, 'Error occurred');
+                    t.ok(result.data, 'Parsing success');
+                })
+                .catch(function (err) {
+                    t.notok(err, 'Error occurred');
+                });
+
+            t.end();
         });
-
-    t.end();
-});
+    })
+    .catch(function (err) {
+        return err;
+    });

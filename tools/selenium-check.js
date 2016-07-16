@@ -1,15 +1,22 @@
 var log = require('../dist/utils/log-wrapper');
 var selenium = require('selenium-standalone');
+var Promise = require('bluebird');
 
 log.warn('Checking Selenium Server...');
 
 // todo: refactor to process status
-selenium.start({}, function (err, child) {
-    if (err) {
-        log.info('Selenium Server is running OK...');
-    } else {
-        child.kill();
-        log.error('Looks like Selenium Server is not running. Exiting...');
-        process.exit(1);
-    }
-});
+
+module.exports = function () {
+    return new Promise(function (resolve, reject) {
+        return selenium.start({}, function (err, child) {
+            if (err) {
+                log.info('Selenium Server is running OK...');
+                resolve();
+            } else {
+                child.kill();
+                log.error('Looks like Selenium Server is not running. Exiting...');
+                reject(process.exit(1));
+            }
+        });
+    });
+};

@@ -64,7 +64,7 @@ const SCRAPER = (stage) => {
     if (stage === 'sources') return;
 
     // scraping data
-    const scrapedData = debugStage !== 'sources' && sources
+    const scrapedData = sources
             .then(sources => {
                 log.debug('sources', sources);
 
