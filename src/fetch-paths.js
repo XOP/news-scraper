@@ -7,6 +7,7 @@ import Promise from 'bluebird';
 import log from './utils/log-wrapper.js';
 import parseFile from './utils/parse-file.js';
 import { readFile } from './utils/file-ops.js';
+import extractFormat from './utils/extract-format.js';
 
 const fetchPaths = (local, repo) => {
     if (!repo) {
@@ -27,8 +28,6 @@ const fetchPaths = (local, repo) => {
         log.error('Repo paths type is not Array. Exiting...');
         process.exit(1);
     }
-
-    const extractFormat = name => path.extname(name).split('.')[1];
 
     const sources = repo ? local.concat(repo) : local;
 

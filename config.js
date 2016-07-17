@@ -37,7 +37,8 @@ var config = {
         path: path.join(__dirname, 'data'),
         fileName: '',
         fileDate: true,
-        fileExt: 'html'
+        fileExt: 'html',
+        current: 'data.json'
     },
     limit: 3,
     absLimit: 50,

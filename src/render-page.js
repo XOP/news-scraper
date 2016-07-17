@@ -34,6 +34,11 @@ const renderPage = (pages, filePath = file) => {
         process.exit(1);
     }
 
+    if (!pages.length) {
+        log.warn('No data to render. Exiting...');
+        return false;
+    }
+
     const input = pages.reduce(
         (initialInput, page) => {
             const pageRender = sectionTemplate(page);

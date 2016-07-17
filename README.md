@@ -215,6 +215,7 @@ Available `STAGE` values:
 - `data`
 - `limit`
 - `refine`
+- `compare`
 - `render`
 
 

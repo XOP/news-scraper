@@ -7,6 +7,7 @@ import fetchPaths from './fetch-paths.js';
 import fetchPage from './fetch-page.js';
 import limitData from './limit-data.js';
 import refineData from './refine-data.js';
+import compareData from './compare-data.js';
 import renderPage from './render-page.js';
 import renderIndex from './render-index.js';
 
@@ -102,12 +103,25 @@ const SCRAPER = (stage) => {
 
     if (stage === 'refine') return;
 
-    // render the page
-    const renderedPage = refinedData
+    // compare to previous data
+    const currentData = refinedData
         .then(refinedData => {
             log.debug('refined data', refinedData);
 
-            return renderPage(refinedData);
+            return compareData(refinedData);
+        })
+        .catch(err => {
+            log.error(err);
+        });
+
+    if (stage === 'compare') return;
+
+    // render the page
+    const renderedPage = currentData
+        .then(newData => {
+            log.debug('new data', newData);
+
+            return renderPage(newData);
         })
         .catch(err => {
             log.error(err);
@@ -117,13 +131,21 @@ const SCRAPER = (stage) => {
 
     // render the index
     const renderedIndex = renderedPage
-        .then(() => {
-            log.info('Page render success!');
+        .then((renderStatus) => {
+            if (renderStatus !== false) {
+                log.info('Page render success!');
 
-            return renderIndex(cfg.output.path);
+                return renderIndex(cfg.output.path);
+            } else {
+                return false;
+            }
         })
-        .then(() => {
-            log.info('Index render success!');
+        .then((renderStatus) => {
+            if (renderStatus !== false) {
+                log.info('Index render success!');
+            } else {
+                return false;
+            }
         })
         .catch(err => {
             log.error(err);

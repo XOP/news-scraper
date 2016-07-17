@@ -27,6 +27,7 @@ const filterData = (newData, currentData) => {
         // there is no data
         filteredData = null;
     } else {
+        filteredData = _differenceBy(newData, currentData, 'title');
         commonData = _intersectionBy(newData, currentData, 'title');
 
         if (!commonData.length) {
@@ -41,18 +42,19 @@ const filterData = (newData, currentData) => {
                     if (newItem.title === currentItem.title) {
                         const differentData = _differenceBy(newItem.data, currentItem.data, 'href');
 
-                        log.debug('New data', differentData);
-
-                        filteredData = filteredData.concat({
-                            title: newItem.title,
-                            data: differentData
-                        });
+                        if (differentData.length) {
+                            filteredData = filteredData.concat({
+                                title: newItem.title,
+                                data: differentData
+                            });
+                        }
                     }
                 });
             });
         }
     }
 
+    log.debug('filtered data', filteredData);
     log.verbose('Data has been filtered!');
 
     return filteredData;
