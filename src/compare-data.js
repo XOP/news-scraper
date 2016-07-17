@@ -59,7 +59,7 @@ const compareData = (pages) => {
 
             // create file with new data
             log.warn('Creating data.json for the first time...');
-            writeFile(cfg.output.current, JSON.stringify(pages), 'utf8');
+            writeFile(currentDataPath, JSON.stringify(pages), 'utf8');
 
             return pages;
         });
