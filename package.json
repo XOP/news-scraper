@@ -1,6 +1,6 @@
 {
   "name": "news-scraper",
-  "version": "0.3.15",
+  "version": "0.4.0",
   "description": "news-scraper",
   "main": "index.js",
   "scripts": {
