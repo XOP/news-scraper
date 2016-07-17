@@ -42,7 +42,7 @@ var config = {
     },
     limit: 3,
     absLimit: 50,
-    localOnly: true,
+    localOnly: false,
     silent: false
 };
 

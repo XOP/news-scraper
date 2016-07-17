@@ -8,24 +8,22 @@ var props = {
     elem: '#page-wrap .main-col .article-card > h2 > a.read-article'
 };
 
-seleniumCheck
-    .then(function () {
-        var pagePromise = fetchPage(props);
+test('Fetch page test', function (t) {
+    seleniumCheck
+        .then(function () {
+            var pagePromise = fetchPage(props);
 
-        test('Fetch page test', function (t) {
             pagePromise
                 .then(function (result) {
-                    console.log(result.data);
-
                     t.ok(result.data, 'Parsing success');
+                    t.end();
                 })
                 .catch(function (err) {
                     t.notok(err, 'Error occurred');
+                    t.end();
                 });
-
-            t.end();
+        })
+        .catch(function (err) {
+            return err;
         });
-    })
-    .catch(function (err) {
-        return err;
-    });
+});
