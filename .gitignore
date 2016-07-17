@@ -5,20 +5,26 @@ node_modules
 /*.log
 
 
+
 # js compilation
 
 /dist
 
 
+
 # scraper source
 
 /source/*
+/source/*.json
+/source/*.yml
+
 
 
 # scraper data
 
 /data/*.html
 /data/*.json
+
 
 
 # user data

@@ -12,6 +12,7 @@ let logWrapper = {
     debug: (name, msg) => {
         log.debug('debug start -----------------');
 
+        // todo: log multiple values if any
         if (msg) {
             console.log(`${name}: `);
             console.log(msg);

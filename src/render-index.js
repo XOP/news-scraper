@@ -12,11 +12,11 @@ const renderIndex = function (filePath) {
 
     return readDir(filePath)
         .then(fileNames => {
-            // sorting by date; desc order
-            fileNames = sortNames(fileNames);
-
             // filtering files with creation postfix
             fileNames = fileNames.filter(fileName => fileName.indexOf('@') > -1);
+
+            // sorting by date; desc order
+            fileNames = sortNames(fileNames);
 
             return fileNames.reduce(
                 (links, fileName) => {

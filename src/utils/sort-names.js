@@ -1,3 +1,5 @@
+import log from './log-wrapper.js';
+
 /**
  * Sort filenames by postfix value if any
  *
@@ -10,8 +12,12 @@
  * @param desc
  * @param divider
  */
-const sortNames = (names, desc = true, divider = '@') =>
-    names.sort((a, b) => {
+const sortNames = (names, desc = true, divider = '@') => {
+    log.debug('names to sort', names);
+
+    return names.sort((a, b) => {
+        log.debug('names to compare:', `${a} <=> ${b}`);
+
         if (a.indexOf(divider) == -1 && b.indexOf(divider) == -1) {
             if (a > b) {
                 return desc ? -1 : 1;
@@ -35,6 +41,8 @@ const sortNames = (names, desc = true, divider = '@') =>
             bValue = bValue.split('.html')[0];
             bValue = parseInt(bValue, 10);
 
+            log.debug('values to compare:', `${aValue} <=> ${bValue}`);
+
             if (aValue < bValue) {
                 return desc ? 1 : -1;
             } else if (aValue > bValue) {
@@ -44,5 +52,6 @@ const sortNames = (names, desc = true, divider = '@') =>
             }
         }
     });
+};
 
 export default sortNames;
