@@ -40,7 +40,10 @@ const pageTemplate = function(title, body) {
                 }
             </style>
         </head>
-        <body>${body}</body>
+        <body>
+            <h1>${title}</h1>
+            ${body}
+        </body>
     </html>`;
 };
 
