@@ -1,3 +1,4 @@
+import is from 'is';
 import log from 'log-util';
 import cfg from '../../config.js';
 
@@ -9,13 +10,17 @@ let logWrapper = {
     info: (msg) => log.info(msg),
     verbose: (msg) => log.verbose(msg),
     warn: (msg) => log.warn(msg),
-    debug: (name, msg) => {
+    debug: (name, ...msg) => {
         log.debug('debug start -----------------');
 
-        // todo: log multiple values if any
         if (msg) {
             console.log(`${name}: `);
-            console.log(msg);
+
+            if (is.array(msg)) {
+                msg.forEach(i => console.log(i));
+            } else {
+                console.log(msg);
+            }
         } else {
             console.log(name);
         }
