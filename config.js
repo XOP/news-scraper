@@ -40,6 +40,7 @@ var config = {
         fileExt: 'html',
         current: 'data.json'
     },
+    sourceFormats: ['json', 'yml'],
     limit: 3,
     absLimit: 50,
     localOnly: false,
