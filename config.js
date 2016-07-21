@@ -40,6 +40,9 @@ var config = {
         fileExt: 'html',
         current: 'data.json'
     },
+    assets: {
+        path: path.join(__dirname, 'assets')
+    },
     sourceFormats: ['json', 'yml'],
     limit: 3,
     absLimit: 50,

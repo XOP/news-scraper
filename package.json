@@ -57,6 +57,7 @@
     "cross-env": "^1.0.8",
     "date-format": "0.0.2",
     "dotenv": "^2.0.0",
+    "fs-extra": "^0.30.0",
     "git-wrapper": "^0.1.1",
     "is": "^3.1.0",
     "lodash.differenceby": "^4.6.0",
