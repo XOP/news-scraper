@@ -16,13 +16,12 @@ const fetchPage = props => {
 
     const browser = remote(wdioOptions);
 
-    // todo: catch browser errors
     return new Promise((resolve) => browser
         .init()
         .url(props.url)
         .getHTML(props.elem, true).then(data => {
             log.verbose(`Fetching page content from ${props.url} done!`);
-            log.info(`${data.length} links scraped`);
+            log.info(`${props.url}: ${data.length} links scraped`);
             log.debug('data', data);
 
             if (!is.array(data)) {
@@ -30,6 +29,15 @@ const fetchPage = props => {
             }
 
             props.data = data;
+            resolve(props);
+
+            return data;
+        })
+        .catch(err => {
+            log.warn(`${props.url}: ${err.message}`);
+            log.info(`${props.url}: 0 links scraped`);
+
+            props.data = [];
             resolve(props);
         })
         .end()

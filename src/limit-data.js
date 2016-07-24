@@ -22,6 +22,12 @@ const limitData = (pages, defaultLimit) => {
         process.exit(1);
     }
 
+    log.verbose('Filtering empty data...');
+
+    pages = pages.filter(page => page.data.length);
+
+    log.verbose('Filtering complete');
+
     log.verbose('Now limiting the links number...');
 
     pages.forEach(page => {

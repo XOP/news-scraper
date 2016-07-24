@@ -12,14 +12,16 @@ import pageTemplate from './utils/page-tpl.js';
 
 import cfg from '../config.js';
 
-let date = dateFormat('dd-MM-yyyy', new Date());
-date += '@';
-date += new Date().getTime();
+const date = dateFormat('dd-MM-yyyy', new Date());
+let preciseDate = date;
+
+preciseDate += '@';
+preciseDate += new Date().getTime();
 
 const file = formatFilename(
     cfg.output.path,
     cfg.output.fileName,
-    cfg.output.fileDate && date,
+    cfg.output.fileDate && preciseDate,
     cfg.output.fileExt
 );
 

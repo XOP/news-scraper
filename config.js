@@ -16,7 +16,12 @@ var REPO_NAME = 'my-favourite-front-end-resources';
 // todo: if there is no array data specified parse directory and utilize directives by alphabet order
 
 var LOCAL_FILES = 'local.yml';
-var REPO_FILES = ['digest.yml', 'blogs.yml'];
+var REPO_FILES = [
+    'digest.yml',
+    'blogs.yml',
+    'blogs-2.yml',
+    'companies.yml'
+];
 
 
 // ==================================================
@@ -46,7 +51,7 @@ var config = {
     sourceFormats: ['json', 'yml'],
     limit: 3,
     absLimit: 50,
-    localOnly: false,
+    localOnly: true,
     silent: false
 };
 
