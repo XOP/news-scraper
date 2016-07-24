@@ -9,5 +9,6 @@ require('./render-index-test');
 require('./source-obj-to-array-test');
 require('./sort-names-test');
 require('./extract-format-test');
+require('./format-file-name-test');
 
 /* not used yet */
