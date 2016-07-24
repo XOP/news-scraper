@@ -3,6 +3,7 @@ require('./limit-data-test');
 require('./refine-data-test');
 require('./filter-data-test');
 require('./fetch-page-test');
+require('./render-index-test');
 
 /* utils */
 require('./source-obj-to-array-test');
