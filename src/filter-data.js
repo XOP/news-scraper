@@ -45,6 +45,7 @@ const filterData = (newData, currentData) => {
                         if (differentData.length) {
                             filteredData = filteredData.concat({
                                 title: newItem.title,
+                                url: newItem.url,
                                 data: differentData
                             });
                         }

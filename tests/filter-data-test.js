@@ -14,6 +14,7 @@ test('Filtering data test', function (t) {
     currentData = [
         {
             "title": "Title 1",
+            "url": "url1",
             "data": [
                 {
                     "href": "#1-1",
@@ -34,6 +35,7 @@ test('Filtering data test', function (t) {
     newData = [
         {
             "title": "Title 2",
+            "url": "url2",
             "data": [
                 {
                     "href": "#2-1",
@@ -64,6 +66,7 @@ test('Filtering data test', function (t) {
     currentData = [
         {
             "title": "Title 1",
+            "url": "url1",
             "data": [
                 {
                     "href": "#1-1",
@@ -84,6 +87,7 @@ test('Filtering data test', function (t) {
     newData = [
         {
             "title": "Title 1",
+            "url": "url1",
             "data": [
                 {
                     "href": "#1-1",
@@ -113,6 +117,7 @@ test('Filtering data test', function (t) {
         [
             {
                 "title": "Title 1",
+                "url": "url1",
                 "data": [
                     {
                         "href": "#1-3",
@@ -133,6 +138,7 @@ test('Filtering data test', function (t) {
     currentData = [
         {
             "title": "Title 1",
+            "url": "url1",
             "data": [
                 {
                     "href": "#1-1",
@@ -153,6 +159,7 @@ test('Filtering data test', function (t) {
     newData = [
         {
             "title": "Title 1",
+            "url": "url1",
             "data": [
                 {
                     "href": "#1-1",
@@ -170,6 +177,7 @@ test('Filtering data test', function (t) {
         },
         {
             "title": "Title 2",
+            "url": "url2",
             "data": [
                 {
                     "href": "#2-1",
@@ -187,6 +195,7 @@ test('Filtering data test', function (t) {
         [
             {
                 "title": "Title 2",
+                "url": "url2",
                 "data": [
                     {
                         "href": "#2-1",
@@ -207,6 +216,7 @@ test('Filtering data test', function (t) {
     currentData = [
         {
             "title": "Title 1",
+            "url": "url1",
             "data": [
                 {
                     "href": "#1-1",
@@ -224,6 +234,7 @@ test('Filtering data test', function (t) {
         },
         {
             "title": "Title 2",
+            "url": "url2",
             "data": [
                 {
                     "href": "#2-1",
@@ -238,6 +249,7 @@ test('Filtering data test', function (t) {
     newData = [
         {
             "title": "Title 1",
+            "url": "url1",
             "data": [
                 {
                     "href": "#1-1",
@@ -261,6 +273,7 @@ test('Filtering data test', function (t) {
         },
         {
             "title": "Title 2",
+            "url": "url2",
             "data": [
                 {
                     "href": "#2-1",
@@ -284,6 +297,7 @@ test('Filtering data test', function (t) {
         [
             {
                 "title": "Title 1",
+                "url": "url1",
                 "data": [
                     {
                         "href": "#1-3",
@@ -295,6 +309,7 @@ test('Filtering data test', function (t) {
             },
             {
                 "title": "Title 2",
+                "url": "url2",
                 "data": [
                     {
                         "href": "#2-2",
@@ -315,6 +330,7 @@ test('Filtering data test', function (t) {
     currentData = [
         {
             "title": "Title 1",
+            "url": "url1",
             "data": [
                 {
                     "href": "#1-1",
@@ -335,6 +351,7 @@ test('Filtering data test', function (t) {
     newData = [
         {
             "title": "Title 1",
+            "url": "url1",
             "data": [
                 {
                     "href": "#1-1",
