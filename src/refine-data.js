@@ -3,8 +3,6 @@ import cheerio from 'cheerio';
 
 import log from './utils/log-wrapper.js';
 
-import cfg from '../config.js';
-
 const refineData = (pages) => {
     if (!pages) {
         log.error('No pages data provided. Check parseData params.');

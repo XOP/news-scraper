@@ -45,9 +45,11 @@ const paths = cfg.localOnly ?
 
 log.verbose('Fetching paths...');
 
-const SCRAPER = (stage) => {
+const scraper = (stage) => {
 
-    if (stage === 'paths') return;
+    if (stage === 'paths') {
+        return;
+    }
 
     // preparing directives
     const sources = paths
@@ -62,7 +64,9 @@ const SCRAPER = (stage) => {
                 log.error(err);
             });
 
-    if (stage === 'sources') return;
+    if (stage === 'sources') {
+        return;
+    }
 
     // scraping data
     const scrapedData = sources
@@ -75,7 +79,9 @@ const SCRAPER = (stage) => {
                 log.error(err);
             });
 
-    if (stage === 'data') return;
+    if (stage === 'data') {
+        return;
+    }
 
     // limit the data
     const limitedData = scrapedData
@@ -88,7 +94,9 @@ const SCRAPER = (stage) => {
             log.error(err);
         });
 
-    if (stage === 'limit') return;
+    if (stage === 'limit') {
+        return;
+    }
 
     // refine the data
     const refinedData = limitedData
@@ -101,7 +109,9 @@ const SCRAPER = (stage) => {
             log.error(err);
         });
 
-    if (stage === 'refine') return;
+    if (stage === 'refine') {
+        return;
+    }
 
     // compare to previous data
     const currentData = refinedData
@@ -114,7 +124,9 @@ const SCRAPER = (stage) => {
             log.error(err);
         });
 
-    if (stage === 'compare') return;
+    if (stage === 'compare') {
+        return;
+    }
 
     // render the page
     const renderedPage = currentData
@@ -127,10 +139,12 @@ const SCRAPER = (stage) => {
             log.error(err);
         });
 
-    if (stage === 'render') return;
+    if (stage === 'render') {
+        return;
+    }
 
     // render the index
-    const renderedIndex = renderedPage
+    renderedPage
         .then((renderStatus) => {
             if (renderStatus !== false) {
                 log.info('Page render success!');
@@ -152,4 +166,4 @@ const SCRAPER = (stage) => {
         });
 };
 
-SCRAPER(debugStage);
+scraper(debugStage);

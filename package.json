@@ -13,7 +13,7 @@
     "test": "node tests",
     "lint-es5": "eslint tests/ tools/",
     "lint-es6": "eslint src",
-    "lint": "npm run lint-es5",
+    "lint": "npm run lint-es5 && npm run lint-es6",
     "precommit": "npm run lint",
     "prepublish": "npm run precommit",
     "prestart": "npm run servercheck && npm run fetch",

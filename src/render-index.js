@@ -1,6 +1,3 @@
-import path from 'path';
-import fs from 'fs';
-
 import log from './utils/log-wrapper.js';
 import pageTemplate from './utils/page-tpl.js';
 import sortNames from './utils/sort-names.js';
@@ -29,7 +26,7 @@ const renderIndex = function (filePath) {
 
                     return links.concat(link);
                 }, input
-            ).join('')
+            ).join('');
         })
         .then(data => {
             const output = pageTemplate('Scraped index', data);

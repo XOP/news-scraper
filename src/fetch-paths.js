@@ -1,6 +1,3 @@
-import fs from 'fs';
-import path from 'path';
-
 import is from 'is';
 import Promise from 'bluebird';
 
@@ -40,11 +37,13 @@ const fetchPaths = (local, repo) => {
             .catch(err => {
                 log.error(err);
             });
-        })
+    })
         .then(result =>
+
             // merging collections into one object
             // { {1, 2}, {3, 4}, ... } >>> {1, 2, 3, 4, ...}
             result.reduce(
+
                 // this strategy implies replacement of item values
                 // if there are same keys in subsequent objects
                 (a, b) => Object.assign({}, a, b)

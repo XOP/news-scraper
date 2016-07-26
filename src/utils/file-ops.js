@@ -15,4 +15,4 @@ export {
     writeFile,
     readFile,
     copySync
-}
+};

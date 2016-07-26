@@ -18,7 +18,7 @@ const sortNames = (names, desc = true, divider = '@') => {
     return names.sort((a, b) => {
         log.debug('names to compare:', `${a} <=> ${b}`);
 
-        if (a.indexOf(divider) == -1 && b.indexOf(divider) == -1) {
+        if (a.indexOf(divider) === -1 && b.indexOf(divider) === -1) {
             if (a > b) {
                 return desc ? -1 : 1;
             } else if (a < b) {
@@ -28,16 +28,18 @@ const sortNames = (names, desc = true, divider = '@') => {
             }
         }
 
-        if (a.indexOf(divider) == -1 && b.indexOf(divider) > -1) {
+        if (a.indexOf(divider) === -1 && b.indexOf(divider) > -1) {
             return desc ? 1 : -1;
         }
 
         if (a.indexOf(divider) > -1 && b.indexOf(divider) > -1) {
             let aValue = a.split(divider)[1];
+
             aValue = aValue.split('.html')[0];
             aValue = parseInt(aValue, 10);
 
             let bValue = b.split(divider)[1];
+
             bValue = bValue.split('.html')[0];
             bValue = parseInt(bValue, 10);
 

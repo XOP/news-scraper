@@ -1,4 +1,3 @@
-import is from 'is';
 import log from './log-wrapper.js';
 import YAML from 'yamljs';
 

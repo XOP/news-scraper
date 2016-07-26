@@ -1,6 +1,3 @@
-import fs from 'fs';
-import path from 'path';
-
 import is from 'is';
 import dateFormat from 'date-format';
 
@@ -45,7 +42,7 @@ const renderPage = (pages, filePath = file) => {
         (initialInput, page) => {
             const pageRender = sectionTemplate(page);
 
-           return initialInput.concat(pageRender);
+            return initialInput.concat(pageRender);
         },
         []
     ).join('');
