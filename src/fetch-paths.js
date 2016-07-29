@@ -28,6 +28,8 @@ const fetchPaths = (local, repo) => {
 
     const sources = repo ? local.concat(repo) : local;
 
+    log.debug('sources', sources);
+
     return Promise.mapSeries(sources, (srcItem) => {
         const itemFormat = extractFormat(srcItem);
 

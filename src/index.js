@@ -29,6 +29,8 @@ if (!is.array(localSrc)) {
 
 const localSrcPath = localSrc.map(src => path.resolve(__dirname, cfg.source.path, src));
 
+log.debug('loca src paths', localSrcPath);
+
 // repo sources
 let repoSrc = cfg.repo.file;
 
@@ -37,6 +39,8 @@ if (!is.array(repoSrc)) {
 }
 
 const repoSrcPath = repoSrc.map(src => path.resolve(__dirname, cfg.source.path, cfg.repo.name, src));
+
+log.debug('repo src paths', repoSrcPath);
 
 // fetch paths depending on the config
 const paths = cfg.localOnly ?
@@ -56,7 +60,8 @@ const scraper = (stage) => {
             .then((res) => {
                 log.verbose('Fetching paths done!');
                 log.info(`${Object.keys(res).length} paths fetched`);
-                log.debug(res);
+
+                log.debug('directives', res);
 
                 return sourceObjToArray(res);
             })

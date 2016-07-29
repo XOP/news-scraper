@@ -51,7 +51,7 @@ var config = {
     sourceFormats: ['json', 'yml'],
     limit: 3,
     absLimit: 50,
-    localOnly: true,
+    localOnly: false,
     silent: false
 };
 
