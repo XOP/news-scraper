@@ -17,8 +17,8 @@ import sourceObjToArray from './utils/source-obj-to-array.js';
 import cfg from '../config.js';
 
 // launch params
-const debug = process.env.DEBUG;
-const debugStage = debug && process.env.STAGE;
+// const debug = process.env.DEBUG;
+const debugStage = process.env.STAGE;
 
 // local sources
 let localSrc = cfg.source.file;
@@ -29,7 +29,7 @@ if (!is.array(localSrc)) {
 
 const localSrcPath = localSrc.map(src => path.resolve(__dirname, cfg.source.path, src));
 
-log.debug('loca src paths', localSrcPath);
+log.debug('local src paths', localSrcPath);
 
 // repo sources
 let repoSrc = cfg.repo.file;
@@ -49,6 +49,15 @@ const paths = cfg.localOnly ?
 
 log.verbose('Fetching paths...');
 
+// fixme: temp debug tool
+const stageLog = (name, msg) => {
+    if (debugStage) {
+        log.info(name.toUpperCase());
+        log.info('====================================');
+        console.log(msg);
+    }
+};
+
 const scraper = (stage) => {
 
     if (stage === 'paths') {
@@ -62,6 +71,7 @@ const scraper = (stage) => {
                 log.info(`${Object.keys(res).length} paths fetched`);
 
                 log.debug('directives', res);
+                stageLog('directives', res);
 
                 return sourceObjToArray(res);
             })
@@ -77,6 +87,7 @@ const scraper = (stage) => {
     const scrapedData = sources
             .then(sources => {
                 log.debug('sources', sources);
+                stageLog('sources', sources);
 
                 return Promise.mapSeries(sources, fetchPage);
             })
@@ -92,6 +103,7 @@ const scraper = (stage) => {
     const limitedData = scrapedData
         .then(scrapedData => {
             log.debug('scraped data', scrapedData);
+            stageLog('scraped data', scrapedData);
 
             return limitData(scrapedData, cfg.limit);
         })
@@ -107,6 +119,7 @@ const scraper = (stage) => {
     const refinedData = limitedData
         .then(limitedData => {
             log.debug('limited data', limitedData);
+            stageLog('limited data', limitedData);
 
             return refineData(limitedData);
         })
@@ -122,6 +135,7 @@ const scraper = (stage) => {
     const currentData = refinedData
         .then(refinedData => {
             log.debug('refined data', refinedData);
+            stageLog('refined data', refinedData);
 
             return compareData(refinedData);
         })
@@ -137,6 +151,7 @@ const scraper = (stage) => {
     const renderedPage = currentData
         .then(newData => {
             log.debug('new data', newData);
+            stageLog('new data', newData);
 
             return renderPage(newData);
         })

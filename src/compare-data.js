@@ -39,7 +39,7 @@ const compareData = (pages) => {
                 log.verbose('Comparing complete');
 
                 if (filteredData) {
-                    log.warn('New data discovered! Updating data.json...');
+                    log.warn(`New data discovered! Updating ${cfg.output.current}...`);
                     writeFile(currentDataPath, JSON.stringify(filteredData), 'utf8');
 
                     return filteredData;
@@ -50,7 +50,7 @@ const compareData = (pages) => {
                     return [];
                 }
             } else {
-                log.err('data.json exists, but seems to be empty or corrupted');
+                log.err(`${cfg.output.current} exists, but seems to be empty or corrupted`);
             }
         })
         .catch(err => {
@@ -58,7 +58,7 @@ const compareData = (pages) => {
             log.verbose('Nothing to compare');
 
             // create file with new data
-            log.warn('Creating data.json for the first time...');
+            log.warn(`Creating ${cfg.output.current} for the first time...`);
             writeFile(currentDataPath, JSON.stringify(pages), 'utf8');
 
             return pages;
