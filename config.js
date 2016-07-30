@@ -53,7 +53,8 @@ var config = {
     limit: 3,
     absLimit: 50,
     localOnly: false,
-    silent: false
+    silent: false,
+    updateStrategy: 'scratch' // todo: scratch | compare
 };
 
 module.exports = config;
