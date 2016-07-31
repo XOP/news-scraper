@@ -54,7 +54,7 @@ var config = {
     absLimit: 50,
     localOnly: false,
     silent: false,
-    updateStrategy: 'scratch' // todo: scratch | compare
+    updateStrategy: 'scratch' // scratch | compare
 };
 
 module.exports = config;

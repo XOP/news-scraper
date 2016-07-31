@@ -20,6 +20,17 @@ import cfg from '../config.js';
 // const debug = process.env.DEBUG;
 const debugStage = process.env.STAGE;
 
+// fixme: temp debug tool
+const stageLog = (name, msg) => {
+    if (debugStage) {
+        log.info(name.toUpperCase());
+        log.info('====================================');
+        console.log(msg);
+    }
+};
+
+// todo: check if path exist
+
 // local sources
 let localSrc = cfg.source.file;
 
@@ -49,16 +60,10 @@ const paths = cfg.localOnly ?
 
 log.verbose('Fetching paths...');
 
-// fixme: temp debug tool
-const stageLog = (name, msg) => {
-    if (debugStage) {
-        log.info(name.toUpperCase());
-        log.info('====================================');
-        console.log(msg);
-    }
-};
-
 const scraper = (stage) => {
+
+    stageLog('local src paths', localSrcPath);
+    stageLog('repo src paths', repoSrcPath);
 
     if (stage === 'paths') {
         return;
@@ -132,16 +137,20 @@ const scraper = (stage) => {
     }
 
     // compare to previous data
-    const currentData = refinedData
-        .then(refinedData => {
-            log.debug('refined data', refinedData);
-            stageLog('refined data', refinedData);
+    let currentData = refinedData;
 
-            return compareData(refinedData);
-        })
-        .catch(err => {
-            log.error(err);
-        });
+    if (cfg.updateStrategy === 'compare') {
+        currentData = refinedData
+            .then(refinedData => {
+                log.debug('refined data', refinedData);
+                stageLog('refined data', refinedData);
+
+                return compareData(refinedData);
+            })
+            .catch(err => {
+                log.error(err);
+            });
+    }
 
     if (stage === 'compare') {
         return;

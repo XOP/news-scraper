@@ -27,12 +27,12 @@ git.exec('clone', [
             if (err) {
                 log.warn(err);
             } else {
-                log.debug('Fetching remote done!');
+                log.verbose('Fetching remote done!');
                 log.debug('Source folder: ' + cfg.source.path + '/' + cfg.repo.name);
             }
         });
     } else {
-        log.debug('Fetching remote done!');
+        log.verbose('Fetching remote done!');
         log.debug('Source folder: ' + cfg.source.path + '/' + cfg.repo.name);
     }
 });
