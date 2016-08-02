@@ -137,20 +137,16 @@ const scraper = (stage) => {
     }
 
     // compare to previous data
-    let currentData = refinedData;
+    const currentData = refinedData
+        .then(refinedData => {
+            log.debug('refined data', refinedData);
+            stageLog('refined data', refinedData);
 
-    if (cfg.updateStrategy === 'compare') {
-        currentData = refinedData
-            .then(refinedData => {
-                log.debug('refined data', refinedData);
-                stageLog('refined data', refinedData);
-
-                return compareData(refinedData);
-            })
-            .catch(err => {
-                log.error(err);
-            });
-    }
+            return compareData(refinedData);
+        })
+        .catch(err => {
+            log.error(err);
+        });
 
     if (stage === 'compare') {
         return;

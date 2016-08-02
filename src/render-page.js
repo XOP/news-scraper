@@ -9,6 +9,7 @@ import pageTemplate from './utils/page-tpl.js';
 
 import cfg from '../config.js';
 
+// todo: move to utils method
 const date = dateFormat('dd-MM-yyyy', new Date());
 let preciseDate = date;
 
