@@ -12,6 +12,9 @@ const renderIndex = function (filePath) {
 
     return readDir(filePath)
         .then(fileNames => {
+            // filtering html files only
+            fileNames = fileNames.filter(fileName => fileName.indexOf('.html') > -1);
+
             // filtering files with creation postfix
             fileNames = fileNames.filter(fileName => fileName.indexOf('@') > -1);
 
