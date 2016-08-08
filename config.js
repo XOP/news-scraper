@@ -1,5 +1,9 @@
 var path = require('path');
+var fs = require('fs-extra');
 
+var _merge = require('lodash.merge');
+
+var log = require('log-util');
 
 // ==================================================
 // Repository
@@ -14,7 +18,6 @@ var REPO_NAME = 'my-favourite-front-end-resources';
 // ==================================================
 
 // todo: if there is no array data specified parse directory and utilize directives by alphabet order
-// todo: move to user settings
 
 var LOCAL_FILES = 'local.yml';
 var REPO_FILES = [
@@ -57,4 +60,14 @@ var config = {
     updateStrategy: 'scratch' // scratch | compare
 };
 
-module.exports = config;
+var userConfig = {};
+
+try {
+    userConfig = fs.readJsonSync(path.join(__dirname, 'user.json'));
+} catch (err) {
+    log.warn('user.json does not exist, proceeding with default settings...');
+}
+
+var mergedConfig = _merge(config, userConfig);
+
+module.exports = mergedConfig;
