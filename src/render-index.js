@@ -1,9 +1,7 @@
 import log from './utils/log-wrapper.js';
 import pageTemplate from './utils/page-tpl.js';
 import sortNames from './utils/sort-names.js';
-import { readDir, writeFile, copySync } from './utils/file-ops.js';
-
-import cfg from '../config';
+import { readDir, writeFile } from './utils/file-ops.js';
 
 const renderIndex = function (filePath) {
     let input = [];
@@ -33,9 +31,6 @@ const renderIndex = function (filePath) {
         })
         .then(data => {
             const output = pageTemplate('Scraped index', data);
-
-            log.verbose('Updating assets...');
-            copySync(cfg.assets.path, cfg.output.path);
 
             log.verbose('Rendering index to a file: ');
             log.verbose(`${filePath}/index.html`);

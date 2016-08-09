@@ -1,6 +1,11 @@
+/*! main styles */
+
+$color-text-main: #222;
+
 body {
     margin: 0;
     font: 16px/1.5 sans-serif;
+    color: $color-text-main;
 }
 
 h1,
