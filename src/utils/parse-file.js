@@ -14,12 +14,20 @@ const parseFile = ((fileData, format = 'json') => {
 
     switch (format) {
         case 'json':
+        case 'JSON':
             parsedFileData = JSON.parse(parsedFileData);
             break;
 
         case 'yml':
+        case 'yaml':
+        case 'YML':
+        case 'YAML':
             parsedFileData = YAML.parse(parsedFileData);
             break;
+
+        default:
+            log.error(`parseFile: format "${format}" is not supported`);
+            return null;
     }
 
     log.debug('Parsed fileData', parsedFileData);

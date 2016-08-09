@@ -1,0 +1,4 @@
+Foo:
+  bar: 'one'
+  baz: 'two'
+  bam: 'three'
