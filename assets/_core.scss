@@ -1,0 +1,33 @@
+/* Core
+---------------------------------------------------------------------------------- */
+
+@import "variables";
+
+body {
+    margin: 0;
+
+    font: #{$root-font-size-mobile}/#{$line-height-n} sans-serif;
+    color: $color-text-regular;
+    }
+
+h1,
+section {
+    max-width: 40rem;
+
+    margin: 0 auto;
+    margin-bottom: $offset-xl;
+    }
+
+a {
+    display: block;
+    padding: $offset-s;
+    color: $color-text-inverse;
+
+    &:hover {
+        color: $color-text-inverse-strong;
+        background: $color-bg-inverse;
+        }
+    }
+
+/* /Core
+---------------------------------------------------------------------------------- */

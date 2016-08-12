@@ -1,0 +1,62 @@
+/* Variables
+---------------------------------------------------------------------------------- */
+
+/* Colors
+-------------------------------------------------- */
+
+$color-text-regular: #555;
+$color-text-light: #999;
+$color-text-strong: #222;
+
+$color-text-inverse: #eee;
+$color-text-inverse-light: #ccc;
+$color-text-inverse-strong: #fff;
+
+$color-bg-regular: #fff;
+$color-bg-light: #eee;
+$color-bg-strong: #aaa;
+
+$color-bg-inverse: #444;
+$color-bg-inverse-light: #666;
+$color-bg-inverse-strong: #222;
+
+/* /Colors
+-------------------------------------------------- */
+
+
+/* Typography
+-------------------------------------------------- */
+
+$root-font-size-mobile: 14px;
+$root-font-size-desktop: 16px;
+
+$font-size-n: 1rem;
+$font-size-s: .85rem;
+$font-size-l: 1.25rem;
+$font-size-xl: 1.45rem;
+
+$line-height-n: 1.5;
+$line-height-s: 1.2;
+$line-height-l: 1.8;
+
+/* /Typography
+-------------------------------------------------- */
+
+
+/* Offset
+-------------------------------------------------- */
+
+$grid-quant: .25rem;
+
+$offset-xs: 1 * $grid-quant;
+$offset-s: 2 * $grid-quant;
+$offset-n: 4 * $grid-quant;
+$offset-l: 6 * $grid-quant;
+$offset-xl: 8 * $grid-quant;
+$offset-xxl: 12 * $grid-quant;
+
+/* /Offset
+-------------------------------------------------- */
+
+/* /Variables
+---------------------------------------------------------------------------------- */
