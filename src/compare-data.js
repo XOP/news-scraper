@@ -6,7 +6,7 @@ import dateFormat from 'date-format';
 import filterData from './filter-data.js';
 
 import log from './utils/log-wrapper.js';
-import { readFile, writeFile } from './utils/file-ops.js';
+import { readFile, writeFileSync } from './utils/file-ops.js';
 import extractFormat from './utils/extract-format.js';
 import parseFile from './utils/parse-file.js';
 import formatFileName from './utils/format-file-name.js';
@@ -42,7 +42,7 @@ const compareData = (pages, outputPath = './', currentOutput = 'data.json', upda
 
                     if (filteredData) {
                         log.warn(`New data discovered! Updating ${currentOutput}...`);
-                        writeFile(currentDataPath, JSON.stringify(filteredData), 'utf8');
+                        writeFileSync(currentDataPath, JSON.stringify(filteredData), 'utf8');
 
                         return filteredData;
                     } else {
@@ -61,7 +61,7 @@ const compareData = (pages, outputPath = './', currentOutput = 'data.json', upda
 
                 // create file with new data
                 log.warn(`Creating ${currentOutput} for the first time...`);
-                writeFile(currentDataPath, JSON.stringify(pages), 'utf8');
+                writeFileSync(currentDataPath, JSON.stringify(pages), 'utf8');
 
                 return pages;
             });
@@ -83,7 +83,7 @@ const compareData = (pages, outputPath = './', currentOutput = 'data.json', upda
         log.verbose('Creating new data file:');
         log.verbose(dataFileName);
 
-        writeFile(dataFileName, JSON.stringify(newData), 'utf8');
+        writeFileSync(dataFileName, JSON.stringify(newData), 'utf8');
     }
 
     return newData;

@@ -9,10 +9,12 @@ const readDir = Promise.promisify(fs.readdir);
 const writeFile = Promise.promisify(fs.writeFile);
 const readFile = Promise.promisify(fs.readFile);
 const copySync = fsExtra.copySync;
+const writeFileSync = fsExtra.outputFileSync;
 
 export {
     readDir,
     writeFile,
     readFile,
-    copySync
+    copySync,
+    writeFileSync
 };
