@@ -142,7 +142,7 @@ const scraper = (stage) => {
             log.debug('refined data', refinedData);
             stageLog('refined data', refinedData);
 
-            return compareData(refinedData);
+            return compareData(refinedData, cfg.output.path, cfg.output.current, cfg.updateStrategy);
         })
         .catch(err => {
             log.error(err);

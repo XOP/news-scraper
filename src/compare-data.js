@@ -11,9 +11,7 @@ import extractFormat from './utils/extract-format.js';
 import parseFile from './utils/parse-file.js';
 import formatFileName from './utils/format-file-name.js';
 
-import cfg from '../config.js';
-
-const compareData = (pages) => {
+const compareData = (pages, outputPath = './', currentOutput = 'data.json', updateStrategy = '') => {
     if (!pages) {
         log.error('No pages data provided. Check parseData params.');
         process.exit(1);
@@ -28,12 +26,12 @@ const compareData = (pages) => {
 
     log.debug('new pages', pages);
 
-    const currentDataPath = path.resolve(cfg.output.path, cfg.output.current);
+    const currentDataPath = path.resolve(outputPath, currentOutput);
     const currentFormat = extractFormat(currentDataPath);
 
     let newData = pages;
 
-    if (cfg.updateStrategy === 'compare') {
+    if (updateStrategy === 'compare') {
         newData = readFile(currentDataPath, 'utf8')
             .then(currentFileData => parseFile(currentFileData, currentFormat))
             .then(currentData => {
@@ -43,7 +41,7 @@ const compareData = (pages) => {
                     log.verbose('Comparing complete');
 
                     if (filteredData) {
-                        log.warn(`New data discovered! Updating ${cfg.output.current}...`);
+                        log.warn(`New data discovered! Updating ${currentOutput}...`);
                         writeFile(currentDataPath, JSON.stringify(filteredData), 'utf8');
 
                         return filteredData;
@@ -54,7 +52,7 @@ const compareData = (pages) => {
                         return [];
                     }
                 } else {
-                    log.err(`${cfg.output.current} exists, but seems to be empty or corrupted`);
+                    log.err(`${currentOutput} exists, but seems to be empty or corrupted`);
                 }
             })
             .catch(err => {
@@ -62,12 +60,12 @@ const compareData = (pages) => {
                 log.verbose('Nothing to compare');
 
                 // create file with new data
-                log.warn(`Creating ${cfg.output.current} for the first time...`);
+                log.warn(`Creating ${currentOutput} for the first time...`);
                 writeFile(currentDataPath, JSON.stringify(pages), 'utf8');
 
                 return pages;
             });
-    } else if (cfg.updateStrategy === 'scratch') {
+    } else if (updateStrategy === 'scratch') {
 
         // todo: move to utils method
         let preciseDate = dateFormat('dd-MM-yyyy', new Date());
@@ -76,7 +74,7 @@ const compareData = (pages) => {
         preciseDate += new Date().getTime();
 
         const dataFileName = formatFileName(
-            cfg.output.path,
+            outputPath,
             'data',
             preciseDate,
             'json'

@@ -23,7 +23,7 @@ var repoMulti = [
     path.join(pathRoot, 'last.yml')
 ];
 
-test('Format file name test', function (t) {
+test('Fetch paths test', function (t) {
 
     //
     // local

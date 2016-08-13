@@ -6,7 +6,7 @@ var sortNames = require('../dist/utils/sort-names.js');
 
 var names = [];
 
-test('Sort names', function (t) {
+test('Sort names test', function (t) {
     names = [
         '01-07-2016@200.html',
         '01-07-2016@300.html',
