@@ -23,7 +23,7 @@
     "index": "node tools/re-render-index.js",
     "deploy": "$(./bin/deploy.js)",
     "add": "node tools/add-sources",
-    "static": "gulp styles"
+    "static": "gulp build"
   },
   "repository": {
     "type": "git",
@@ -69,7 +69,6 @@
     "cheerio": "^0.20.0",
     "cross-env": "^1.0.8",
     "date-format": "0.0.2",
-    "dotenv": "^2.0.0",
     "fs-extra": "^0.30.0",
     "git-wrapper": "^0.1.1",
     "is": "^3.1.0",
