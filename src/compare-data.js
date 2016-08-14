@@ -40,7 +40,7 @@ const compareData = (pages, outputPath = './', currentOutput = 'data.json', upda
 
                     log.verbose('Comparing complete');
 
-                    if (filteredData) {
+                    if (filteredData && filteredData.length) {
                         log.warn(`New data discovered! Updating ${currentOutput}...`);
                         writeFileSync(currentDataPath, JSON.stringify(filteredData), 'utf8');
 
