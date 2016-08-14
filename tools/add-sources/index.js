@@ -70,7 +70,7 @@ var addSourceDialog = function () {
             if (result['add another source? y/n'] === 'y') {
                 addSourceDialog();
             } else {
-                log.info('Number of sources added: ' + newSources.length);
+                log.info('Number of sources added: ' + Object.keys(newSources).length);
 
                 writeResult(newSources, filePath());
 
