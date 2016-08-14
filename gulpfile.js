@@ -6,7 +6,7 @@ var $ = require('gulp-load-plugins')();
 
 // other modules
 var del = require('del');
-//var runSequence = require('run-sequence');
+var runSequence = require('run-sequence');
 var merge = require('merge2');
 
 // config
@@ -49,3 +49,38 @@ gulp.task('styles', function() {
 });
 
 // -----------------------------------------------------------------------------------------------------------------
+
+//
+// browser sync
+
+var browserSync = require('browser-sync');
+var reload = browserSync.reload;
+
+gulp.task('sync', function(){
+    browserSync.init({
+        server: {
+            baseDir: cfg.output.path
+        },
+        files: [cfg.output.path + '/*.css'],
+        port: 3000
+    });
+});
+
+// -----------------------------------------------------------------------------------------------------------------
+
+//
+// dev mode
+
+gulp.task('build', function(){
+    return runSequence(
+        'styles'
+    );
+});
+
+gulp.task('default', ['build'], function(){
+    runSequence(
+        'sync',
+        function(){
+            gulp.watch(cfg.assets.path + '/**/*.scss', ['styles']);
+        });
+});

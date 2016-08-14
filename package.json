@@ -1,6 +1,6 @@
 {
   "name": "news-scraper",
-  "version": "0.4.7",
+  "version": "0.4.8",
   "description": "news-scraper",
   "main": "index.js",
   "scripts": {
@@ -49,6 +49,7 @@
     "babel-cli": "^6.9.0",
     "babel-plugin-add-module-exports": "^0.2.1",
     "babel-preset-es2015": "^6.9.0",
+    "browser-sync": "^2.14.0",
     "cssnano": "^3.7.3",
     "del": "^2.2.1",
     "eslint": "^2.11.0",
