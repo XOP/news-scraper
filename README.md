@@ -13,11 +13,17 @@ All you need to do from here is to look through the titles and decide whether to
 
 > Any special skills required?
 
-JS maps understanding, basic knowledge of browser dev tools ([Chrome Dev Tools](https://developers.google.com/web/tools/chrome-devtools/), for instance) and CSS selectors are highly preferable. 
+Basic knowledge of JS, browser dev tools ([Chrome Dev Tools](https://developers.google.com/web/tools/chrome-devtools/), for instance) and CSS selectors are highly preferable.  
+
+If you are more of a user than of a developer, then this current manual should cover almost everything necessary.
 
 > What does it look like?
 
 Daily digital digest, manually (for now) controlled.
+
+> Anything else I should know?
+
+Yes! NewScraper involves powers of [Nightmare](http://www.nightmarejs.org/) for the web-scrawling purposes.
 
 
 
@@ -31,18 +37,7 @@ Daily digital digest, manually (for now) controlled.
 
 NewScraper is designed for Node.js, so go ahead and [install](https://nodejs.org/) it.
 
-Next - install latest [Java SDK](http://www.oracle.com/technetwork/java/javase/downloads/index.html).
-
-Make sure it is present in the `$PATH`.
-
-And check the following:
-
-```
-$ java -version     # build 1.8...
-$ javac -version    # build 1.8...
-```
-
-Also, for easy deployment process it's better to have [surge](http://surge.sh/) installed globally.  
+For easy deployment process it's better to have [surge](http://surge.sh/) installed globally.  
 It is not necessary, though. For test scraping and saving results locally you can proceed without it. 
 
 
@@ -54,9 +49,6 @@ No big surprise here:
 ```
 $ npm install
 ```
-
-_Note_: Mind the `postinstall` process!  
-It will automatically install [Selenium standalone server](https://www.npmjs.com/package/selenium-standalone). The one is used here for web scraping.
 
 
 
@@ -121,12 +113,6 @@ This has to be done **only once**, unless you are making changes in the `/src` d
 $ npm run build
 ```
 
-Then run the server and let it operate in parallel process:
-
-```
-$ npm run server
-```
-
 After that starting is pretty straightforward:
 
 ```
@@ -136,7 +122,7 @@ $ npm start
 
 ### Generating index
 
-Some times it's needed to generate or re-generate the index without undergoing the whole fetching process.
+Sometimes it's needed to generate or re-generate the index without undergoing the whole fetching process.
 
 Please notice, that any existing `index.html` in target folder will be overwritten.
 
@@ -182,7 +168,7 @@ in silent mode there are only errors displayed in console
 
 ## Development mode
 
-In this mode Selenium Server Check and Repository Update are skipped.
+In this mode Repository Update is skipped.
 
 ```
 $ npm run build
@@ -223,11 +209,8 @@ Available `STAGE` values:
 
 ## Running tests
 
-Some tests require Selenium server.  
-Make sure it is running.
-
 ```
-$ npm run server
+$ npm run build
 $ npm test
 ```
 
@@ -239,6 +222,6 @@ $ npm test
 
 ## Useful links
 
-- [webdriver.io](http://webdriver.io/)
+- [Nightmare](http://www.nightmarejs.org/)
 - [cheerio](https://github.com/cheeriojs/cheerio)
 - [surge.sh](http://surge.sh/)

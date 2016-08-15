@@ -1,12 +1,9 @@
 {
   "name": "news-scraper",
-  "version": "0.4.8",
+  "version": "0.5.0",
   "description": "news-scraper",
   "main": "index.js",
   "scripts": {
-    "postinstall": "./node_modules/.bin/selenium-standalone install",
-    "server": "./node_modules/.bin/selenium-standalone start",
-    "servercheck": "node tools/selenium-check.js",
     "prebuild": "trash dist && mkdir dist",
     "build": "babel src --out-dir dist && npm run static",
     "fetch": "node tools/git-fetch-resources.js",
@@ -16,7 +13,7 @@
     "lint": "npm run lint-es5 && npm run lint-es6",
     "precommit": "npm run lint",
     "prepublish": "npm run precommit && npm run build",
-    "prestart": "npm run servercheck && npm run fetch",
+    "prestart": "npm run fetch",
     "start": "node dist",
     "dev": "node dist",
     "debug": "cross-env DEBUG=true node dist",
