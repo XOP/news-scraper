@@ -26,7 +26,9 @@ const refineData = (pages) => {
             page.data = page.data.reduce(
                 (arr, data) => {
                     const $ = cheerio.load(data);
-                    const a = $('a');
+
+                    // parsing link
+                    const a = page.link ? $(page.link) : $('a');
 
                     let href = a.attr('href');
 
@@ -57,14 +59,36 @@ const refineData = (pages) => {
                         href = pageUrlDomain + href;
                     }
 
-                    const link = {
+                    // creating props object
+                    const parsedProps = {
                         href: href,
                         text: a.text() || '',
                         title: a.attr('title') || '',
                         raw: data
                     };
 
-                    return arr.concat(link);
+                    // parsing author
+                    const author = $(page.author);
+
+                    if (author && author.text()) {
+                        parsedProps.author = author.text();
+                    }
+
+                    // parsing time
+                    const time = $(page.time);
+
+                    if (time && time.text()) {
+                        parsedProps.time = time.text();
+                    }
+
+                    // parsing image src
+                    const image = $(page.image);
+
+                    if (image && image.attr('src')) {
+                        parsedProps.imageSrc = image.attr('src');
+                    }
+
+                    return arr.concat(parsedProps);
                 },
                 []
             );
