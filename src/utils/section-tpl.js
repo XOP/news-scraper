@@ -21,21 +21,33 @@ const sectionTemplate = (page => {
 
     const body = data.reduce(
         (initialBody, dataItem) => {
-            const link = '' +
-                '<a href="' + dataItem.href + '" title="' + dataItem.title + '" target="_blank">' +
-                    dataItem.text +
+            const newsItem = '' +
+                '<a class="news-item" href="' + dataItem.href + '" title="' + dataItem.title + '" target="_blank">' +
+                    (
+                        dataItem.imageSrc ?
+                        '<img class="news-item__image" src="' + dataItem.imageSrc + '" width="100" />' : ''
+                    ) +
+                    '<div class="news-item__text">' + dataItem.text + '</div>' +
+                    (
+                        dataItem.author ?
+                        '<div class="news-item__author">author: ' + dataItem.author + '</div>' : ''
+                    ) +
+                    (
+                        dataItem.time ?
+                        '<div class="news-item__date">date: ' + dataItem.time + '</div>' : ''
+                    ) +
                 '</a>';
 
-            return initialBody.concat(link);
+            return initialBody.concat(newsItem);
         },
         []
     ).join('');
 
     return '' +
-        '<section>' +
-            '<h2>' + title + '</h2>' +
-            '<h3>' + url + '</h3>' +
-            '<article>' + body + '</article>' +
+        '<section class="news-section">' +
+            '<h2 class="news-section__heading">' + title + '</h2>' +
+            '<h3 class="news-section__url">' + url + '</h3>' +
+            '<article class="news-section__content">' + body + '</article>' +
         '</section>';
 });
 

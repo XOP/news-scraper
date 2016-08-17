@@ -84,8 +84,16 @@ const refineData = (pages) => {
                     // parsing image src
                     const image = $(page.image);
 
-                    if (image && image.attr('src')) {
-                        parsedProps.imageSrc = image.attr('src');
+                    if (image) {
+                        let imageSrc = image.attr('src');
+
+                        if (!imageSrc) {
+                            imageSrc = image.attr('data-src'); // todo: test case
+                        }
+
+                        if (imageSrc) {
+                            parsedProps.imageSrc = imageSrc;
+                        }
                     }
 
                     return arr.concat(parsedProps);
