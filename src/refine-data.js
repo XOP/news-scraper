@@ -28,12 +28,17 @@ const refineData = (pages) => {
                     const $ = cheerio.load(data);
 
                     // parsing link
-                    const a = page.link ? $(page.link) : $('a');
+                    let a = page.link ? $(page.link) : $('a');
+
+                    // choose first link if multiple occur
+                    if (a.length > 1) {
+                        a = a.eq(0);
+                    }
 
                     let href = a.attr('href');
 
                     // no href found
-                    if (href === '') {
+                    if (!href) {
                         log.warn(`Link parsed, but no href found: ${data} @ ${page.url}`);
                         log.debug('missing href', data);
 
