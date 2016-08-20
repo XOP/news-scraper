@@ -23,6 +23,19 @@ const refineData = (pages) => {
 
     const refinedData = pages.reduce(
         (initialData, page) => {
+            // extract domain from url
+            let pageUrlDomain = page.url.match(domainRegexp);
+
+            if (!pageUrlDomain) {
+                log.warn(`Cannot refine url: ${page.url}`);
+                log.debug('refined url', pageUrlDomain);
+
+                // try something
+                pageUrlDomain = page.url;
+            } else {
+                pageUrlDomain = pageUrlDomain[0];
+            }
+
             page.data = page.data.reduce(
                 (arr, data) => {
                     const $ = cheerio.load(data);
@@ -46,21 +59,9 @@ const refineData = (pages) => {
                     }
 
                     // relative link
-                    const firstChar = href.charAt(0);
+                    const firstUrlChar = href.charAt(0);
 
-                    if (firstChar === '/' || firstChar === '#') {
-                        let pageUrlDomain = page.url.match(domainRegexp);
-
-                        if (!pageUrlDomain) {
-                            log.warn(`Cannot refine url: ${page.url}`);
-                            log.debug('refined url', pageUrlDomain);
-
-                            // try something
-                            pageUrlDomain = page.url;
-                        } else {
-                            pageUrlDomain = pageUrlDomain[0];
-                        }
-
+                    if (firstUrlChar === '/' || firstUrlChar === '#') {
                         href = pageUrlDomain + href;
                     }
 
@@ -89,14 +90,30 @@ const refineData = (pages) => {
                     // parsing image src
                     const image = $(page.image);
 
-                    if (image) {
+                    if (image.length) {
                         let imageSrc = image.attr('src');
 
                         if (!imageSrc) {
                             imageSrc = image.attr('data-src'); // todo: test case
                         }
 
+                        if (!imageSrc) {
+                            imageSrc = image.css('background-image'); // todo: test case
+
+                            if (imageSrc) {
+                                // extract src from pattern 'url(src)'
+                                imageSrc = imageSrc.slice(4, -1);
+                            }
+                        }
+
                         if (imageSrc) {
+                            const firstImageSrcChar = imageSrc.charAt(0);
+
+                            // relative src
+                            if (firstImageSrcChar === '/' || firstImageSrcChar === '#') {
+                                imageSrc = pageUrlDomain + imageSrc;
+                            }
+
                             parsedProps.imageSrc = imageSrc;
                         }
                     }

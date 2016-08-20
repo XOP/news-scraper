@@ -23,6 +23,7 @@ const compareData = (pages, outputPath = './', currentOutput = 'data.json', upda
     }
 
     log.verbose('Comparing data...');
+    log.verbose(`Update strategy: ${updateStrategy}`);
 
     log.debug('new pages', pages);
 

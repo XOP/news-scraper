@@ -21,6 +21,7 @@ const pageTemplate = (title, body) => {
             <link rel="stylesheet" type="text/css" href="/main.css"/>
         </head>
         <body>
+            <div><a href="/" title="Index page">Index</a></div>
             <h1>${title}</h1>
             ${body}
         </body>
