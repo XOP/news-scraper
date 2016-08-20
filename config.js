@@ -17,15 +17,8 @@ var REPO_NAME = 'my-favourite-front-end-resources';
 // Directives
 // ==================================================
 
-// todo: if there is no array data specified parse directory and utilize directives by alphabet order
-
 var LOCAL_FILES = 'local.yml';
-var REPO_FILES = [
-    'digest.yml',
-    'blogs.yml',
-    'blogs-2.yml',
-    'companies.yml'
-];
+var REPO_FILES = []; // todo: check empty paths and stop process
 
 
 // ==================================================
