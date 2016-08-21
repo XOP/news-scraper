@@ -1,3 +1,5 @@
+import dateFormat from 'date-format';
+
 import log from './utils/log-wrapper.js';
 import pageTemplate from './utils/page-tpl.js';
 import sortNames from './utils/sort-names.js';
@@ -23,7 +25,13 @@ const renderIndex = function (filePath) {
                 (links, fileName) => {
                     const linkHref = `/${fileName}`;
                     const linkName = `${fileName.split('@')[0]}`;
-                    const link = `<a href="${linkHref}" title="${linkName}">${linkName}</a>`;
+
+                    let time = fileName.split('@')[1].slice(0, -5);
+
+                    time = new Date(+time);
+                    time = dateFormat('hh:mm', time);
+
+                    const link = `<a href="${linkHref}" title="${linkName} [${time}]">${linkName} [${time}]</a>`;
 
                     return links.concat(link);
                 }, input

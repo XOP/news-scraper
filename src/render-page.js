@@ -11,6 +11,8 @@ import cfg from '../config.js';
 
 // todo: move to utils method
 const date = dateFormat('dd-MM-yyyy', new Date());
+const time = dateFormat('hh:mm', new Date());
+
 let preciseDate = date;
 
 preciseDate += '@';
@@ -48,7 +50,7 @@ const renderPage = (pages, filePath = file) => {
         []
     ).join('');
 
-    const title = `Scraped links for: ${date}`;
+    const title = `Scraped links for: ${date}, ${time}`;
     const output = pageTemplate(title, input);
 
     log.verbose('Rendering page to a file: ');
