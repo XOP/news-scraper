@@ -22,7 +22,7 @@ const fetchPage = props => {
         .end()
         .then(data => {
             log.verbose(`Fetching page content from ${props.url} done!`);
-            log.info(`${props.url}: ${data.length} links scraped`);
+            log.info(`${props.url}: ${data.length} news scraped`);
             log.debug('data', data);
 
             props.data = data;
@@ -33,7 +33,7 @@ const fetchPage = props => {
         .catch(err => {
             log.warn(`Oops, something happened: ${err}`);
             log.warn(`${props.url}: ${err.message}`);
-            log.info(`${props.url}: 0 links scraped`);
+            log.info(`${props.url}: 0 news scraped`);
 
             props.data = [];
             resolve(props);

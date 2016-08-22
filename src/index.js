@@ -1,3 +1,4 @@
+import fs from 'fs';
 import path from 'path';
 
 import is from 'is';
@@ -29,8 +30,6 @@ const stageLog = (name, msg) => {
     }
 };
 
-// todo: check if path exist
-
 // local sources
 let localSrc = cfg.source.file;
 
@@ -38,7 +37,20 @@ if (!is.array(localSrc)) {
     localSrc = [localSrc];
 }
 
-const localSrcPath = localSrc.map(src => path.resolve(__dirname, cfg.source.path, src));
+let localSrcPath = localSrc.map(src => path.resolve(__dirname, cfg.source.path, src));
+
+localSrcPath = localSrcPath.filter(src => {
+    try {
+        fs.readFileSync(src);
+        return true;
+    } catch (err) {
+        return false;
+    }
+});
+
+if (!localSrcPath.length) {
+    log.warn('No local directives found');
+}
 
 log.debug('local src paths', localSrcPath);
 
@@ -49,9 +61,27 @@ if (!is.array(repoSrc)) {
     repoSrc = [repoSrc];
 }
 
-const repoSrcPath = repoSrc.map(src => path.resolve(__dirname, cfg.source.path, cfg.repo.name, src));
+let repoSrcPath = repoSrc.map(src => path.resolve(__dirname, cfg.source.path, cfg.repo.name, src));
+
+repoSrcPath = repoSrcPath.filter(src => {
+    try {
+        fs.readFileSync(src);
+        return true;
+    } catch (err) {
+        return false;
+    }
+});
+
+if (!repoSrcPath.length) {
+    log.warn('No repo directives found');
+}
 
 log.debug('repo src paths', repoSrcPath);
+
+if (!localSrcPath.length && !repoSrcPath.length) {
+    log.error('No directives found, exiting...');
+    process.exit(1);
+}
 
 // fetch paths depending on the config
 const paths = cfg.localOnly ?
