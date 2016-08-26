@@ -60,16 +60,43 @@ Source data can be presented in JSON or [YAML](http://docs.ansible.com/ansible/Y
 `*.yml` example:
 
 ```
-'CSS tricks':
-  url: 'http://css-tricks.com/'
-  elem: '#page-wrap .main-col .article-card > h2 > a.read-article'
+'Smashing magazine':
+  url: 'http://www.smashingmagazine.com/'
+  elem: 'article.post'
+  link: 'h2 > a'
+  author: 'h2 + ul li.a a'
+  time: 'h2 + ul li.rd'
+  image: 'figure > a > img'
   limit: 6
 ```
 
-`'CSS tricks'` - name of the resource  
-`url` - source url for the NewScraper  
-`elem` - CSS selector of the link (<a href="">...</a>) element  
-`limit` - how many `elem`-s from the `url` will be scraped, maximum
+Properties explained:
+
+`'Smashing magazine'`  
+name of the resource, **required**  
+
+`url`  
+source url for the NewScraper, **required**  
+
+`elem`  
+CSS selector of the news item container element, **required**  
+
+`link`  
+CSS selector of the link (<a href="">...</a>) _inside_ of the `elem`  
+If the `elem` itself _is_ a link, this is not required
+
+`author`  
+CSS selector of the author element _inside_ of the `elem`
+
+`time`  
+CSS selector of the time element _inside_ of the `elem`
+
+`image`  
+CSS selector of the image element _inside_ of the `elem`  
+This one can be `img` tag or any other - scraper will search for `data-src` and `background-image` CSS properties to find proper image data
+
+`limit`  
+how many `elem`-s from the `url` will be scraped, maximum
 
 
 ### Adding directives
