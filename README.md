@@ -150,6 +150,20 @@ $ npm run deploy
 ```
 
 
+### Adjusting the deploy
+
+By default deploy covers the whole directory (specified in config as `output.path`), which implies a lot of generated JSON data.  
+To take care of that inconvenience create the `.surgeignore` file with the following content:
+
+```
+*.json
+```
+
+and make sure to store it **inside the deployed folder** (specified in config as `output.path`) - "data" by default. 
+
+You can find a sample `.surgeignore` file in the project root.
+
+
 
 ## Configuration
 
