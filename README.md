@@ -167,16 +167,95 @@ You can find a sample `.surgeignore` file in the project root.
 
 ## Configuration
 
-`config.js`
+Persistent configuration is stored in the `config.js`.  
+It can be tweaked, though there is a better way to tweak settings.
 
-`limit: 3`  
-maximum number of links parsed from each resource
+For various everyday needs there is a `user.json` file at your service.  
+It basically _overrides_ config settings.
 
-`localOnly: true`  
-perform scraping using `source/local.yml` data only
+Here are all the config parameters:
+```
+{
+    // directives' parameters
+    source: {
+        // folder for all directives
+        path: '/source',
+        
+        // array of local directives' names
+        // empty array means no local directives being used
+        file: ['local.yml']
+    },
+    
+    // repository parameters
+    repo: {
+        name: 'my-favourite-front-end-resources',
+        path: 'https://github.com/XOP/my-favourite-front-end-resources',
+        
+        // array of directives' names in repository
+        // empty array means no repo directives being used
+        file: []
+    },
+    
+    // results parameters
+    output: {
+        // folder for the output data and rendered html
+        path: '/data',
+        
+        // properties for the rendered html file name
+        fileName: '',
+        fileDate: true,
+        fileExt: 'html',
+        
+        // keeps last scraping run data (applies to compare update strategy)
+        current: 'data.json'
+    },
+    
+    // here are the assets for the deployed site being kept - css etc.
+    assets: {
+        path: '/assets'
+    },
+    
+    // array of acceptable directives formats
+    sourceFormats: ['json', 'yml'],
+    
+    // maximum number of news parsed from each resource
+    limit: 3,
+    
+    // the most maximum number of news scraped from each resource
+    absLimit: 50,
+    
+    // determines if only local directives are being used
+    localOnly: false,
+    
+    // prevents verbose output to console and reports errors only
+    silent: false,
+    
+    // possible options: scratch | compare
+    // scratch - each following scraping round ignores previous results
+    // compare - each following scraping round brings only news since last run
+    updateStrategy: 'scratch'
+}
+```
 
-`silent: false`  
-in silent mode there are only errors displayed in console
+Thus said, here is the possible configuration of the `user.json` (create one from the [corresponding sample file](user-example.json)):
+
+```
+{
+    "surgeDomain": "xop-news-scraper.surge.sh",
+
+    "localOnly": false,
+
+    "repo": {
+        "file": [
+            "news-rus.yml"
+        ]
+    },
+
+    "source": {
+        "file": []
+    }
+}
+```
 
 
 
