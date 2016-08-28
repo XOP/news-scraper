@@ -1,22 +1,27 @@
 /* Core
 ---------------------------------------------------------------------------------- */
 
-@import "variables";
+@import "assets";
+
+html {
+    background: $color-bg-regular;
+}
 
 body {
     margin: 0;
 
-    font: #{$root-font-size-mobile}/#{$line-height-n} sans-serif;
+    overflow: hidden;
+    overflow-y: scroll;
+
+    background: $color-bg-regular;
+
+    font: #{$root-font-size-mobile}/#{$line-height-n} Tahoma, "Helvetica Neue", Arial, sans-serif;
     color: $color-text-regular;
-    }
 
-h1,
-section {
-    max-width: 40rem;
-
-    margin: 0 auto;
-    margin-bottom: $offset-xl;
+    @include respond($mq-desktop) {
+        font-size: $root-font-size-desktop;
     }
+}
 
 a {
     display: block;
@@ -26,8 +31,8 @@ a {
     &:hover {
         color: $color-text-inverse-strong;
         background: $color-bg-inverse;
-        }
     }
+}
 
 /* /Core
 ---------------------------------------------------------------------------------- */

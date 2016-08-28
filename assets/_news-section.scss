@@ -1,0 +1,27 @@
+/* News section
+---------------------------------------------------------------------------------- */
+
+@import "assets";
+
+.news-section {
+    & + & {
+        margin-top: $offset-l;
+    }
+}
+
+.news-section__heading {
+
+}
+
+.news-section__url {
+    margin-top: $offset-n;
+
+    font-size: $font-size-s;
+}
+
+.news-section__content {
+    margin-top: $offset-l;
+}
+
+/* /News section
+---------------------------------------------------------------------------------- */

@@ -1,0 +1,44 @@
+/* Heading
+---------------------------------------------------------------------------------- */
+
+@import "assets";
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.heading {
+    margin: 0;
+
+    font-weight: normal;
+    text-transform: uppercase;
+}
+
+h1,
+.heading--1 {
+    font-style: $font-size-xl;
+    text-transform: none;
+}
+
+h2,
+.heading--2 {
+    font-size: $font-size-l;
+    text-transform: none;
+}
+
+h3,
+.heading--3 {
+    font-size: $font-size-n;
+}
+
+h4,
+.heading--4 {
+    font-size: $font-size-n;
+    text-transform: none;
+    font-weight: bold;
+}
+
+/* /Heading
+---------------------------------------------------------------------------------- */
