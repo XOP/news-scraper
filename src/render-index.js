@@ -1,7 +1,7 @@
 import dateFormat from 'date-format';
 
 import log from './utils/log-wrapper.js';
-import pageTemplate from './utils/page-tpl.js';
+import pageTemplate from './tpl/page-tpl.js';
 import sortNames from './utils/sort-names.js';
 import { readDir, writeFile } from './utils/file-ops.js';
 

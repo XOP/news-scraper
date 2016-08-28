@@ -4,8 +4,8 @@ import dateFormat from 'date-format';
 import log from './utils/log-wrapper.js';
 import { writeFile } from './utils/file-ops.js';
 import formatFilename from './utils/format-file-name.js';
-import sectionTemplate from './utils/section-tpl.js';
-import pageTemplate from './utils/page-tpl.js';
+import sectionTemplate from './tpl/section-tpl.js';
+import pageTemplate from './tpl/page-tpl.js';
 
 import cfg from '../config.js';
 
