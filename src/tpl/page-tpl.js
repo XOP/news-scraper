@@ -21,9 +21,15 @@ const pageTemplate = (title, body) => {
             <link rel="stylesheet" type="text/css" href="/main.css"/>
         </head>
         <body>
-            <div><a href="/" title="Index page">Index</a></div>
-            <h1>${title}</h1>
-            ${body}
+            <header class="header">
+                <div class="header__index"
+                    ><a href="/" title="Index page">Index</a
+                ></div>
+                <div class="header__heading"
+                    ><h1 class="heading heading--1">${title}</h1
+                ></div>
+            </header
+            ><main class="main">${body}</main>
         </body>
     </html>`;
 };

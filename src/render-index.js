@@ -31,7 +31,11 @@ const renderIndex = function (filePath) {
                     time = new Date(+time);
                     time = dateFormat('hh:mm', time);
 
-                    const link = `<a href="${linkHref}" title="${linkName} [${time}]">${linkName} [${time}]</a>`;
+                    const link = (
+                        `<div
+                            ><a href="${linkHref}" title="${linkName} [${time}]">${linkName} [${time}]</a
+                        ></div>`
+                    );
 
                     return links.concat(link);
                 }, input

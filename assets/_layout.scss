@@ -1,0 +1,30 @@
+/* Layout
+---------------------------------------------------------------------------------- */
+
+.header {
+    position: sticky;
+
+    display: flex;
+
+    align-items: center;
+
+    padding: $offset-n;
+
+    background: $color-brand-main-dark;
+    color: $color-text-inverse-strong;
+
+    * + * {
+        margin-left: $offset-n;
+    }
+}
+
+.header__heading {
+
+}
+
+.main {
+    padding: $offset-n;
+}
+
+/* /Layout
+---------------------------------------------------------------------------------- */

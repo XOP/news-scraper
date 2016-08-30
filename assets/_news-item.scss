@@ -1,0 +1,43 @@
+/* News item
+---------------------------------------------------------------------------------- */
+
+@import "assets";
+
+.news-item {
+    & + & {
+        margin-top: $offset-l;
+    }
+}
+
+.news-item__link {
+    display: block;
+
+    text-decoration: none;
+}
+
+.news-item__image {
+    margin: 0;
+
+    font-size: 0;
+}
+
+.news-item__image__pic {
+
+}
+
+.news-item__heading {
+
+}
+
+.news-item__author {
+    color: $color-text-light;
+    font-size: $font-size-s;
+}
+
+.news-item__date {
+    color: $color-text-light;
+    font-size: $font-size-s;
+}
+
+/* /News item
+---------------------------------------------------------------------------------- */

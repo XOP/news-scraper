@@ -4,16 +4,20 @@
 @import "assets";
 
 html {
-    background: $color-bg-regular;
+    height: 100%;
+
+    background: $color-bg-lightest;
 }
 
 body {
+    height: 100%;
+
     margin: 0;
 
     overflow: hidden;
     overflow-y: scroll;
 
-    background: $color-bg-regular;
+    background: $color-bg-lightest;
 
     font: #{$root-font-size-mobile}/#{$line-height-n} Tahoma, "Helvetica Neue", Arial, sans-serif;
     color: $color-text-regular;
@@ -24,14 +28,10 @@ body {
 }
 
 a {
-    display: block;
-    padding: $offset-s;
-
-    color: $color-text-strong;
+    color: $color-text-regular;
 
     &:hover {
-        color: $color-text-inverse-strong;
-        background: $color-bg-inverse;
+        color: $color-text-strong;
     }
 }
 

@@ -4,8 +4,12 @@
 @import "assets";
 
 .news-section {
-    & + & {
-        margin-top: $offset-l;
+    padding: $offset-n 0;
+
+    border-bottom: 1px solid $color-brand-main;
+
+    &:hover {
+        background: $color-bg-regular;
     }
 }
 
