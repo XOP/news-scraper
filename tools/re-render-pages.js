@@ -15,7 +15,7 @@ fs.readdir(cfg.output.path, function (err, files) {
     }
 
     files = files.filter(function (fileName) {
-        return fileName.indexOf('.json') > -1;
+        return fileName.indexOf('json') > -1;
     });
 
     if (files.length) {
@@ -24,14 +24,13 @@ fs.readdir(cfg.output.path, function (err, files) {
         files.forEach(function (filePath) {
             var fileName = filePath;
 
-            fileName = fileName.split('.json')[0];
-            fileName = fileName.split('data--')[1];
-            fileName += '.';
+            fileName = fileName.split('json')[0];
             fileName += cfg.output.fileExt;
+            fileName = path.join(cfg.output.path, fileName);
 
             var fileData = fs.readFileSync(path.join(cfg.output.path, filePath), 'utf8');
 
-            renderPage(JSON.parse(fileData), path.join(cfg.output.path, fileName));
+            renderPage(JSON.parse(fileData), fileName);
 
             if (++counter === files.length) {
                 log.info('Rendering pages success!');

@@ -76,7 +76,7 @@ const compareData = (pages, outputPath = './', currentOutput = 'data.json', upda
 
         const dataFileName = formatFileName(
             outputPath,
-            'data',
+            '',
             preciseDate,
             'json'
         );

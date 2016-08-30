@@ -4,15 +4,25 @@
 @import "assets";
 
 .news-item {
-    & + & {
-        margin-top: $offset-l;
-    }
+    margin: $offset-s;
+
+    background: $color-bg-regular;
+
+    box-shadow: 0 1px 5px -2px rgba(0,0,0,.8);
+    border-radius: 2px;
 }
 
 .news-item__link {
     display: block;
 
+    padding: $offset-s;
+    border: 1px solid transparent;
+
     text-decoration: none;
+
+    &:hover {
+        border-color: $color-bg-strong;
+    }
 }
 
 .news-item__image {

@@ -23,7 +23,7 @@ const pageTemplate = (title, body) => {
         <body>
             <header class="header">
                 <div class="header__index"
-                    ><a href="/" title="Index page">Index</a
+                    ><a class="header__index__link" href="/" title="Index page">Index</a
                 ></div>
                 <div class="header__heading"
                     ><h1 class="heading heading--1">${title}</h1

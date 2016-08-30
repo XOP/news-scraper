@@ -2,8 +2,6 @@
 ---------------------------------------------------------------------------------- */
 
 .header {
-    position: sticky;
-
     display: flex;
 
     align-items: center;
@@ -18,12 +16,20 @@
     }
 }
 
+.header__index__link {
+    color: $color-text-inverse-light;
+
+    &:hover {
+        color: $color-text-inverse-strong;
+    }
+}
+
 .header__heading {
 
 }
 
 .main {
-    padding: $offset-n;
+
 }
 
 /* /Layout

@@ -40,6 +40,8 @@ var config = {
         fileName: '',
         fileDate: true,
         fileExt: 'html',
+        dataPrefix: 'data',
+        dataSplit: '--',
         current: 'data.json'
     },
     assets: {

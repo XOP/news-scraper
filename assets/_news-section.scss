@@ -4,17 +4,13 @@
 @import "assets";
 
 .news-section {
-    padding: $offset-n 0;
+    padding: $offset-n;
 
     border-bottom: 1px solid $color-brand-main;
-
-    &:hover {
-        background: $color-bg-regular;
-    }
 }
 
 .news-section__heading {
-
+    color: $color-brand-main;
 }
 
 .news-section__url {
@@ -25,6 +21,8 @@
 
 .news-section__content {
     margin-top: $offset-l;
+    margin-left: -$offset-s;
+    margin-right: -$offset-s;
 }
 
 /* /News section
