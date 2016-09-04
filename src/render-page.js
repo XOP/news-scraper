@@ -1,22 +1,20 @@
 import is from 'is';
-import dateFormat from 'date-format';
 
 import log from './utils/log-wrapper.js';
 import { writeFile } from './utils/file-ops.js';
 import formatFilename from './utils/format-file-name.js';
+import { getDate, getTime, getDateMarker, getPreciseDate } from './utils/date-utils.js';
 import sectionTemplate from './tpl/section-tpl.js';
 import pageTemplate from './tpl/page-tpl.js';
 
 import cfg from '../config.js';
 
-// todo: move to utils method
-const date = dateFormat('dd-MM-yyyy', new Date());
-const time = dateFormat('hh:mm', new Date());
+// todo: extract date marker from the data file name
+const currentDate = new Date();
 
-let preciseDate = date;
-
-preciseDate += '@';
-preciseDate += new Date().getTime();
+const date = getDate(currentDate);
+const time = getTime(currentDate);
+const preciseDate = getPreciseDate(currentDate, getDateMarker());
 
 const file = formatFilename(
     cfg.output.path,

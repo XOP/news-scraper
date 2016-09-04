@@ -1,8 +1,7 @@
-import dateFormat from 'date-format';
-
 import log from './utils/log-wrapper.js';
 import pageTemplate from './tpl/page-tpl.js';
 import sortNames from './utils/sort-names.js';
+import { getTime, getDateMarker } from './utils/date-utils.js';
 import { readDir, writeFile } from './utils/file-ops.js';
 
 const renderIndex = function (filePath) {
@@ -26,10 +25,8 @@ const renderIndex = function (filePath) {
                     const linkHref = `/${fileName}`;
                     const linkName = `${fileName.split('@')[0]}`;
 
-                    let time = fileName.split('@')[1].slice(0, -5);
-
-                    time = new Date(+time);
-                    time = dateFormat('hh:mm', time);
+                    const timeString = getDateMarker(fileName);
+                    const time = getTime(new Date(+timeString));
 
                     const link = (
                         `<div

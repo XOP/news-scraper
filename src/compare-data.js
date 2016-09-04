@@ -1,7 +1,6 @@
 import path from 'path';
 
 import is from 'is';
-import dateFormat from 'date-format';
 
 import filterData from './filter-data.js';
 
@@ -10,6 +9,7 @@ import { readFile, writeFileSync } from './utils/file-ops.js';
 import extractFormat from './utils/extract-format.js';
 import parseFile from './utils/parse-file.js';
 import formatFileName from './utils/format-file-name.js';
+import { getPreciseDate } from './utils/date-utils.js';
 
 const compareData = (pages, outputPath = './', currentOutput = 'data.json', updateStrategy = '') => {
     if (!pages) {
@@ -67,17 +67,10 @@ const compareData = (pages, outputPath = './', currentOutput = 'data.json', upda
                 return pages;
             });
     } else if (updateStrategy === 'scratch') {
-
-        // todo: move to utils method
-        let preciseDate = dateFormat('dd-MM-yyyy', new Date());
-
-        preciseDate += '@';
-        preciseDate += new Date().getTime();
-
         const dataFileName = formatFileName(
             outputPath,
             '',
-            preciseDate,
+            getPreciseDate(),
             'json'
         );
 
