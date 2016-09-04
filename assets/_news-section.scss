@@ -4,16 +4,25 @@
 @import "assets";
 
 .news-section {
-    padding: $offset-n;
+    padding-top: $offset-n;
 
     border-bottom: 1px solid $color-brand-main;
+
+    @include respond($mq-desktop) {
+        padding-left: $offset-n;
+        padding-right: $offset-n;
+        padding-bottom: $offset-n;
+    }
 }
 
 .news-section__heading {
+    padding: 0 $offset-s;
+
     color: $color-brand-main;
 }
 
 .news-section__url {
+    padding: 0 $offset-s;
     margin-top: $offset-n;
 
     font-size: $font-size-s;
@@ -23,6 +32,12 @@
     margin-top: $offset-l;
     margin-left: -$offset-s;
     margin-right: -$offset-s;
+
+    @include respond($mq-desktop) {
+        display: flex;
+
+        flex-wrap: wrap;
+    }
 }
 
 /* /News section

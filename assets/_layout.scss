@@ -2,17 +2,24 @@
 ---------------------------------------------------------------------------------- */
 
 .header {
-    display: flex;
-
-    align-items: center;
-
     padding: $offset-n;
 
     background: $color-brand-main-dark;
     color: $color-text-inverse-strong;
 
     * + * {
-        margin-left: $offset-n;
+        margin-top: $offset-s;
+    }
+
+    @include respond($mq-desktop) {
+        display: flex;
+
+        align-items: center;
+
+        * + * {
+            margin-top: 0;
+            margin-left: $offset-n;
+        }
     }
 }
 
