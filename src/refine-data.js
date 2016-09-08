@@ -36,6 +36,9 @@ const refineData = (pages) => {
                 pageUrlDomain = pageUrlDomain[0];
             }
 
+            // extract protocol from url
+            const pageUrlProtocol = page.url.split('://')[0];
+
             page.data = page.data.reduce(
                 (arr, data) => {
                     const $ = cheerio.load(data);
@@ -58,11 +61,16 @@ const refineData = (pages) => {
                         return arr;
                     }
 
-                    // relative link
-                    const firstUrlChar = href.charAt(0);
+                    if (href.indexOf('//') === 0) {
+                        // protocol link
+                        href = `${pageUrlProtocol}:${href}`;
+                    } else {
+                        // relative link
+                        const firstUrlChar = href.charAt(0);
 
-                    if (firstUrlChar === '/' || firstUrlChar === '#') {
-                        href = pageUrlDomain + href;
+                        if (firstUrlChar === '/' || firstUrlChar === '#') {
+                            href = pageUrlDomain + href;
+                        }
                     }
 
                     // creating props object
@@ -107,11 +115,16 @@ const refineData = (pages) => {
                         }
 
                         if (imageSrc) {
-                            const firstImageSrcChar = imageSrc.charAt(0);
+                            if (imageSrc.indexOf('//') === 0) {
+                                // protocol link
+                                imageSrc = `${pageUrlProtocol}:${imageSrc}`;
+                            } else {
+                                // relative link
+                                const firstImageSrcChar = imageSrc.charAt(0);
 
-                            // relative src
-                            if (firstImageSrcChar === '/' || firstImageSrcChar === '#') {
-                                imageSrc = pageUrlDomain + imageSrc;
+                                if (firstImageSrcChar === '/' || firstImageSrcChar === '#') {
+                                    imageSrc = pageUrlDomain + imageSrc;
+                                }
                             }
 
                             parsedProps.imageSrc = imageSrc;
