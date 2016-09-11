@@ -3,8 +3,6 @@ import Promise from 'bluebird';
 
 import log from './utils/log-wrapper.js';
 import parseFile from './utils/parse-file.js';
-import { readFile } from './utils/file-ops.js';
-import extractFormat from './utils/extract-format.js';
 
 const fetchPaths = (local, repo) => {
     if (!repo) {
@@ -31,13 +29,7 @@ const fetchPaths = (local, repo) => {
     log.debug('sources', sources);
 
     return Promise.mapSeries(sources, (srcItem) => {
-        const itemFormat = extractFormat(srcItem);
-
-        return readFile(srcItem, 'utf8')
-            .then(itemPaths => parseFile(itemPaths, itemFormat))
-            .catch(err => {
-                log.error(err);
-            });
+        return parseFile(srcItem);
     })
         .then(result =>
 

@@ -1,5 +1,6 @@
-import log from './utils/log-wrapper.js';
 import pageTemplate from './tpl/page-tpl.js';
+
+import log from './utils/log-wrapper.js';
 import sortNames from './utils/sort-names.js';
 import { getTime, getDateMarker } from './utils/date-utils.js';
 import { readDir, writeFile } from './utils/file-ops.js';

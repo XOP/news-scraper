@@ -2,7 +2,8 @@ var fs = require('fs');
 
 var log = require('log-util');
 
-var parseFile = require('../../dist/utils/parse-file.js');
+// todo: update adding sources
+var parseFile = require('../../dist/utils/parse-filedata.js');
 var readFile = require('../../dist/utils/file-ops.js').readFile;
 var writeFile = require('../../dist/utils/file-ops.js').writeFile;
 

@@ -2,13 +2,10 @@ import fs from 'fs';
 import path from 'path';
 
 import is from 'is';
-import Promise from 'bluebird';
+
+import scraper from './scraper';
 
 import fetchPaths from './fetch-paths.js';
-import fetchPage from './fetch-page.js';
-import limitData from './limit-data.js';
-import refineData from './refine-data.js';
-import compareData from './compare-data.js';
 import renderPage from './render-page.js';
 import renderIndex from './render-index.js';
 
@@ -90,7 +87,7 @@ const paths = cfg.localOnly ?
 
 log.verbose('Fetching paths...');
 
-const scraper = (stage) => {
+const scrapeAndPublish = (stage) => {
 
     stageLog('local src paths', localSrcPath);
     stageLog('repo src paths', repoSrcPath);
@@ -118,72 +115,15 @@ const scraper = (stage) => {
         return;
     }
 
-    // scraping data
+    // scraping
     const scrapedData = sources
-            .then(sources => {
-                log.debug('sources', sources);
-                stageLog('sources', sources);
-
-                return Promise.mapSeries(sources, fetchPage);
-            })
-            .catch(err => {
-                log.error(err);
-            });
-
-    if (stage === 'data') {
-        return;
-    }
-
-    // limit the data
-    const limitedData = scrapedData
-        .then(scrapedData => {
-            log.debug('scraped data', scrapedData);
-            stageLog('scraped data', scrapedData);
-
-            return limitData(scrapedData, cfg.limit);
-        })
+        .then(sources => scraper(sources, cfg, stage))
         .catch(err => {
             log.error(err);
         });
-
-    if (stage === 'limit') {
-        return;
-    }
-
-    // refine the data
-    const refinedData = limitedData
-        .then(limitedData => {
-            log.debug('limited data', limitedData);
-            stageLog('limited data', limitedData);
-
-            return refineData(limitedData);
-        })
-        .catch(err => {
-            log.error(err);
-        });
-
-    if (stage === 'refine') {
-        return;
-    }
-
-    // compare to previous data
-    const currentData = refinedData
-        .then(refinedData => {
-            log.debug('refined data', refinedData);
-            stageLog('refined data', refinedData);
-
-            return compareData(refinedData, cfg.output.path, cfg.output.current, cfg.updateStrategy);
-        })
-        .catch(err => {
-            log.error(err);
-        });
-
-    if (stage === 'compare') {
-        return;
-    }
 
     // render the page
-    const renderedPage = currentData
+    const renderedPage = scrapedData
         .then(newData => {
             log.debug('new data', newData);
             stageLog('new data', newData);
@@ -221,4 +161,4 @@ const scraper = (stage) => {
         });
 };
 
-scraper(debugStage);
+scrapeAndPublish(debugStage);
