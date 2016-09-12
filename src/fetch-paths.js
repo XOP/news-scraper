@@ -1,5 +1,4 @@
 import is from 'is';
-import Promise from 'bluebird';
 
 import log from './utils/log-wrapper.js';
 import parseFile from './utils/parse-file.js';
@@ -28,24 +27,10 @@ const fetchPaths = (local, repo) => {
 
     log.debug('sources', sources);
 
-    return Promise.mapSeries(sources, (srcItem) => {
-        return parseFile(srcItem);
-    })
-        .then(result =>
-
-            // merging collections into one object
-            // { {1, 2}, {3, 4}, ... } >>> {1, 2, 3, 4, ...}
-            result.reduce(
-
-                // this strategy implies replacement of item values
-                // if there are same keys in subsequent objects
-                (flattenedResult, resultItem) => Object.assign(flattenedResult, resultItem),
-                {}
-            )
-        )
-        .catch(err => {
-            log.error(err);
-        });
+    return sources.reduce(
+       (directives, srcItem) => Object.assign(directives, parseFile(srcItem)),
+       {}
+    );
 };
 
 export default fetchPaths;

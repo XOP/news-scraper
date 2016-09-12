@@ -80,15 +80,7 @@ if (!localSrcPath.length && !repoSrcPath.length) {
     process.exit(1);
 }
 
-// fetch paths depending on the config
-const paths = cfg.localOnly ?
-    fetchPaths(localSrcPath) :
-    fetchPaths(repoSrcPath, localSrcPath);
-
-log.verbose('Fetching paths...');
-
 const scrapeAndPublish = (stage) => {
-
     stageLog('local src paths', localSrcPath);
     stageLog('repo src paths', repoSrcPath);
 
@@ -96,31 +88,28 @@ const scrapeAndPublish = (stage) => {
         return;
     }
 
-    // preparing directives
-    const sources = paths
-            .then((res) => {
-                log.verbose('Fetching paths done!');
-                log.info(`${Object.keys(res).length} paths fetched`);
+    // fetch paths depending on the config
+    const directives = cfg.localOnly ?
+        fetchPaths(localSrcPath) :
+        fetchPaths(repoSrcPath, localSrcPath);
 
-                log.debug('directives', res);
-                stageLog('directives', res);
+    log.debug('directives', directives);
+    stageLog('directives', directives);
 
-                return sourceObjToArray(res);
-            })
-            .catch(err => {
-                log.error(err);
-            });
+    // formatting directives
+    const formattedDirectives = sourceObjToArray(directives);
 
-    if (stage === 'sources') {
+    log.debug('formatted directives', formattedDirectives);
+    stageLog('formatted directives', formattedDirectives);
+
+    if (stage === 'directives') {
         return;
     }
 
+    log.info(`Processing ${Object.keys(directives).length} directive(s)...`);
+
     // scraping
-    const scrapedData = sources
-        .then(sources => scraper(sources, cfg, stage))
-        .catch(err => {
-            log.error(err);
-        });
+    const scrapedData = scraper(formattedDirectives, cfg, stage);
 
     // render the page
     const renderedPage = scrapedData
