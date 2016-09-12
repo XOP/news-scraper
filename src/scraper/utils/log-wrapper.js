@@ -33,14 +33,4 @@ if (!debug) {
     logWrapper.debug = () => null;
 }
 
-// todo: silent option
-
-/*
-if (silent) {
-    logWrapper.verbose = () => null;
-    logWrapper.info = () => null;
-    logWrapper.warn = () => null;
-}
-*/
-
 export default logWrapper;

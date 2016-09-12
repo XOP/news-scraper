@@ -7,8 +7,6 @@ const parseFile = fileName => {
     const fileFormat = extractFormat(fileName);
     const fileData = fs.readFileSync(fileName, 'utf8');
 
-    // todo: catch error on reading
-
     return parseFileData(fileData, fileFormat);
 };
 

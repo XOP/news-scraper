@@ -52,7 +52,7 @@ const compareData = (pages, outputPath = './', currentOutput = 'data.json', upda
                     newData = [];
                 }
             } else {
-                log.err(`${currentOutput} exists, but seems to be empty or corrupted`);
+                log.error(`${currentOutput} exists, but seems to be empty or corrupted`);
             }
         } catch (err) {
             log.error(err);
