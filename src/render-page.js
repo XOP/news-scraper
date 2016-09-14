@@ -36,7 +36,7 @@ const renderPage = (pages, filePath = file) => {
     }
 
     if (!pages.length) {
-        log.warn('No data to render. Exiting...');
+        log.warn('No data to render!');
         return false;
     }
 

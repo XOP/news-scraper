@@ -1,4 +1,4 @@
-import log from 'log-util';
+import log from './utils/log-wrapper';
 
 import renderIndex from './render-index.js';
 
