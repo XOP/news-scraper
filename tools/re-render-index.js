@@ -5,11 +5,9 @@ var cfg = require('../config.js');
 
 log.info('Rendering index.html...');
 
-renderIndex(cfg.output.path)
-    .then(function () {
-        log.info('Rendering index.html success!');
-    })
-    .catch(function (err) {
-        log.error(err);
-    });
-
+try {
+    renderIndex(cfg.output.path);
+    log.info('Rendering index.html success!');
+} catch (err) {
+    log.error(err, 'Rendering index.html failed');
+}
