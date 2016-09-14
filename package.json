@@ -1,6 +1,6 @@
 {
   "name": "news-scraper",
-  "version": "0.6.3-beta.0",
+  "version": "0.6.4-beta.0",
   "description": "news-scraper",
   "main": "index.js",
   "scripts": {
@@ -17,7 +17,7 @@
     "start": "node dist",
     "dev": "node dist",
     "debug": "cross-env DEBUG=true node dist",
-    "index": "node tools/re-render-index.js",
+    "index": "node dist/re-render-index.js",
     "pages": "node tools/re-render-pages.js",
     "deploy": "$(./bin/deploy.js)",
     "add": "node tools/add-sources",
