@@ -1,10 +1,10 @@
+import fs from 'fs-extra';
 import is from 'is';
 
 import sectionTemplate from './tpl/section-tpl.js';
 import pageTemplate from './tpl/page-tpl.js';
 
 import log from './utils/log-wrapper.js';
-import { writeFile } from './utils/file-ops.js';
 import formatFilename from './utils/format-file-name.js';
 import { getDate, getTime, getDateMarker, getPreciseDate } from './utils/date-utils.js';
 
@@ -40,22 +40,22 @@ const renderPage = (pages, filePath = file) => {
         return false;
     }
 
-    const input = pages.reduce(
-        (initialInput, page) => {
-            const pageRender = sectionTemplate(page);
+    const pageBodyHtml = pages.reduce(
+        (html, page) => {
+            const sectionHtml = sectionTemplate(page);
 
-            return initialInput.concat(pageRender);
+            return html.concat(sectionHtml);
         },
         []
     ).join('');
 
-    const title = `Scraped links for: ${date}, ${time}`;
-    const output = pageTemplate(title, input);
+    const pageTitle = `Scraped links for: ${date}, ${time}`;
+    const pageHtml = pageTemplate(pageTitle, pageBodyHtml);
 
     log.verbose('Rendering page to a file: ');
     log.verbose(filePath);
 
-    return writeFile(filePath, output, 'utf8');
+    return fs.outputFileSync(filePath, pageHtml, 'utf8');
 };
 
 export default renderPage;
