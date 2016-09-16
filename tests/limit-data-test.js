@@ -1,6 +1,6 @@
 var test = require('tape');
 
-var limitData = require('../dist/limit-data.js');
+var limitData = require('../dist/scraper/limit-data.js');
 
 var scrapedData = [];
 

@@ -2,7 +2,7 @@
 
 var test = require('tape');
 
-var refineData = require('../dist/refine-data.js');
+var refineData = require('../dist/scraper/refine-data.js');
 
 var scrapedData = [];
 
@@ -37,7 +37,7 @@ test('Source object refinement test', function (t) {
     ];
 
     t.deepEqual(
-        refineData(scrapedData),
+        refineData(scrapedData).pages,
 
         [
             {
@@ -122,7 +122,7 @@ test('Source object refinement test', function (t) {
     ];
 
     t.deepEqual(
-        refineData(scrapedData),
+        refineData(scrapedData).pages,
 
         [
             {

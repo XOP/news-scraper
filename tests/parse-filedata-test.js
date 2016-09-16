@@ -3,7 +3,7 @@ var path = require('path');
 
 var test = require('tape');
 
-var parseFile = require('../dist/utils/parse-file.js');
+var parseFileData = require('../dist/utils/parse-filedata.js');
 
 var data;
 var dataPath = path.resolve(__dirname, 'fixtures/data');
@@ -13,7 +13,7 @@ test('Parse file test', function (t) {
     data = fs.readFileSync(path.join(dataPath, 'data.json'), 'utf8');
 
     t.deepEqual(
-        parseFile(data),
+        parseFileData(data),
 
         {
             Foo: {
@@ -27,7 +27,7 @@ test('Parse file test', function (t) {
     );
 
     t.deepEqual(
-        parseFile(data, 'json'),
+        parseFileData(data, 'json'),
 
         {
             Foo: {
@@ -44,7 +44,7 @@ test('Parse file test', function (t) {
     data = fs.readFileSync(path.join(dataPath, 'data.yml'), 'utf8');
 
     t.deepEqual(
-        parseFile(data, 'yml'),
+        parseFileData(data, 'yml'),
 
         {
             Foo: {
@@ -58,7 +58,7 @@ test('Parse file test', function (t) {
     );
 
     t.deepEqual(
-        parseFile(data, 'yaml'),
+        parseFileData(data, 'yaml'),
 
         {
             Foo: {
@@ -72,7 +72,7 @@ test('Parse file test', function (t) {
     );
 
     t.equal(
-        parseFile(data, 'xls'),
+        parseFileData(data, 'xls'),
 
         null,
 

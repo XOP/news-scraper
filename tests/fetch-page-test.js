@@ -1,6 +1,6 @@
 var test = require('tape');
 
-var fetchPage = require('../dist/fetch-page.js');
+var fetchPage = require('../dist/scraper/fetch-page.js');
 
 var props = {
     url: 'http://css-tricks.com/',

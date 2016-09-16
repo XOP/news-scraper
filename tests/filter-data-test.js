@@ -2,7 +2,7 @@
 
 var test = require('tape');
 
-var filterData = require('../dist/filter-data.js');
+var filterData = require('../dist/scraper/filter-data.js');
 
 var currentData;
 var newData;
