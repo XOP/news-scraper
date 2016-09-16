@@ -142,7 +142,10 @@ const refineData = (pages) => {
 
     log.verbose('Refining operation complete');
 
-    return refinedData;
+    return {
+        meta: {},
+        pages: refinedData
+    };
 };
 
 export default refineData;

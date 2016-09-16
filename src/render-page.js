@@ -1,30 +1,19 @@
 import fs from 'fs-extra';
+
 import is from 'is';
 
 import sectionTemplate from './tpl/section-tpl.js';
 import pageTemplate from './tpl/page-tpl.js';
 
 import log from './utils/log-wrapper.js';
-import formatFilename from './utils/format-file-name.js';
-import { getDate, getTime, getDateMarker, getPreciseDate } from './utils/date-utils.js';
+import { getDate, getTime } from './utils/date-utils.js';
 
-import cfg from '../config.js';
+const renderPage = (complexData, filePath = '') => {
+    const {
+        meta,
+        pages
+        } = complexData;
 
-// todo: extract date marker from the data file name
-const currentDate = new Date();
-
-const date = getDate(currentDate);
-const time = getTime(currentDate);
-const preciseDate = getPreciseDate(currentDate, getDateMarker());
-
-const file = formatFilename(
-    cfg.output.path,
-    cfg.output.fileName,
-    cfg.output.fileDate && preciseDate,
-    cfg.output.fileExt
-);
-
-const renderPage = (pages, filePath = file) => {
     if (!pages) {
         log.error('No data to render. Check renderPage params.');
         process.exit(1);
@@ -49,8 +38,16 @@ const renderPage = (pages, filePath = file) => {
         []
     ).join('');
 
+    const fileDate = meta.date;
+
+    // todo: move data generation to scraper?
+    const date = getDate(fileDate);
+    const time = getTime(fileDate);
+
     const pageTitle = `Scraped links for: ${date}, ${time}`;
     const pageHtml = pageTemplate(pageTitle, pageBodyHtml);
+
+    filePath = filePath || meta.file.replace('json', 'html');
 
     log.verbose('Rendering page to a file: ');
     log.verbose(filePath);

@@ -8,7 +8,12 @@ import filterData from './filter-data.js';
 import log from './utils/log-wrapper.js';
 import parseFile from './utils/parse-file.js';
 
-const compareData = (pages, outputPath = './', currentOutput = 'data.json', updateStrategy = '') => {
+const compareData = (complexData, outputPath = './', currentOutput = 'data.json', updateStrategy = '') => {
+    const {
+        meta,
+        pages
+        } = complexData;
+
     if (!pages) {
         log.error('No pages data provided. Check parseData params.');
         process.exit(1);
@@ -25,8 +30,16 @@ const compareData = (pages, outputPath = './', currentOutput = 'data.json', upda
     log.debug('new pages', pages);
 
     const currentDataPath = path.resolve(outputPath, currentOutput);
+    const currentDate = new Date().getTime();
+    const dataFileName = path.join(outputPath, `${currentDate}.json`);
 
-    let newData = pages;
+    let updatedComplexData = {
+        meta: Object.assign(meta, {
+            file: dataFileName,
+            date: currentDate
+        }),
+        pages
+    };
 
     if (updateStrategy === 'compare') {
         let currentData;
@@ -42,14 +55,16 @@ const compareData = (pages, outputPath = './', currentOutput = 'data.json', upda
 
                 if (filteredData && filteredData.length) {
                     log.warn(`New data discovered! Updating ${currentOutput}...`);
-                    fs.writeJsonSync(currentDataPath, filteredData);
 
-                    newData = filteredData;
+                    updatedComplexData.pages = filteredData;
+
+                    fs.writeJsonSync(currentDataPath, updatedComplexData);
+                    fs.writeJsonSync(dataFileName, updatedComplexData);
                 } else {
                     log.verbose('Nothing to compare');
                     log.warn('No new data discovered. Try again later or change directives!');
 
-                    newData = [];
+                    updatedComplexData.pages = [];
                 }
             } else {
                 log.error(`${currentOutput} exists, but seems to be empty or corrupted`);
@@ -60,19 +75,18 @@ const compareData = (pages, outputPath = './', currentOutput = 'data.json', upda
 
             // create file with new data
             log.warn(`Creating ${currentOutput} for the first time...`);
-            fs.writeJsonSync(currentDataPath, pages);
+
+            fs.writeJsonSync(currentDataPath, updatedComplexData);
+            fs.writeJsonSync(dataFileName, updatedComplexData);
         }
     } else if (updateStrategy === 'scratch') {
-        const currentDate = new Date().getTime();
-        const dataFileName = path.join(outputPath, `${currentDate}.json`);
-
         log.verbose('Creating new data file:');
         log.verbose(dataFileName);
 
-        fs.writeJsonSync(dataFileName, newData);
+        fs.writeJsonSync(dataFileName, updatedComplexData);
     }
 
-    return newData;
+    return updatedComplexData;
 };
 
 export default compareData;
