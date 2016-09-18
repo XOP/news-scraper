@@ -26,6 +26,9 @@ const renderIndex = function (filePath) {
     // filtering html files only
     pageFileNames = pageFileNames.filter(fileName => fileName.indexOf('.html') > -1);
 
+    // filter self
+    pageFileNames = pageFileNames.filter(fileName => fileName.indexOf('index') === -1);
+
     if (!pageFileNames.length) {
         log.warn('No html files in the output directory!');
 
