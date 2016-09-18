@@ -1,6 +1,6 @@
 {
   "name": "news-scraper",
-  "version": "0.6.7-beta.0",
+  "version": "0.6.8-beta.0",
   "description": "news-scraper",
   "main": "index.js",
   "scripts": {
@@ -20,7 +20,7 @@
     "index": "node dist/re-render-index.js",
     "pages": "node dist/re-render-pages.js",
     "deploy": "$(./bin/deploy.js)",
-    "add": "node tools/add-sources",
+    "add": "node dist/add-sources",
     "static": "gulp build"
   },
   "repository": {
