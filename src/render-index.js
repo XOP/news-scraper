@@ -1,10 +1,12 @@
 import fs from 'fs-extra';
+import path from 'path';
 
 import pageTemplate from './tpl/page-tpl.js';
 
 import log from './utils/log-wrapper.js';
 import sortNames from './utils/sort-names.js';
-import { getTime, getDateMarker } from './utils/date-utils.js';
+import { getDate, getTime } from './utils/date-utils.js';
+import parseFile from './utils/parse-file.js';
 
 const renderIndex = function (filePath) {
     let input = [];
@@ -24,9 +26,6 @@ const renderIndex = function (filePath) {
     // filtering html files only
     pageFileNames = pageFileNames.filter(fileName => fileName.indexOf('.html') > -1);
 
-    // filtering files with creation postfix
-    pageFileNames = pageFileNames.filter(fileName => fileName.indexOf('@') > -1);
-
     if (!pageFileNames.length) {
         log.warn('No html files in the output directory!');
 
@@ -36,17 +35,21 @@ const renderIndex = function (filePath) {
     // sorting by date; desc order
     pageFileNames = sortNames(pageFileNames);
 
-    let indexData = pageFileNames.reduce(
+    let indexLinksHtml = pageFileNames.reduce(
         (links, fileName) => {
             const linkHref = `/${fileName}`;
-            const linkName = `${fileName.split('@')[0]}`;
 
-            const timeString = getDateMarker(fileName);
-            const time = getTime(new Date(+timeString));
+            const fileData = parseFile(path.join(filePath, fileName.replace('html', 'json')));
+            const fileDate = fileData.meta.date;
+
+            const fileFormattedDate = getDate(fileDate);
+            const fileFormattedTime = getTime(fileDate);
+
+            const linkTitle = `${fileFormattedDate} [${fileFormattedTime}]`;
 
             const link = (
                 `<li
-                    ><a href="${linkHref}" title="${linkName} [${time}]">${linkName} [${time}]</a
+                    ><a href="${linkHref}" title="${linkTitle}">${linkTitle}</a
                 ></li>`
             );
 
@@ -54,9 +57,9 @@ const renderIndex = function (filePath) {
         }, input
     ).join('');
 
-    indexData = `<ul>${indexData}</ul>`;
+    indexLinksHtml = `<ul>${indexLinksHtml}</ul>`;
 
-    const indexHtml = pageTemplate('Scraped index', indexData);
+    const indexHtml = pageTemplate('Scraped index', indexLinksHtml);
 
     log.verbose('Rendering index to a file: ');
     log.verbose(`${filePath}/index.html`);

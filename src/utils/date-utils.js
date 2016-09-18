@@ -15,16 +15,3 @@ export function getTime (time = new Date()) {
 
     return dateFormat('hh:mm', time);
 }
-
-export function getDateMarker (fileName) {
-    if (fileName) {
-        let dateMarker;
-
-        dateMarker = fileName.split('@')[1];
-        dateMarker = dateMarker.split('.')[0];
-
-        return dateMarker;
-    } else {
-        return new Date().getTime();
-    }
-}
