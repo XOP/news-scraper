@@ -1,3 +1,20 @@
 {
-    "surgeDomain": "example-domain.surge.sh"
+    "surgeDomain": "example-domain.surge.sh",
+
+    "localOnly": false,
+
+    "repo": {
+        "file": [
+            "digest.yml",
+            "blogs.yml",
+            "blogs-2.yml",
+            "companies.yml"
+        ]
+    },
+
+    "source": {
+        "file": [
+            "local.yml"
+        ]
+    }
 }
