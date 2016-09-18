@@ -34,18 +34,35 @@ const addSourceDialog = () => {
         const title = result.title;
         const url = result.url;
         const elem = result.elem;
+        const link = result.link;
+        const author = result.author;
+        const time = result.time;
+        const image = result.image;
         const limit = result.limit;
 
-        log.info('\n' +
+        /* eslint-disable no-multi-spaces */
+
+        const summary = '\n' +
             title + '\n' +
             '    ' + 'url: ' + url + '\n' +
             '    ' + 'elem: ' + elem + '\n' +
-            '    ' + 'limit: ' + limit
-        );
+            (link    && '    ' + 'link: ' + link + '\n') +
+            (author  && '    ' + 'author: ' + author + '\n') +
+            (time    && '    ' + 'time: ' + time + '\n') +
+            (image   && '    ' + 'image: ' + image + '\n') +
+            (limit   && '    ' + 'limit: ' + limit + '\n');
+
+        /* eslint-enable */
+
+        log.info(summary);
 
         newSources[title] = {
             url,
             elem,
+            link,
+            author,
+            time,
+            image,
             limit
         };
 
