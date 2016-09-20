@@ -1,6 +1,6 @@
 {
   "name": "news-scraper",
-  "version": "0.6.9-beta.0",
+  "version": "0.6.10-beta.1",
   "description": "news-scraper",
   "main": "index.js",
   "scripts": {
@@ -21,7 +21,8 @@
     "pages": "node dist/re-render-pages.js",
     "deploy": "$(./bin/deploy.js)",
     "add": "node dist/add-sources",
-    "static": "gulp build"
+    "static": "gulp build",
+    "server": "node dist/server.js"
   },
   "repository": {
     "type": "git",
@@ -71,6 +72,7 @@
     "date-format": "0.0.2",
     "fs-extra": "^0.30.0",
     "git-wrapper": "^0.1.1",
+    "hapi": "^15.0.3",
     "is": "^3.1.0",
     "lodash.differenceby": "^4.6.0",
     "lodash.intersectionby": "^4.5.0",
