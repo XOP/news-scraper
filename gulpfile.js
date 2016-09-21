@@ -1,5 +1,6 @@
-var gulp = require('gulp');
 var path = require('path');
+
+var gulp = require('gulp');
 
 // auto-load gulp-* plugins
 var $ = require('gulp-load-plugins')();
@@ -22,7 +23,7 @@ var nano = require('cssnano');
 var autoprefixer = require('autoprefixer');
 var Browsers = ['last 2 versions'];
 
-gulp.task('styles', function() {
+gulp.task('styles', function () {
 
     var preCssPlugins = [
         autoprefixer({ browsers: Browsers })
@@ -56,7 +57,7 @@ gulp.task('styles', function() {
 var browserSync = require('browser-sync');
 var reload = browserSync.reload;
 
-gulp.task('sync', function(){
+gulp.task('sync', function () {
     browserSync.init({
         server: {
             baseDir: cfg.output.path
@@ -69,18 +70,35 @@ gulp.task('sync', function(){
 // -----------------------------------------------------------------------------------------------------------------
 
 //
+// transpile
+
+gulp.task('transpile-server', function () {
+    return require('./bin/build-server.js');
+});
+
+// -----------------------------------------------------------------------------------------------------------------
+
+//
 // dev mode
 
-gulp.task('build', function(){
+gulp.task('build', function () {
     return runSequence(
         'styles'
     );
 });
 
-gulp.task('default', ['build'], function(){
+gulp.task('dev', function () {
+    $.nodemon({
+        script: './dist/server.js',
+        ignore: ['dist'],
+        tasks: ['transpile-server']
+    })
+});
+
+gulp.task('default', ['build'], function () {
     runSequence(
         'sync',
-        function(){
+        function () {
             gulp.watch(cfg.assets.path + '/**/*.scss', ['styles']);
         });
 });
