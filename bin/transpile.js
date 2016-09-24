@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 "use strict";
 
-var log = require('../dist/utils/log-wrapper.js');
+var log = require('log-util');
 var exec = require('child_process').exec;
 
-var command = 'npm run build-server';
+var command = 'npm run transpile';
 
 exec(
     command,

@@ -10,7 +10,7 @@ const server = new Hapi.Server();
 
 const mockDirectives = [
     {
-        url: 'https://www.smashingmagazine.com/',
+        url: 'https://www.smashingmagazine.com',
         elem: 'article.post',
         link: 'h2 > a',
         author: 'h2 + ul li.a a',
@@ -29,7 +29,7 @@ server.route({
     method: 'GET',
     path: '/',
     handler: function (request, reply) {
-        reply('<a href="/scraper">Scraper</a>');
+        reply('<html><body><a href="/scraper">Scraper 1</a></body></html>');
     }
 });
 

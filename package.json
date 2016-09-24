@@ -1,12 +1,13 @@
 {
   "name": "news-scraper",
-  "version": "0.6.11-beta.1",
+  "version": "0.6.13-beta.1",
   "description": "news-scraper",
   "main": "index.js",
   "scripts": {
-    "prebuild": "trash dist && mkdir dist",
-    "build": "babel src -d dist && npm run static",
-    "build-server": "babel src/server.js -o dist/server.js",
+    "dir": "trash dist && mkdir dist",
+    "build": "npm run dir && npm run transpile && npm run assets",
+    "transpile": "babel src -d dist",
+    "transpile-server": "babel src/server.js -o dist/server.js",
     "fetch": "node tools/git-fetch-resources.js",
     "test": "node tests",
     "lint-es5": "eslint tests/ tools/",
@@ -22,7 +23,7 @@
     "pages": "node dist/re-render-pages.js",
     "deploy": "$(./bin/deploy.js)",
     "add": "node dist/add-sources",
-    "static": "gulp build",
+    "assets": "gulp assets",
     "server": "node dist/server.js"
   },
   "repository": {

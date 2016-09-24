@@ -52,18 +52,43 @@ gulp.task('styles', function () {
 // -----------------------------------------------------------------------------------------------------------------
 
 //
+// server
+
+gulp.task('demon', function (cb) {
+    return $.nodemon({
+        script: 'dist/server.js',
+        watch: [
+            'dist/server.js'
+        ]
+    })
+        .once('start', cb)
+        .on('restart', function () {
+            setTimeout(function () {
+                reload({ stream: false });
+            }, 1000);
+        });
+});
+
+// -----------------------------------------------------------------------------------------------------------------
+
+//
 // browser sync
 
 var browserSync = require('browser-sync');
 var reload = browserSync.reload;
 
-gulp.task('sync', function () {
-    browserSync.init({
-        server: {
-            baseDir: cfg.output.path
+gulp.task('sync', ['demon'], function () {
+    browserSync.init(null, {
+        proxy: {
+            target: 'http://localhost:9000',
+            ws: true
         },
-        files: [cfg.output.path + '/*.css'],
-        port: 3000
+        port: 3000,
+        files: [
+            'dist/server.js',
+            'templates/**/*.*',
+            'data/**/*.*'
+        ]
     });
 });
 
@@ -72,8 +97,16 @@ gulp.task('sync', function () {
 //
 // transpile
 
+// NB: workaround for the babel
+
+// all "src/" dir
+gulp.task('transpile', function () {
+    return require('./bin/transpile.js');
+});
+
+// only "src/server.js"
 gulp.task('transpile-server', function () {
-    return require('./bin/build-server.js');
+    return require('./bin/transpile-server.js');
 });
 
 // -----------------------------------------------------------------------------------------------------------------
@@ -81,24 +114,18 @@ gulp.task('transpile-server', function () {
 //
 // dev mode
 
-gulp.task('build', function () {
+gulp.task('assets', function () {
     return runSequence(
         'styles'
     );
 });
 
-gulp.task('dev', function () {
-    $.nodemon({
-        script: './dist/server.js',
-        ignore: ['dist'],
-        tasks: ['transpile-server']
-    })
-});
-
-gulp.task('default', ['build'], function () {
+gulp.task('default', ['assets', 'transpile'], function () {
     runSequence(
         'sync',
         function () {
             gulp.watch(cfg.assets.path + '/**/*.scss', ['styles']);
-        });
+            gulp.watch('src/server.js', ['transpile-server']);
+        }
+    );
 });
