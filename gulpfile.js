@@ -58,7 +58,8 @@ gulp.task('demon', function (cb) {
     return $.nodemon({
         script: 'dist/server.js',
         watch: [
-            'dist/server.js'
+            'dist/server.js',
+            'templates/**/*.*'
         ]
     })
         .once('start', cb)
@@ -83,11 +84,11 @@ gulp.task('sync', ['demon'], function () {
             target: 'http://localhost:9000',
             ws: true
         },
+        serveStatic: [cfg.output.path],
         port: 3000,
         files: [
             'dist/server.js',
-            'templates/**/*.*',
-            'data/**/*.*'
+            cfg.output.path + '/**/*.*'
         ]
     });
 });
@@ -121,6 +122,16 @@ gulp.task('assets', function () {
 });
 
 gulp.task('default', ['assets', 'transpile'], function () {
+    runSequence(
+        'sync',
+        function () {
+            gulp.watch(cfg.assets.path + '/**/*.scss', ['styles']);
+            gulp.watch('src/**/*.js', ['transpile']);
+        }
+    );
+});
+
+gulp.task('server', ['assets', 'transpile-server'], function () {
     runSequence(
         'sync',
         function () {

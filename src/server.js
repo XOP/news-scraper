@@ -1,12 +1,16 @@
-import Hapi from 'hapi';
+import path from 'path';
 
+import Hapi from 'hapi';
+import vision from 'vision';
+import handlebars from 'handlebars';
+
+// fixme: move to global modules
 import scraper from './scraper';
 
 import log from './utils/log-wrapper';
+import parseFile from './utils/parse-file.js';
 
 import cfg from '../config';
-
-const server = new Hapi.Server();
 
 const mockDirectives = [
     {
@@ -20,33 +24,76 @@ const mockDirectives = [
     }
 ];
 
+const server = new Hapi.Server();
+
+const root = path.resolve(__dirname, '../');
+const paths = {
+    templates: path.resolve(root, 'templates'),
+    data: path.resolve(root, 'data')
+};
+
 server.connection({
     port: 9000,
     host: 'localhost'
 });
 
-server.route({
-    method: 'GET',
-    path: '/',
-    handler: function (request, reply) {
-        reply('<html><body><a href="/scraper">Scraper 1</a></body></html>');
-    }
-});
+server.register(vision, (err) => {
 
-server.route({
-    method: 'GET',
-    path: '/scraper',
-    handler: function (request, reply) {
-        const data = scraper(mockDirectives, cfg)
-            .then(function (data) {
-                return data;
-            })
-            .catch(function (err) {
-                return err;
+    if (err) {
+        log.error(err);
+    }
+
+    server.views({
+        engines: {
+            hbs: handlebars
+        },
+        path: paths.templates,
+        layout: 'layout',
+        layoutPath: path.join(paths.templates, 'layout'),
+        partialsPath: path.join(paths.templates, 'partials')
+    });
+
+    server.route({
+        method: 'GET',
+        path: '/',
+        handler: function (request, reply) {
+            reply.view('index', {
+                title: 'Scraper'
             });
+        }
+    });
 
-        return reply(data);
-    }
+    server.route({
+        method: 'GET',
+        path: '/news/{id}',
+        handler: function (request, reply) {
+            const timestamp = request.params.id;
+            const fileName = `${timestamp}.json`;
+
+            const pageData = parseFile(path.join(paths.data, fileName));
+
+            reply.view('news', {
+                content: pageData,
+                title: 'News'
+            });
+        }
+    });
+
+    server.route({
+        method: 'GET',
+        path: '/scraper',
+        handler: function (request, reply) {
+            const data = scraper(mockDirectives, cfg)
+                .then(function (data) {
+                    return data;
+                })
+                .catch(function (err) {
+                    return err;
+                });
+
+            return reply(data);
+        }
+    });
 });
 
 server.start((err) => {

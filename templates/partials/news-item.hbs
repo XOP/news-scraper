@@ -1,0 +1,18 @@
+<article class="news-item">
+    <a class="news-item__link" href="{{href}}" title="{{title}}" target="_blank">
+        {{#if imageSrc}}
+            <figure class="news-item__image">
+                <img class="news-item__image__pic" src="{{imageSrc}}" width="100">
+            </figure>
+        {{/if}}
+        <div class="news-item__heading">
+            <h3 class="heading heading--3">{{text}}</h3>
+        </div>
+        {{#if author}}
+            <div class="news-item__author">{{author}}</div>
+        {{/if}}
+        {{#if time}}
+            <div class="news-item__date">{{time}}</div>
+        {{/if}}
+    </a>
+</article>
