@@ -50,16 +50,23 @@ server.register(vision, (err) => {
         path: paths.templates,
         layout: 'layout',
         layoutPath: path.join(paths.templates, 'layout'),
-        partialsPath: path.join(paths.templates, 'partials')
+        partialsPath: path.join(paths.templates, 'partials'),
+        context: {
+            title: 'NewScraper'
+        }
     });
 
     server.route({
         method: 'GET',
         path: '/',
         handler: function (request, reply) {
-            reply.view('index', {
-                title: 'Scraper'
+            const ctx = Object.assign({}, {
+                header: {
+                    heading: 'Index'
+                }
             });
+
+            reply.view('index', ctx);
         }
     });
 
@@ -72,10 +79,13 @@ server.register(vision, (err) => {
 
             const pageData = parseFile(path.join(paths.data, fileName));
 
-            reply.view('news', {
-                content: pageData,
-                title: 'News'
+            const ctx = Object.assign({}, pageData, {
+                header: {
+                    heading: 'News'
+                }
             });
+
+            reply.view('news', ctx);
         }
     });
 
