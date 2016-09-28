@@ -66,7 +66,7 @@ gulp.task('demon', function (cb) {
         .on('restart', function () {
             setTimeout(function () {
                 reload({ stream: false });
-            }, 1000);
+            }, 2000);
         });
 });
 
@@ -100,15 +100,14 @@ gulp.task('sync', ['demon'], function () {
 
 // NB: workaround for the babel
 
+var transpile = require('./bin/transpile.js');
+var transpileServer = require('./bin/transpile-server.js');
+
 // all "src/" dir
-gulp.task('transpile', function () {
-    return require('./bin/transpile.js');
-});
+gulp.task('transpile', transpile);
 
 // only "src/server.js"
-gulp.task('transpile-server', function () {
-    return require('./bin/transpile-server.js');
-});
+gulp.task('transpile-server', transpileServer);
 
 // -----------------------------------------------------------------------------------------------------------------
 

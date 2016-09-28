@@ -29,8 +29,11 @@ const server = new Hapi.Server();
 const root = path.resolve(__dirname, '../');
 const paths = {
     templates: path.resolve(root, 'templates'),
-    data: path.resolve(root, 'data')
+    data: path.resolve(root, 'data'),
+    resources: path.resolve(root, 'data.json')
 };
+
+const resources = parseFile(paths.resources);
 
 server.connection({
     port: 9000,
@@ -52,7 +55,9 @@ server.register(vision, (err) => {
         layoutPath: path.join(paths.templates, 'layout'),
         partialsPath: path.join(paths.templates, 'partials'),
         context: {
-            title: 'NewScraper'
+            meta: resources.meta,
+            header: resources.header,
+            footer: resources.footer
         }
     });
 

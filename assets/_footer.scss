@@ -1,0 +1,35 @@
+/* Footer
+---------------------------------------------------------------------------------- */
+
+.footer {
+    background: $color-bg-inverse-light;
+    color: $color-text-inverse;
+}
+
+.footer__content {
+    max-width: $page-max-width;
+    margin: 0 auto;
+    padding: $offset-n $page-side-padding;
+
+    @include respond($mq-desktop) {
+        display: flex;
+
+        justify-content: space-between;
+    }
+}
+
+.footer__item {
+    & + & {
+        margin-top: $offset-s;
+    }
+
+    @include respond($mq-desktop) {
+        & + & {
+            margin-top: 0;
+            margin-left: $offset-n;
+        }
+    }
+}
+
+/* /Footer
+---------------------------------------------------------------------------------- */

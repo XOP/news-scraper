@@ -1,47 +1,36 @@
 /* Layout
 ---------------------------------------------------------------------------------- */
 
+html {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+
+    min-height: 100%;
+
+    margin: 0;
+
+    overflow: hidden;
+    overflow-y: scroll;
+}
+
 .page {
+    display: flex;
 
+    flex: 1 0 auto;
+    flex-flow: column nowrap;
 }
 
-.header {
-    padding: $offset-n;
-
-    background: $color-brand-main-dark;
-    color: $color-text-inverse-strong;
-
-    * + * {
-        margin-top: $offset-s;
-    }
-
-    @include respond($mq-desktop) {
-        display: flex;
-
-        align-items: center;
-
-        * + * {
-            margin-top: 0;
-            margin-left: $offset-n;
-        }
-    }
+.header,
+.footer {
+    flex: 0 1 auto;
 }
 
-.header__index__link {
-    color: $color-text-inverse-light;
-
-    &:hover {
-        color: $color-text-inverse-strong;
-    }
-}
-
-.header__heading {
-
-}
-
-.main {
-    max-width: 70rem;
-    margin: 0 auto;
+.content {
+    flex: 1 1 auto;
 }
 
 /* /Layout

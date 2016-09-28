@@ -1,0 +1,47 @@
+/* Header
+---------------------------------------------------------------------------------- */
+
+.header {
+    background: $color-brand-main-dark;
+    color: $color-text-inverse-strong;
+}
+
+.header__content {
+    max-width: $page-max-width;
+    margin: 0 auto;
+    padding: $offset-n $page-side-padding;
+
+    * + * {
+        margin-top: $offset-s;
+    }
+
+    @include respond($mq-desktop) {
+        display: flex;
+
+        align-items: center;
+
+        * + * {
+            margin-top: 0;
+            margin-left: $offset-n;
+        }
+    }
+}
+
+.header__link {
+
+}
+
+.header__link__elem {
+    color: $color-text-inverse-light;
+
+    &:hover {
+        color: $color-text-inverse-strong;
+    }
+}
+
+.header__heading {
+
+}
+
+/* /Header
+---------------------------------------------------------------------------------- */

@@ -1,0 +1,18 @@
+{
+    "meta": {
+        "title": "NewScraper"
+    },
+    "header": {
+        "link": {
+            "title": "Index",
+            "href": "/"
+        },
+        "heading": "NewScraper"
+    },
+    "footer": {
+        "items": [
+            "<a href='https://github.com/XOP/news-scraper'>Github</a>",
+            "© \"NewScraper\" 2016"
+        ]
+    }
+}

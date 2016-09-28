@@ -1,7 +1,14 @@
 <header class="header">
-    <div class="header__heading">
-        <h1 class="heading heading--1">
-            {{heading}}
-        </h1>
+    <div class="header__content">
+        {{#if link}}
+            <div class="header__link">
+                <a class="header__link__elem" href="{{link.href}}" title="{{link.title}}">{{link.title}}</a>
+            </div>
+        {{/if}}
+        <div class="header__heading">
+            <h1 class="heading heading--1">
+                {{heading}}
+            </h1>
+        </div>
     </div>
 </header>
