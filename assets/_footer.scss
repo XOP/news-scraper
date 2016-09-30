@@ -4,6 +4,14 @@
 .footer {
     background: $color-bg-inverse-light;
     color: $color-text-inverse;
+
+    a {
+        color: $color-text-inverse-light;
+
+        &:hover {
+            color: $color-text-inverse-strong;
+        }
+    }
 }
 
 .footer__content {

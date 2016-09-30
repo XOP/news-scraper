@@ -104,10 +104,14 @@ var transpile = require('./bin/transpile.js');
 var transpileServer = require('./bin/transpile-server.js');
 
 // all "src/" dir
-gulp.task('transpile', transpile);
+gulp.task('transpile', function () {
+    return transpile();
+});
 
 // only "src/server.js"
-gulp.task('transpile-server', transpileServer);
+gulp.task('transpile-server', function () {
+    return transpileServer();
+});
 
 // -----------------------------------------------------------------------------------------------------------------
 

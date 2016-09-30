@@ -4,14 +4,11 @@
 @import "assets";
 
 .news-section {
-    padding-top: $offset-n;
+    & + & {
+        padding-top: $offset-n;
+        margin-top: $offset-n;
 
-    border-bottom: 1px solid $color-brand-main;
-
-    @include respond($mq-desktop) {
-        padding-left: $offset-n;
-        padding-right: $offset-n;
-        padding-bottom: $offset-n;
+        border-top: 1px solid $color-brand-main;
     }
 }
 
