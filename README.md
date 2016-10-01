@@ -335,6 +335,11 @@ $ npm test
 ```
 
 
+## Dependencies
+
+- [NewScraper Core](https://www.npmjs.com/package/news-scraper-core)
+
+
 
 ## [MIT License](LICENSE)
 

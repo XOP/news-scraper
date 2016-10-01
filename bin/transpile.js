@@ -4,16 +4,18 @@
 var log = require('log-util');
 var exec = require('child_process').exec;
 
-var command = 'npm run transpile';
+module.exports = function () {
+    var command = 'npm run transpile';
 
-exec(
-    command,
-    function (error, stdout, stderr) {
-        if (error) {
-            log.error('exec error: ' + error);
+    exec(
+        command,
+        function (error, stdout, stderr) {
+            if (error) {
+                log.error('exec error: ' + error);
+            }
+
+            log.verbose(stdout);
+            log.error(stderr);
         }
-
-        log.verbose(stdout);
-        log.error(stderr);
-    }
-);
+    );
+};

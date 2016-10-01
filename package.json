@@ -1,6 +1,6 @@
 {
   "name": "news-scraper",
-  "version": "0.6.13-beta.1",
+  "version": "0.7.0-beta.0",
   "description": "news-scraper",
   "main": "index.js",
   "scripts": {
@@ -14,7 +14,7 @@
     "lint-es6": "eslint src",
     "lint": "npm run lint-es5 && npm run lint-es6",
     "precommit": "npm run lint",
-    "prepublish": "npm run precommit && npm run build",
+    "prepublish": "npm run build",
     "prestart": "npm run fetch",
     "start": "node dist",
     "dev": "node dist",
@@ -38,8 +38,7 @@
     "json",
     "markup",
     "html",
-    "nightmare",
-    "electron"
+    "nightmare"
   ],
   "author": "Evgeny Khoroshilov <stewiekillsloiss@gmail.com> (https://github.com/XOP)",
   "license": "MIT",
@@ -69,8 +68,6 @@
     "run-sequence": "^1.2.2"
   },
   "dependencies": {
-    "bluebird": "^3.4.0",
-    "cheerio": "^0.20.0",
     "cross-env": "^1.0.8",
     "date-format": "0.0.2",
     "deep-assign": "^2.0.0",
@@ -79,12 +76,9 @@
     "handlebars": "^4.0.5",
     "hapi": "^15.0.3",
     "is": "^3.1.0",
-    "lodash.differenceby": "^4.6.0",
-    "lodash.intersectionby": "^4.5.0",
-    "lodash.isequal": "^4.2.0",
     "lodash.merge": "^4.5.1",
     "log-util": "^1.1.1",
-    "nightmare": "^2.6.1",
+    "news-scraper-core": "^1.0.0",
     "normalize.css": "^4.2.0",
     "prompt": "^1.0.0",
     "tape": "^4.5.1",

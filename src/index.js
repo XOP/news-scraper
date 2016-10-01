@@ -3,7 +3,7 @@ import path from 'path';
 
 import is from 'is';
 
-import scraper from './scraper';
+import scraper from 'news-scraper-core';
 
 import fetchPaths from './fetch-paths.js';
 import renderPage from './render-page.js';
