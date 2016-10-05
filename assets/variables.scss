@@ -21,9 +21,19 @@ $color-bg-inverse: #444;
 $color-bg-inverse-light: #666;
 $color-bg-inverse-strong: #222;
 
-$color-brand-main: #f44336;
-$color-brand-main-light: #ffcdd2;
-$color-brand-main-dark: #d32f2f;
+$color-brand-main: #84DCC6;
+$color-brand-main-light: #A5FFD6;
+$color-brand-main-dark: #58b8a3;
+
+$color-brand-secondary: #FF686B;
+$color-brand-secondary-light: #FFA69E;
+$color-brand-secondary-dark: #c1353f;
+
+$color-border-regular: $color-brand-main-light;
+$color-border-light: $color-bg-light;
+$color-border-dark: $color-brand-main-dark;
+$color-border-strong: $color-bg-strong;
+
 
 /* /Colors
 -------------------------------------------------- */

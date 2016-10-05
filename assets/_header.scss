@@ -2,7 +2,8 @@
 ---------------------------------------------------------------------------------- */
 
 .header {
-    background: $color-brand-main-dark;
+    border-bottom: $offset-xs solid $color-border-regular;
+    background: $color-brand-main;
     color: $color-text-inverse-strong;
 }
 

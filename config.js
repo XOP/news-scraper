@@ -42,6 +42,9 @@ var config = {
         fileExt: 'html',
         current: 'data.json'
     },
+    publish: {
+        path: path.join(__dirname, 'public')
+    },
     assets: {
         path: path.join(__dirname, 'assets')
     },

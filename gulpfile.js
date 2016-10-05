@@ -46,7 +46,7 @@ gulp.task('styles', function () {
             rebaseUrls: false
         }))
         .pipe($.postcss(postCssPlugins))
-        .pipe(gulp.dest(cfg.output.path));
+        .pipe(gulp.dest(cfg.publish.path));
 });
 
 // -----------------------------------------------------------------------------------------------------------------
@@ -84,10 +84,14 @@ gulp.task('sync', ['demon'], function () {
             target: 'http://localhost:9000',
             ws: true
         },
-        serveStatic: [cfg.output.path],
+        serveStatic: [
+            cfg.publish.path,
+            cfg.output.path
+        ],
         port: 3000,
         files: [
             'dist/server.js',
+            cfg.publish.path + '/**/*.*',
             cfg.output.path + '/**/*.*'
         ]
     });

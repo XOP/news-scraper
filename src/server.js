@@ -30,7 +30,8 @@ const server = new Hapi.Server();
 const root = path.resolve(__dirname, '../');
 const paths = {
     templates: path.resolve(root, 'templates'),
-    data: path.resolve(root, 'data'),
+    data: cfg.output.path,
+    publish: cfg.publish.path,
     resources: path.resolve(root, 'data.json')
 };
 
@@ -75,7 +76,7 @@ server.register(vision, (err) => {
                     },
                     {
                         href: '/news',
-                        name: 'News Directory'
+                        name: 'News Index'
                     }
                 ]
             });
