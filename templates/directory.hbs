@@ -1,0 +1,21 @@
+{{#>heading tag='h2' level=2}}
+Latest
+{{/heading}}
+
+<ul>
+    {{#each latest}}
+        <li><a href="{{href}}" title="{{name}}">{{name}}</a></li>
+    {{/each}}
+</ul>
+
+<hr/>
+
+{{#>heading tag='h2' level=2}}
+Others
+{{/heading}}
+
+<ul>
+    {{#each others}}
+        <li><a href="{{href}}" title="{{name}}">{{name}}</a></li>
+    {{/each}}
+</ul>

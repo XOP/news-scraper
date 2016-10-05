@@ -76,7 +76,7 @@ server.register(vision, (err) => {
                     },
                     {
                         href: '/news',
-                        name: 'News Index'
+                        name: 'News Directory'
                     }
                 ]
             });
@@ -89,13 +89,25 @@ server.register(vision, (err) => {
         method: 'GET',
         path: '/news',
         handler: function (request, reply) {
-            const ctx = deepAssign(resources, {
-                header: {
-                    heading: 'News Index'
-                }
+            const latestMock = new Array(5).fill({
+                href: '/',
+                name: 'Smashing Magazine, CSS tricks, ... (05.10.2016 / 18:30)'
             });
 
-            reply.view('news', ctx);
+            const othersMock = new Array(20).fill({
+                href: '/',
+                name: 'Smashing Magazine, CSS tricks, ... (05.10.2016 / 18:30)'
+            });
+
+            const ctx = deepAssign(resources, {
+                header: {
+                    heading: 'News Directory'
+                },
+                latest: latestMock,
+                others: othersMock
+            });
+
+            reply.view('directory', ctx);
         }
     });
 

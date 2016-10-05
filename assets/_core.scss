@@ -22,5 +22,14 @@ body {
     }
 }
 
+hr {
+    height: $offset-xs;
+    
+    margin: $offset-xl 0;
+    border: none;
+    
+    background: $color-border-strong;
+}
+
 /* /Core
 ---------------------------------------------------------------------------------- */
