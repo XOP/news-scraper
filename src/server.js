@@ -4,8 +4,7 @@ import Hapi from 'hapi';
 import vision from 'vision';
 import handlebars from 'handlebars';
 
-// fixme: move to global modules
-import scraper from './scraper';
+import scraper from 'news-scraper-core';
 
 import log from './utils/log-wrapper';
 import parseFile from './utils/parse-file.js';
@@ -68,7 +67,17 @@ server.register(vision, (err) => {
                 header: {
                     heading: 'Index',
                     link: false
-                }
+                },
+                links: [
+                    {
+                        href: '/scraper',
+                        name: 'Scraper'
+                    },
+                    {
+                        href: '/news',
+                        name: 'News Directory'
+                    }
+                ]
             });
 
             reply.view('index', ctx);

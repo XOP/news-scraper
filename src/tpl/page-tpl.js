@@ -1,5 +1,5 @@
 import is from 'is';
-import log from './../utils/log-wrapper.js';
+import log from '../utils/log-wrapper.js';
 
 const pageTemplate = (title, body) => {
     if (!body) {

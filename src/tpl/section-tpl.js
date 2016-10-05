@@ -2,7 +2,7 @@ import is from 'is';
 
 import itemTemplate from './item-tpl.js';
 
-import log from './../utils/log-wrapper.js';
+import log from '../utils/log-wrapper.js';
 
 const sectionTemplate = (page => {
     const {

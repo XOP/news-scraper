@@ -1,4 +1,4 @@
-import log from './../utils/log-wrapper.js';
+import log from '../utils/log-wrapper.js';
 
 const itemTemplate = (dataItem => {
     if (!dataItem) {
