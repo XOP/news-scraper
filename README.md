@@ -1,5 +1,10 @@
 # NewScraper
 
+> IMPORTANT!
+
+Current version is work in progress, documentation is not up-to-date.  
+If you want to try stable working example, check out [latest release](https://github.com/XOP/news-scraper/tree/0.5.0-beta). 
+
 > Why?
 
 I have a decent number of favourite sites that regularly publish new interesting articles  
