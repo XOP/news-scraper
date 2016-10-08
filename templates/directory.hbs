@@ -1,21 +1,25 @@
 {{#>heading tag='h2' level=2}}
-Latest
+    Latest
 {{/heading}}
 
 <ul>
     {{#each latest}}
-        <li><a href="{{href}}" title="{{name}}">{{name}}</a></li>
+        {{#if .}}
+            <li><a href="{{href}}" title="{{name}}">{{name}}</a></li>
+        {{/if}}
     {{/each}}
 </ul>
 
-<hr/>
-
-{{#>heading tag='h2' level=2}}
-Others
-{{/heading}}
-
-<ul>
-    {{#each others}}
-        <li><a href="{{href}}" title="{{name}}">{{name}}</a></li>
-    {{/each}}
-</ul>
+{{#if others}}
+    <hr/>
+    
+    {{#>heading tag='h2' level=2}}
+        Others
+    {{/heading}}
+    
+    <ul>
+        {{#each others}}
+            <li><a href="{{href}}" title="{{name}}">{{name}}</a></li>
+        {{/each}}
+    </ul>
+{{/if}}

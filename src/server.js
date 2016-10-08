@@ -1,4 +1,5 @@
 import path from 'path';
+import fs from 'fs-extra';
 
 import Hapi from 'hapi';
 import vision from 'vision';
@@ -8,6 +9,8 @@ import scraper from 'news-scraper-core';
 
 import log from './utils/log-wrapper';
 import parseFile from './utils/parse-file.js';
+import { getDate, getTime} from './utils/date-utils.js';
+
 import deepAssign from 'deep-assign';
 
 import cfg from '../config';
@@ -89,22 +92,46 @@ server.register(vision, (err) => {
         method: 'GET',
         path: '/news',
         handler: function (request, reply) {
-            const latestMock = new Array(5).fill({
-                href: '/',
-                name: 'Smashing Magazine, CSS tricks, ... (05.10.2016 / 18:30)'
-            });
+            let newsFiles = fs.readdirSync(paths.data);
 
-            const othersMock = new Array(20).fill({
-                href: '/',
-                name: 'Smashing Magazine, CSS tricks, ... (05.10.2016 / 18:30)'
+            newsFiles = newsFiles.filter(item => item.indexOf('.json') > -1);
+            newsFiles = newsFiles.map(fileName => {
+                const timestamp = +fileName.split('.json')[0];
+                const href = `/news/${timestamp}`;
+                const timeDate = renderTimeDate(timestamp);
+
+                const fileData = parseFile(path.join(paths.data, fileName));
+                const titles = fileData.pages.reduce((init, page) => {
+                    return page.title && init.concat(page.title);
+                }, []);
+
+                let someTitles = titles && titles.slice(0, 3);
+                let titlePostfix = ' ';
+
+                if (someTitles && someTitles.length) {
+                    someTitles = someTitles.join(', ');
+
+                    if (titles.length > 3) {
+                        titlePostfix = '...' + titlePostfix;
+                    }
+                }
+
+                if (!href || !someTitles) {
+                    return false;
+                }
+
+                return {
+                    href,
+                    name: `${someTitles}${titlePostfix} / ${timeDate}`
+                };
             });
 
             const ctx = deepAssign(resources, {
                 header: {
                     heading: 'News Directory'
                 },
-                latest: latestMock,
-                others: othersMock
+                latest: newsFiles,
+                others: null
             });
 
             reply.view('directory', ctx);
@@ -117,12 +144,13 @@ server.register(vision, (err) => {
         handler: function (request, reply) {
             const timestamp = request.params.id;
             const fileName = `${timestamp}.json`;
+            const timeDate = renderTimeDate(timestamp);
 
             const pageData = parseFile(path.join(paths.data, fileName));
 
             const ctx = deepAssign(resources, pageData, {
                 header: {
-                    heading: 'News'
+                    heading: `News for ${timeDate}`
                 }
             });
 
@@ -148,3 +176,12 @@ server.start((err) => {
 
     log.info(`Server running at: ${server.info.uri}`);
 });
+
+function renderTimeDate (timestamp) {
+    timestamp = +timestamp;
+
+    const date = getDate(timestamp);
+    const time = getTime(timestamp);
+
+    return `${date} [${time}]`;
+}
