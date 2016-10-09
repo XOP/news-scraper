@@ -53,14 +53,15 @@ server.register(vision, (err) => {
 
     server.views({
         engines: {
-            hbs: handlebars
+            hbs: {
+                module: handlebars
+            }
         },
         path: paths.templates,
         layout: 'layout',
         layoutPath: path.join(paths.templates, 'layout'),
         partialsPath: path.join(paths.templates, 'partials'),
-        context: resources,
-        isCached: false
+        context: resources
     });
 
     server.route({
@@ -162,9 +163,36 @@ server.register(vision, (err) => {
         method: 'GET',
         path: '/scraper',
         handler: function (request, reply) {
+            const ctx = deepAssign(resources, {
+                header: {
+                    heading: 'Scraper'
+                },
+                scripts: ['main']
+            });
+
+            reply.view('scraper', ctx);
+        }
+    });
+
+    server.route({
+        method: 'GET',
+        path: '/scraper/new',
+        handler: function (request, reply) {
+
+            // todo: use real data
             const data = scraper(mockDirectives, cfg);
 
-            return data.then(data => reply.view('news', data));
+            let ctx = deepAssign(resources, data, {
+                header: {
+                    heading: 'Scraping result'
+                }
+            });
+
+            return data.then(data => {
+                ctx = deepAssign(ctx, data);
+
+                reply.view('news', ctx);
+            });
         }
     });
 });

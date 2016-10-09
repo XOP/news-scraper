@@ -10,6 +10,13 @@ var del = require('del');
 var runSequence = require('run-sequence');
 var merge = require('merge2');
 
+// js transform
+var source = require('vinyl-source-stream');
+var buffer = require('vinyl-buffer');
+var browserify = require('browserify');
+var watchify = require('watchify');
+var babel = require('babelify');
+
 // config
 var cfg = require('./config.js');
 
@@ -52,27 +59,6 @@ gulp.task('styles', function () {
 // -----------------------------------------------------------------------------------------------------------------
 
 //
-// server
-
-gulp.task('demon', function (cb) {
-    return $.nodemon({
-        script: 'dist/server.js',
-        watch: [
-            'dist/server.js',
-            'templates/**/*.*'
-        ]
-    })
-        .once('start', cb)
-        .on('restart', function () {
-            setTimeout(function () {
-                reload({ stream: false });
-            }, 2000);
-        });
-});
-
-// -----------------------------------------------------------------------------------------------------------------
-
-//
 // browser sync
 
 var browserSync = require('browser-sync');
@@ -100,9 +86,31 @@ gulp.task('sync', ['demon'], function () {
 // -----------------------------------------------------------------------------------------------------------------
 
 //
+// server
+
+gulp.task('demon', function (cb) {
+    return $.nodemon({
+        script: 'dist/server.js',
+        watch: [
+            'dist/server.js',
+            'templates/**/*.*'
+        ]
+    })
+        .once('start', cb)
+        .on('restart', function () {
+            setTimeout(function () {
+                reload({ stream: false });
+            }, 2000);
+        });
+});
+
+// -----------------------------------------------------------------------------------------------------------------
+
+//
 // transpile
 
 // NB: workaround for the babel
+// todo: gulp-babel after babel-core fix
 
 var transpile = require('./bin/transpile.js');
 var transpileServer = require('./bin/transpile-server.js');
@@ -120,6 +128,59 @@ gulp.task('transpile-server', function () {
 // -----------------------------------------------------------------------------------------------------------------
 
 //
+// client JS
+
+function compile (watch) {
+    var bundler = watchify(
+        browserify({
+            entries: ['src/client.js'],
+            debug: true,
+            extensions: ['js']
+        })
+            .transform(babel, {
+                presets: ['es2015']
+            })
+    );
+
+    function rebundle () {
+        return bundler
+            .bundle()
+            .on('error', function (err) {
+                console.error(err);
+
+                this.emit('end');
+            })
+            .pipe(source('main.js'))
+            .pipe(buffer())
+            .pipe($.sourcemaps.init({ loadMaps: true }))
+            .pipe($.sourcemaps.write('./'))
+            .pipe(gulp.dest('./public/scripts'));
+    }
+
+    if (watch) {
+        bundler.on('update', function () {
+            console.log('-> bundling...');
+
+            rebundle();
+        });
+
+        rebundle();
+    } else {
+        rebundle().pipe($.exit());
+    }
+}
+
+gulp.task('js', function () {
+    return compile();
+});
+
+gulp.task('js-watch', function () {
+    return compile(true);
+});
+
+// -----------------------------------------------------------------------------------------------------------------
+
+//
 // dev mode
 
 gulp.task('assets', function () {
@@ -131,6 +192,7 @@ gulp.task('assets', function () {
 gulp.task('default', ['assets', 'transpile'], function () {
     runSequence(
         'sync',
+        'js-watch',
         function () {
             gulp.watch(cfg.assets.path + '/**/*.scss', ['styles']);
             gulp.watch('src/**/*.js', ['transpile']);
@@ -141,6 +203,7 @@ gulp.task('default', ['assets', 'transpile'], function () {
 gulp.task('server', ['assets', 'transpile-server'], function () {
     runSequence(
         'sync',
+        'js-watch',
         function () {
             gulp.watch(cfg.assets.path + '/**/*.scss', ['styles']);
             gulp.watch('src/server.js', ['transpile-server']);

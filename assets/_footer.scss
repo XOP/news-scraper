@@ -17,7 +17,7 @@
 .footer__content {
     max-width: $page-max-width;
     margin: 0 auto;
-    padding: $offset-n $page-side-padding;
+    padding: $offset-n $page-side-padding * 2;
 
     @include respond($mq-desktop) {
         display: flex;
