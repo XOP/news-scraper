@@ -110,7 +110,7 @@ gulp.task('demon', function (cb) {
 // transpile
 
 // NB: workaround for the babel
-// todo: gulp-babel after babel-core fix
+// todo: gulp-babel
 
 var transpile = require('./bin/transpile.js');
 var transpileServer = require('./bin/transpile-server.js');
