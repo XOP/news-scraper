@@ -11,8 +11,6 @@ import log from './utils/log-wrapper';
 import parseFile from './utils/parse-file.js';
 import { getDate, getTime} from './utils/date-utils.js';
 
-import deepAssign from 'deep-assign';
-
 import cfg from '../config';
 
 const mockDirectives = [
@@ -68,11 +66,11 @@ server.register(vision, (err) => {
         method: 'GET',
         path: '/',
         handler: function (request, reply) {
-            const ctx = deepAssign(resources, {
-                header: {
+            const ctx = {
+                header: Object.assign({}, resources.header, {
                     heading: 'Index',
                     link: false
-                },
+                }),
                 links: [
                     {
                         href: '/scraper',
@@ -83,7 +81,7 @@ server.register(vision, (err) => {
                         name: 'News Directory'
                     }
                 ]
-            });
+            };
 
             reply.view('index', ctx);
         }
@@ -127,13 +125,13 @@ server.register(vision, (err) => {
                 };
             });
 
-            const ctx = deepAssign(resources, {
-                header: {
+            const ctx = {
+                header: Object.assign({}, resources.header, {
                     heading: 'News Directory'
-                },
+                }),
                 latest: newsFiles,
                 others: null
-            });
+            };
 
             reply.view('directory', ctx);
         }
@@ -149,10 +147,10 @@ server.register(vision, (err) => {
 
             const pageData = parseFile(path.join(paths.data, fileName));
 
-            const ctx = deepAssign(resources, pageData, {
-                header: {
+            const ctx = Object.assign({}, pageData, {
+                header: Object.assign({}, resources.header, {
                     heading: `News for ${timeDate}`
-                }
+                })
             });
 
             reply.view('news', ctx);
@@ -163,12 +161,12 @@ server.register(vision, (err) => {
         method: 'GET',
         path: '/scraper',
         handler: function (request, reply) {
-            const ctx = deepAssign(resources, {
-                header: {
+            const ctx = {
+                header: Object.assign({}, resources.header, {
                     heading: 'Scraper'
-                },
+                }),
                 scripts: ['main']
-            });
+            };
 
             reply.view('scraper', ctx);
         }
@@ -182,14 +180,14 @@ server.register(vision, (err) => {
             // todo: use real data
             const data = scraper(mockDirectives, cfg);
 
-            let ctx = deepAssign(resources, data, {
-                header: {
+            let ctx = Object.assign({}, data, {
+                header: Object.assign({}, resources.header, {
                     heading: 'Scraping result'
-                }
+                })
             });
 
             return data.then(data => {
-                ctx = deepAssign(ctx, data);
+                ctx = Object.assign(ctx, data);
 
                 reply.view('news', ctx);
             });

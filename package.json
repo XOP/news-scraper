@@ -78,7 +78,6 @@
   "dependencies": {
     "cross-env": "^1.0.8",
     "date-format": "0.0.2",
-    "deep-assign": "^2.0.0",
     "fs-extra": "^0.30.0",
     "git-wrapper": "^0.1.1",
     "handlebars": "^4.0.5",
