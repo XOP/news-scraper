@@ -1,13 +1,13 @@
 {
   "name": "news-scraper",
-  "version": "0.7.3-beta.0",
+  "version": "0.7.4-beta.0",
   "description": "news-scraper",
   "main": "index.js",
   "scripts": {
     "dir": "trash dist && mkdir dist",
     "build": "npm run dir && npm run transpile && npm run assets",
-    "transpile": "babel src -d dist",
-    "transpile-server": "babel src/server.js -o dist/server.js",
+    "transpile": "gulp transpile",
+    "transpile-server": "gulp transpile-server",
     "fetch": "node tools/git-fetch-resources.js",
     "test": "node tests",
     "lint-es5": "eslint tests/ tools/",

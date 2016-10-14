@@ -3,6 +3,12 @@ var path = require('path');
 var gulp = require('gulp');
 
 // auto-load gulp-* plugins
+// babel
+// exit
+// nodemon
+// postcss
+// sass
+// sourcemaps
 var $ = require('gulp-load-plugins')();
 
 // other modules
@@ -19,6 +25,20 @@ var babel = require('babelify');
 
 // config
 var cfg = require('./config.js');
+
+var paths = {
+    data: cfg.output.path,
+    assets: {
+        input: cfg.assets.path,
+        output: './public'
+    },
+    js: {
+        input: './src',
+        output: './dist'
+    },
+    publish: './public',
+    templates: './templates'
+};
 
 // -----------------------------------------------------------------------------------------------------------------
 
@@ -45,7 +65,7 @@ gulp.task('styles', function () {
         gulp.src(path.resolve(__dirname, 'node_modules/normalize.css/normalize.css')),
 
         // main
-        gulp.src(path.join(cfg.assets.path, 'main.scss'))
+        gulp.src(path.join(paths.assets.input, 'main.scss'))
             .pipe($.sass().on('error', $.sass.logError))
             .pipe($.postcss(preCssPlugins, {parser: scssSyntax}))
     )
@@ -53,7 +73,7 @@ gulp.task('styles', function () {
             rebaseUrls: false
         }))
         .pipe($.postcss(postCssPlugins))
-        .pipe(gulp.dest(cfg.publish.path));
+        .pipe(gulp.dest(paths.assets.output));
 });
 
 // -----------------------------------------------------------------------------------------------------------------
@@ -71,14 +91,14 @@ gulp.task('sync', ['demon'], function () {
             ws: true
         },
         serveStatic: [
-            cfg.publish.path,
-            cfg.output.path
+            paths.data,
+            paths.publish
         ],
         port: 3000,
         files: [
-            'dist/server.js',
-            cfg.publish.path + '/**/*.*',
-            cfg.output.path + '/**/*.*'
+            paths.js.output + '/server.js',
+            paths.data + '/**/*.*',
+            paths.publish + '/**/*.*'
         ]
     });
 });
@@ -90,10 +110,10 @@ gulp.task('sync', ['demon'], function () {
 
 gulp.task('demon', function (cb) {
     return $.nodemon({
-        script: 'dist/server.js',
+        script: paths.js.output + '/server.js',
         watch: [
-            'dist/server.js',
-            'templates/**/*.*'
+            paths.js.output + '/server.js',
+            paths.templates + '/**/*.*'
         ]
     })
         .once('start', cb)
@@ -109,20 +129,20 @@ gulp.task('demon', function (cb) {
 //
 // transpile
 
-// NB: workaround for the babel
-// todo: gulp-babel
-
-var transpile = require('./bin/transpile.js');
-var transpileServer = require('./bin/transpile-server.js');
-
-// all "src/" dir
-gulp.task('transpile', function () {
-    return transpile();
+gulp.task('transpile', () => {
+    return gulp.src(paths.js.input + '/**/*.js')
+        .pipe($.babel({
+            presets: ['es2015']
+        }))
+        .pipe(gulp.dest(paths.js.output));
 });
 
-// only "src/server.js"
-gulp.task('transpile-server', function () {
-    return transpileServer();
+gulp.task('transpile-server', () => {
+    return gulp.src(paths.js.input + '/server.js')
+        .pipe($.babel({
+            presets: ['es2015']
+        }))
+        .pipe(gulp.dest(paths.js.output));
 });
 
 // -----------------------------------------------------------------------------------------------------------------
@@ -133,7 +153,7 @@ gulp.task('transpile-server', function () {
 function compile (watch) {
     var bundler = watchify(
         browserify({
-            entries: ['src/client.js'],
+            entries: [paths.js.input + '/client.js'],
             debug: true,
             extensions: ['js']
         })
@@ -154,7 +174,7 @@ function compile (watch) {
             .pipe(buffer())
             .pipe($.sourcemaps.init({ loadMaps: true }))
             .pipe($.sourcemaps.write('./'))
-            .pipe(gulp.dest('./public/scripts'));
+            .pipe(gulp.dest(paths.publish + '/scripts'));
     }
 
     if (watch) {
@@ -194,19 +214,9 @@ gulp.task('default', ['assets', 'transpile'], function () {
         'sync',
         'js-watch',
         function () {
-            gulp.watch(cfg.assets.path + '/**/*.scss', ['styles']);
-            gulp.watch('src/**/*.js', ['transpile']);
-        }
-    );
-});
-
-gulp.task('server', ['assets', 'transpile-server'], function () {
-    runSequence(
-        'sync',
-        'js-watch',
-        function () {
-            gulp.watch(cfg.assets.path + '/**/*.scss', ['styles']);
-            gulp.watch('src/server.js', ['transpile-server']);
+            gulp.watch(paths.assets.input + '/**/*.scss', ['styles']);
+            gulp.watch(paths.js.input + '/**/*.js', ['transpile']);
+            gulp.watch(paths.js.input + '/server.js', ['transpile-server']);
         }
     );
 });
