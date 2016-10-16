@@ -4,16 +4,17 @@
 
 @import "core";
 @import "layout";
-@import "link";
+
 @import "form";
-
 @import "heading";
+@import "link";
 @import "menu";
+@import "spinner";
 
+@import "content";
 @import "header";
 @import "footer";
-@import "content";
 
-@import "scraper";
-@import "news-section";
 @import "news-item";
+@import "news-section";
+@import "scraper";
