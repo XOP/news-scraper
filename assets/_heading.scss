@@ -20,11 +20,13 @@ h1,
 .heading--1 {
     font-style: $font-size-xl;
     text-transform: none;
+    text-shadow: $text-shadow;
 }
 
 h2,
 .heading--2 {
     font-size: $font-size-l;
+    font-weight: bold;
     text-transform: none;
 }
 

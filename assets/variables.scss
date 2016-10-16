@@ -16,6 +16,7 @@ $color-bg-regular: #fff;
 $color-bg-light: #eee;
 $color-bg-lightest: #f4f4f4;
 $color-bg-strong: #aaa;
+$color-bg-stronger: #777;
 
 $color-bg-inverse: #444;
 $color-bg-inverse-light: #666;
@@ -29,11 +30,12 @@ $color-brand-secondary: #FF686B;
 $color-brand-secondary-light: #FFA69E;
 $color-brand-secondary-dark: #c1353f;
 
-$color-border-regular: $color-brand-main-light;
-$color-border-light: $color-bg-light;
+$color-border-regular: $color-bg-strong;
+$color-border-light: $color-brand-main-light;
 $color-border-dark: $color-brand-main-dark;
-$color-border-strong: $color-bg-strong;
+$color-border-strong: $color-bg-stronger;
 
+$screen-color: transparentize($color-bg-lightest, .4);
 
 /* /Colors
 -------------------------------------------------- */
@@ -56,6 +58,8 @@ $font-size-xl: 1.45em;
 $line-height-n: 1.5;
 $line-height-s: 1.2;
 $line-height-l: 1.8;
+
+$text-shadow: 1px 1px 1px rgba(0,0,0,.15);
 
 /* /Typography
 -------------------------------------------------- */
@@ -105,6 +109,16 @@ $page-max-width: 50rem;
 $page-side-padding: $offset-s;
 
 /* /Page
+-------------------------------------------------- */
+
+
+/* Animation
+-------------------------------------------------- */
+
+$transition-duration: .15s;
+$transition-effect: ease-out;
+
+/* /Animation
 -------------------------------------------------- */
 
 /* /Variables

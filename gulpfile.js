@@ -117,7 +117,11 @@ gulp.task('demon', function (cb) {
             paths.templates + '/**/*.*'
         ]
     })
-        .once('start', cb)
+        .once('start', function () {
+            setTimeout(function () {
+                cb();
+            }, 1000);
+        })
         .on('restart', function () {
             setTimeout(function () {
                 reload({ stream: false });
@@ -211,10 +215,11 @@ gulp.task('assets', function () {
     );
 });
 
-gulp.task('default', ['assets', 'transpile'], function () {
+gulp.task('default', ['assets'], function () {
     runSequence(
-        'sync',
+        'transpile',
         'js-watch',
+        'sync',
         function () {
             gulp.watch(paths.assets.input + '/**/*.scss', ['styles']);
             gulp.watch(paths.js.input + '/**/*.js', ['transpile']);

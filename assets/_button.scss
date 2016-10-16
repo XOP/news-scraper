@@ -1,0 +1,41 @@
+/* Button
+---------------------------------------------------------------------------------- */
+
+input[type=button],
+input[type=submit],
+.button {
+    display: inline-block;
+    vertical-align: top;
+
+    padding: $offset-s $offset-n;
+    border: none;
+    border-bottom: 1px solid darken($color-brand-secondary, 25%);
+    border-radius: $radius-regular;
+    background: $color-brand-secondary;
+
+    color: $color-text-inverse-strong;
+    font-size: $font-size-n;
+    text-shadow: $text-shadow;
+    line-height: 1;
+
+    appearance: none;
+    cursor: pointer;
+    user-select: none;
+
+    transition: background $transition-duration $transition-effect;
+
+    &:hover {
+        background: darken($color-brand-secondary, 6%);
+    }
+
+    &:active {
+        background: lighten($color-brand-secondary, 2%);
+    }
+}
+
+.button--full {
+    width: 100%;
+}
+
+/* /Button
+---------------------------------------------------------------------------------- */
