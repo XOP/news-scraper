@@ -14,7 +14,7 @@ html {
 body {
     background: $color-bg-lightest;
 
-    font: #{$root-font-size-mobile}/#{$line-height-n} Tahoma, "Helvetica Neue", Arial, sans-serif;
+    font: #{$root-font-size-mobile}/#{$line-height-n} #{$font-family-main}, #{$font-family-fallback};
     color: $color-text-regular;
 
     @include respond($mq-desktop) {
@@ -24,10 +24,10 @@ body {
 
 hr {
     height: $offset-xs;
-    
+
     margin: $offset-xl 0;
     border: none;
-    
+
     background: $color-border-strong;
 }
 
