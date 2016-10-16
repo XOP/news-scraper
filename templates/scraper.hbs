@@ -1,17 +1,31 @@
 <div class="scraper">
     <div class="scraper__heading">
-        {{#>heading tag='h2' level=2}}
+        {{#>heading tag="h2" level=2}}
             Let's get some News!
         {{/heading}}
     </div>
-    
-    <div class="scraper__form">
-        <form class="form" action="/scraper/new">
+
+    <div class="scraper__form" data-id="scraper-form">
+        <form class="form" action="/scraper" method="post">
             <div class="form__row">
-                <textarea disabled name="input" id="input" cols="30" rows="10"></textarea>
+                <textarea name="input" id="input" data-id="scraper-input" cols="30" rows="10">
+{
+    "url": "https://www.smashingmagazine.com",
+    "title": "Smashing Magazine",
+    "elem": "article.post",
+    "link": "h2 > a",
+    "author": "h2 + ul li.a a",
+    "time": "h2 + ul li.rd",
+    "image": "figure > a > img",
+    "limit": 6
+}
+                </textarea>
             </div>
             <div class="form__row">
-                <input type="submit" value="OK"/>
+                <input type="submit" data-id="scraper-submit" value="OK"/>
+                <strong data-id="scraper-spinner" style="display: none;">
+                    Processing...
+                </strong>
             </div>
         </form>
     </div>

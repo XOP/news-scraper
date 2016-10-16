@@ -1,5 +1,6 @@
 import path from 'path';
 import fs from 'fs-extra';
+import is from 'is';
 
 import Hapi from 'hapi';
 import vision from 'vision';
@@ -12,19 +13,6 @@ import parseFile from './utils/parse-file.js';
 import { getDate, getTime} from './utils/date-utils.js';
 
 import cfg from '../config';
-
-const mockDirectives = [
-    {
-        url: 'https://www.smashingmagazine.com',
-        title: 'Smashing Magazine',
-        elem: 'article.post',
-        link: 'h2 > a',
-        author: 'h2 + ul li.a a',
-        time: 'h2 + ul li.rd',
-        image: 'figure > a > img',
-        limit: 6
-    }
-];
 
 const server = new Hapi.Server();
 
@@ -100,7 +88,8 @@ server.register(vision, (err) => {
                 const timeDate = renderTimeDate(timestamp);
 
                 const fileData = parseFile(path.join(paths.data, fileName));
-                const titles = fileData.pages.reduce((init, page) => {
+
+                const titles = fileData.pages && fileData.pages.reduce((init, page) => {
                     return page.title && init.concat(page.title);
                 }, []);
 
@@ -173,12 +162,14 @@ server.register(vision, (err) => {
     });
 
     server.route({
-        method: 'GET',
-        path: '/scraper/new',
+        method: 'POST',
+        path: '/scraper',
         handler: function (request, reply) {
+            const rawInput = request.payload.input;
+            const parsedInput = JSON.parse(rawInput);
+            const wrappedInput = is.array(parsedInput) ? parsedInput : [parsedInput];
 
-            // todo: use real data
-            const data = scraper(mockDirectives, cfg);
+            const data = scraper(wrappedInput, cfg);
 
             let ctx = Object.assign({}, data, {
                 header: Object.assign({}, resources.header, {

@@ -30,14 +30,14 @@ var paths = {
     data: cfg.output.path,
     assets: {
         input: cfg.assets.path,
-        output: './public'
+        output: 'public'
     },
     js: {
-        input: './src',
-        output: './dist'
+        input: 'src',
+        output: 'dist'
     },
-    publish: './public',
-    templates: './templates'
+    publish: 'public',
+    templates: 'templates'
 };
 
 // -----------------------------------------------------------------------------------------------------------------
@@ -98,7 +98,8 @@ gulp.task('sync', ['demon'], function () {
         files: [
             paths.js.output + '/server.js',
             paths.data + '/**/*.*',
-            paths.publish + '/**/*.*'
+            paths.publish + '/**/*.*',
+            paths.templates + '/**/*.*'
         ]
     });
 });
@@ -158,7 +159,8 @@ function compile (watch) {
             extensions: ['js']
         })
             .transform(babel, {
-                presets: ['es2015']
+                presets: ['es2015'],
+                plugins: ['add-module-exports']
             })
     );
 
