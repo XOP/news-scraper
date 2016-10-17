@@ -13,13 +13,10 @@
 }
 
 .news-section__heading {
-    padding: 0 $page-side-padding;
-
     color: $color-brand-main;
 }
 
 .news-section__url {
-    padding: 0 $offset-s;
     margin-top: $offset-n;
 
     font-size: $font-size-s;
@@ -27,8 +24,8 @@
 
 .news-section__content {
     margin-top: $offset-l;
-    margin-left: -$offset-s;
-    margin-right: -$offset-s;
+    margin-left: -$page-side-padding;
+    margin-right: -$page-side-padding;
 
     @include respond($mq-desktop) {
         display: flex;

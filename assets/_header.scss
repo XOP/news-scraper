@@ -10,7 +10,7 @@
 .header__content {
     max-width: $page-max-width;
     margin: 0 auto;
-    padding: $offset-n $page-side-padding * 2;
+    padding: $offset-n $page-side-padding;
 
     * + * {
         margin-top: $offset-s;
