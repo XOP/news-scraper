@@ -171,16 +171,10 @@ server.register(vision, (err) => {
 
             const data = scraper(wrappedInput, cfg);
 
-            let ctx = Object.assign({}, data, {
-                header: Object.assign({}, resources.header, {
-                    heading: 'Scraping result'
-                })
-            });
-
             return data.then(data => {
-                ctx = Object.assign(ctx, data);
+                const newsId = data.meta.date;
 
-                reply.view('news', ctx);
+                reply.redirect(`/news/${newsId}`);
             });
         }
     });
