@@ -10,7 +10,7 @@ var log = require('log-util');
 // ==================================================
 
 var HOST_NAME = 'https://github.com/XOP';
-var REPO_NAME = 'my-favourite-front-end-resources';
+var REPO_NAME = 'news-scraper-directives';
 
 
 // ==================================================
