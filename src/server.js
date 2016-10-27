@@ -12,6 +12,8 @@ import log from './utils/log-wrapper';
 import parseFile from './utils/parse-file.js';
 import { getDate, getTime} from './utils/date-utils.js';
 
+import formatDirectives from './server/format-directives.js';
+
 import cfg from '../config';
 
 const server = new Hapi.Server();
@@ -158,6 +160,16 @@ server.register(vision, (err) => {
             };
 
             reply.view('scraper', ctx);
+        }
+    });
+
+    server.route({
+        method: 'GET',
+        path: '/scraper/dir',
+        handler: function (request, reply) {
+            const repoDirectives = formatDirectives(path.join(cfg.source.path, cfg.repo.name));
+
+            reply(repoDirectives);
         }
     });
 

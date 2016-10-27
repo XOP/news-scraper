@@ -137,7 +137,8 @@ gulp.task('demon', function (cb) {
 gulp.task('transpile', () => {
     return gulp.src(paths.js.input + '/**/*.js')
         .pipe($.babel({
-            presets: ['es2015']
+            presets: ['es2015'],
+            plugins: ['add-module-exports']
         }))
         .pipe(gulp.dest(paths.js.output));
 });
@@ -163,8 +164,7 @@ function compile (watch) {
             extensions: ['js']
         })
             .transform(babel, {
-                presets: ['es2015'],
-                plugins: ['add-module-exports']
+                presets: ['es2015']
             })
     );
 
