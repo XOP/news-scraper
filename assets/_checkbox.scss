@@ -1,0 +1,55 @@
+/* Checkbox
+---------------------------------------------------------------------------------- */
+
+.checkbox {
+    cursor: pointer;
+    user-select: none;
+}
+
+.checkbox__element {
+    display: inline-block;
+    vertical-align: top;
+
+    height: 1em * $line-height-n;
+    
+    // fixme: move to --is-active mod
+    
+    &:before {
+        @include cover();
+
+        z-index: -1;
+        
+        content: "";
+    
+        background: $color-brand-main-light;
+        
+        opacity: 0;
+        pointer-events: none;
+    }
+    
+    &:checked:before {
+        opacity: 1;
+    }
+}
+
+.checkbox__text {
+    display: inline-block;
+    vertical-align: top;
+
+    margin-left: $offset-s;
+}
+
+.checkbox--pseudo {
+    .checkbox__element {
+        @include hidden();
+    }
+}
+
+.checkbox--fluid {
+    display: block;
+    
+    width: 100%;
+}
+
+/* /Checkbox
+---------------------------------------------------------------------------------- */

@@ -1,0 +1,28 @@
+<section class="directive-group">
+    <div class="directive-group__control"></div>
+    <div class="directive-group__content">
+        <label class="checkbox">
+            <input class="checkbox__element" name="{{name}}" type="checkbox" value="{{directives}}" />
+            <span class="checkbox__text">
+                <div class="directive-group__name">
+                    {{name}}
+                </div>
+            </span>
+        </label>
+        {{#description}}
+            <div class="directive-group__description">
+                {{description}}
+            </div>
+        {{/description}}
+        <div class="directive-group__code">
+            <span class="directive-group__code__trigger" data-id="group-code-trigger">
+                <span class="link link--pseudo">
+                    code        
+                </span>
+            </span>
+            <code class="directive-group__code__content">
+                {{{directives}}}
+            </code>
+        </div>
+    </div>
+</section>

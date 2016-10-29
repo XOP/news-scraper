@@ -159,17 +159,11 @@ server.register(vision, (err) => {
                 scripts: ['main']
             };
 
-            reply.view('scraper', ctx);
-        }
-    });
-
-    server.route({
-        method: 'GET',
-        path: '/scraper/dir',
-        handler: function (request, reply) {
             const repoDirectives = formatDirectives(path.join(cfg.source.path, cfg.repo.name));
 
-            reply(repoDirectives);
+            ctx.directives = repoDirectives;
+
+            reply.view('scraper', ctx);
         }
     });
 

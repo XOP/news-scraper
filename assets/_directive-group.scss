@@ -1,0 +1,76 @@
+/* Directive Group
+---------------------------------------------------------------------------------- */
+
+.directive-group {
+    position: relative;
+    z-index: 0;
+
+    display: flex;
+    
+    flex-flow: row wrap;
+
+    padding: $offset-s;
+
+    background: $color-bg-light;
+}
+
+.directive-group__control {
+    flex: 0 1 auto;
+}
+
+.directive-group__content {
+    flex: 1 1 100%;
+}
+
+.directive-group__name {
+    display: block;
+    
+    font-size: $font-size-n;
+    color: $color-text-strong;
+    
+    text-transform: uppercase;
+    
+    @include hover() {
+        text-decoration: underline;
+    }
+}
+
+.directive-group__description {
+    margin-top: $offset-s;
+
+    font-size: $font-size-s;
+    color: $color-text-light;
+    line-height: $line-height-s;
+}
+
+.directive-group__code {
+    flex: 1 0 100%;
+
+    margin-top: $offset-s;
+
+    font-size: $font-size-s;
+    text-align: right;
+}
+
+.directive-group__code__trigger {
+
+}
+
+.directive-group__code__content {
+    display: none;
+
+    padding: $offset-s;
+    margin-top: $offset-xs;
+
+    background: $color-bg-inverse-light;
+    
+    color: $color-text-inverse;
+    text-align: left;
+}
+
+.directive-group__code--is-opened .directive-group__code__content {
+    display: block;
+}
+
+/* /Directive Group
+---------------------------------------------------------------------------------- */

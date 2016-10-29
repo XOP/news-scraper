@@ -45,7 +45,7 @@ const formatDirectives = (directivesPath) => {
             const formattedGroupDirectives = {
                 name: groupInfo.name || name,
                 description: groupInfo.description,
-                directives: pureGroupDirectives
+                directives: JSON.stringify(pureGroupDirectives)
             };
 
             return groupDirectivesTotal.concat(formattedGroupDirectives);
@@ -53,7 +53,7 @@ const formatDirectives = (directivesPath) => {
         []
     );
 
-    return JSON.stringify(formattedDirectives);
+    return formattedDirectives;
 };
 
 export default formatDirectives;

@@ -1,9 +1,7 @@
 import 'whatwg-fetch';
 import * as $ from 'xop-module-utils';
 
-console.log('up and running!');
-
-// const scraperInput = $.find('[data-id=scraper-input]');
+console.log('NewScraper client is up and running!');
 
 const scraperSubmit = $.find('[data-id=scraper-submit]');
 const scraperForm = $.find('[data-id=scraper-form]');
@@ -23,5 +21,17 @@ scraperSubmit.addEventListener('click', function (evt) {
         console.error(err);
     }).always(() => {
         scraperSpinner.style.display = 'none';
+    });
+});
+
+const groupCodeTrigger = $.findAll('[data-id=group-code-trigger]');
+
+groupCodeTrigger.forEach(elem => {
+    elem.addEventListener('click', function (evt) {
+        evt.preventDefault();
+
+        const groupCode = elem.parentNode;
+
+        groupCode.classList.toggle('directive-group__code--is-opened');
     });
 });

@@ -9,6 +9,22 @@
     }
 }
 
+@mixin hover ($mq: $mq-desktop) {
+    @include respond($mq) {
+        &:hover {
+            @content;
+        }
+    }
+}
+
+@mixin active ($mq: $mq-desktop) {
+    @include respond($mq) {
+        &:active {
+            @content;
+        }
+    }
+}
+
 @mixin text-wrap () {
     word-wrap: break-word;
 }
@@ -19,6 +35,20 @@
     left: 0;
     bottom: 0;
     right: 0;
+}
+
+@mixin hidden () {
+    position: absolute;
+    
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    
+    height: 1px; 
+    width: 1px;
+    
+    margin: -1px; 
+    padding: 0; 
+    border: 0;
 }
 
 /* /Mixins

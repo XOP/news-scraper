@@ -31,6 +31,13 @@ input[type=submit],
     &:active {
         background: lighten($color-brand-secondary, 2%);
     }
+    
+    &[disabled] {
+        background: $color-bg-strong;
+        border-color: $color-bg-stronger;
+
+        cursor: not-allowed;
+    }
 }
 
 .button--full {
