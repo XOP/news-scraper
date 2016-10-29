@@ -1,6 +1,8 @@
 import path from 'path';
 import fs from 'fs-extra';
 
+import _get from 'lodash.get';
+
 import log from '../utils/log-wrapper';
 import parseFile from '../utils/parse-file.js';
 
@@ -32,7 +34,21 @@ const formatDirectives = (directivesPath) => {
             const groupPath = path.join(directivesPath, name);
             const groupDirectives = parseFile(groupPath);
 
-            return groupDirectivesTotal.concat(groupDirectives);
+            let pureGroupDirectives = groupDirectives;
+
+            const groupInfo = _get(groupDirectives, 'meta') || {};
+
+            if (groupInfo) {
+                delete pureGroupDirectives.meta;
+            }
+
+            const formattedGroupDirectives = {
+                name: groupInfo.name || name,
+                description: groupInfo.description,
+                directives: pureGroupDirectives
+            };
+
+            return groupDirectivesTotal.concat(formattedGroupDirectives);
         },
         []
     );
