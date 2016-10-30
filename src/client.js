@@ -7,16 +7,30 @@ console.log('NewScraper client is up and running!');
 
 const scraperSubmit = $.find('[data-id=scraper-submit]');
 const scraperSpinner = $.find('[data-id=scraper-spinner]');
+const scraperError = $.find('[data-id=scraper-error]');
+
+const directiveGroups = $.findAll('[data-id=directive-group-check]');
+
+directiveGroups.forEach(elem => {
+    elem.addEventListener('change', function () {
+        if (validateChecked(directiveGroups)) {
+            scraperSubmit.disabled = '';
+        } else {
+            scraperSubmit.disabled = 'disabled';
+        }
+    });
+});
 
 scraperSubmit.addEventListener('click', function (evt) {
     evt.preventDefault();
 
+    scraperError.style.display = 'none';
     scraperSpinner.style.display = 'block';
 
     const directivesBody = new FormData();
 
-    const directiveGroups = $.findAll('[data-id=directive-group-check]').filter(elem => elem.checked);
-    const directiveGroupsData = directiveGroups.reduce(
+    const directiveGroupsChecked = directiveGroups.filter(elem => elem.checked);
+    const directiveGroupsData = directiveGroupsChecked.reduce(
         (total, elem) => {
             let groupData = JSON.parse(elem.value);
 
@@ -36,6 +50,10 @@ scraperSubmit.addEventListener('click', function (evt) {
         window.location = res.url;
     }).catch(err => {
         console.error(err);
+
+        $.find('.form__error', scraperError).innerText = `Something went wrong: ${err}`;
+
+        scraperError.style.display = 'block';
         scraperSpinner.style.display = 'none';
     });
 });
@@ -51,3 +69,7 @@ groupCodeTrigger.forEach(elem => {
         groupCode.classList.toggle('directive-group__code--is-opened');
     });
 });
+
+function validateChecked (group) {
+    return group.filter(elem => elem.checked).length > 0;
+}
