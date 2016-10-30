@@ -1,10 +1,11 @@
 import 'whatwg-fetch';
 import * as $ from 'xop-module-utils';
 
+import sourceObjectToArray from './utils/source-obj-to-array.js';
+
 console.log('NewScraper client is up and running!');
 
 const scraperSubmit = $.find('[data-id=scraper-submit]');
-const scraperForm = $.find('[data-id=scraper-form]');
 const scraperSpinner = $.find('[data-id=scraper-spinner]');
 
 scraperSubmit.addEventListener('click', function (evt) {
@@ -12,14 +13,29 @@ scraperSubmit.addEventListener('click', function (evt) {
 
     scraperSpinner.style.display = 'block';
 
+    const directivesBody = new FormData();
+
+    const directiveGroups = $.findAll('[data-id=directive-group-check]').filter(elem => elem.checked);
+    const directiveGroupsData = directiveGroups.reduce(
+        (total, elem) => {
+            let groupData = JSON.parse(elem.value);
+
+            groupData = sourceObjectToArray(groupData);
+
+            return total.concat(groupData);
+        },
+        []
+    );
+
+    directivesBody.append('directives', JSON.stringify(directiveGroupsData));
+
     fetch('/scraper', {
         method: 'POST',
-        body: new FormData(scraperForm)
+        body: directivesBody
     }).then(res => {
         window.location = res.url;
     }).catch(err => {
         console.error(err);
-    }).always(() => {
         scraperSpinner.style.display = 'none';
     });
 });

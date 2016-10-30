@@ -171,7 +171,7 @@ server.register(vision, (err) => {
         method: 'POST',
         path: '/scraper',
         handler: function (request, reply) {
-            const rawInput = request.payload.input;
+            const rawInput = request.payload.directives;
             const parsedInput = JSON.parse(rawInput);
             const wrappedInput = is.array(parsedInput) ? parsedInput : [parsedInput];
 
