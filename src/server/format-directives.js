@@ -2,6 +2,7 @@ import path from 'path';
 import fs from 'fs-extra';
 
 import _get from 'lodash.get';
+import _keys from 'lodash.keys';
 
 import log from '../utils/log-wrapper';
 import parseFile from '../utils/parse-file.js';
@@ -42,9 +43,11 @@ const formatDirectives = (directivesPath) => {
                 delete pureGroupDirectives.meta;
             }
 
+            const description = _keys(pureGroupDirectives).join(', ');
+
             const formattedGroupDirectives = {
                 name: groupInfo.name || name,
-                description: groupInfo.description,
+                description: groupInfo.description || description,
                 directives: JSON.stringify(pureGroupDirectives)
             };
 

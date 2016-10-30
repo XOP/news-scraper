@@ -84,6 +84,7 @@ server.register(vision, (err) => {
             let newsFiles = fs.readdirSync(paths.data);
 
             newsFiles = newsFiles.filter(item => item.indexOf('.json') > -1);
+            newsFiles = newsFiles.reverse(); // later (newest) first
             newsFiles = newsFiles.map(fileName => {
                 const timestamp = +fileName.split('.json')[0];
                 const href = `/news/${timestamp}`;
