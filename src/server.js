@@ -16,6 +16,7 @@ import { getDate, getTime} from './utils/date-utils.js';
 import formatDirectives from './server/format-directives.js';
 
 import cfg from '../config';
+import pkg from '../package.json';
 
 const server = new Hapi.Server();
 
@@ -27,7 +28,11 @@ const paths = {
     resources: path.resolve(root, 'data.json')
 };
 
+// requesting resources
 const resources = parseFile(paths.resources);
+
+// extending with dynamic data
+resources.header.version = pkg.version;
 
 server.connection({
     port: 9000,

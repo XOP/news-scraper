@@ -8,28 +8,19 @@
 }
 
 .header__content {
+    position: relative;
+    
+    display: flex;
+
+    align-items: center;
+    
     max-width: $page-max-width;
     margin: 0 auto;
     padding: $offset-n $page-side-padding;
-
-    * + * {
-        margin-top: $offset-s;
-    }
-
-    @include respond($mq-desktop) {
-        display: flex;
-
-        align-items: center;
-
-        * + * {
-            margin-top: 0;
-            margin-left: $offset-n;
-        }
-    }
 }
 
 .header__link {
-
+    margin-right: $offset-s;
 }
 
 .header__link__elem {
@@ -41,7 +32,16 @@
 }
 
 .header__heading {
+    flex: 1 0 auto;
+}
 
+.header__version {
+    position: absolute;
+
+    top: $offset-xs;
+    right: $page-side-padding;
+    
+    text-align: right;
 }
 
 /* /Header
