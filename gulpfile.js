@@ -90,10 +90,6 @@ gulp.task('sync', ['demon'], function () {
             target: 'http://localhost:9000',
             ws: true
         },
-        serveStatic: [
-            paths.data,
-            paths.publish
-        ],
         port: 3000,
         files: [
             paths.js.output + '/server.js',

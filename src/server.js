@@ -3,6 +3,7 @@ import fs from 'fs-extra';
 import is from 'is';
 
 import Hapi from 'hapi';
+import inert from 'inert';
 import vision from 'vision';
 import handlebars from 'handlebars';
 
@@ -33,7 +34,14 @@ server.connection({
     host: 'localhost'
 });
 
-server.register(vision, (err) => {
+server.register([
+    {
+        register: vision
+    },
+    {
+        register: inert
+    }
+], (err) => {
 
     if (err) {
         log.error(err);
@@ -50,6 +58,31 @@ server.register(vision, (err) => {
         layoutPath: path.join(paths.templates, 'layout'),
         partialsPath: path.join(paths.templates, 'partials'),
         context: resources
+    });
+
+    // static assets
+    server.route({
+        method: 'GET',
+        path: '/{param*}',
+        handler: {
+            directory: {
+                index: false,
+                path: paths.publish
+            }
+        }
+    });
+
+    // data
+    server.route({
+        method: 'GET',
+        path: '/data/{param*}',
+        handler: {
+            directory: {
+                index: false,
+                path: paths.data,
+                defaultExtension: 'json'
+            }
+        }
     });
 
     server.route({
