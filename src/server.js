@@ -225,6 +225,36 @@ server.register([
     });
 });
 
+/*
+ isBoom - if true, indicates this is a Boom object instance.
+ message - the error message.
+ output - the formatted response. Can be directly manipulated after object construction to return a custom error response. Allowed root keys:
+ statusCode - the HTTP status code (typically 4xx or 5xx).
+ headers - an object containing any HTTP headers where each key is a header name and value is the header content.
+ payload - the formatted object used as the response payload (stringified). Can be directly manipulated but any changes will be lost if reformat() is called. Any content allowed and by default includes the following content:
+ statusCode - the HTTP status code, derived from error.output.statusCode.
+ error - the HTTP status message (e.g. 'Bad Request', 'Internal Server Error') derived from statusCode.
+ message - the error message derived from error.message.
+*/
+
+server.ext('onPreResponse', function (request, reply) {
+    const status = request.response.output;
+
+    if (request.response.isBoom) {
+        const ctx = {
+            header: Object.assign({}, resources.header, {
+                heading: 'Oops!',
+                link: false
+            }),
+            message: `${status.statusCode}: ${status.payload.error}`
+        };
+
+        return reply.view('error', ctx);
+    }
+
+    return reply.continue();
+});
+
 server.start((err) => {
     if (err) {
         throw err;
