@@ -28,12 +28,15 @@ var REPO_FILES = []; // todo: check empty paths and stop process
 var config = {
     source: {
         path: path.join(__dirname, 'source'),
-        file: LOCAL_FILES
+        file: LOCAL_FILES // todo: remove in favor of local.path
     },
     repo: {
         name: REPO_NAME,
         path: HOST_NAME + '/' + REPO_NAME,
-        file: REPO_FILES
+        file: REPO_FILES // todo: remove and leave dir only
+    },
+    local: {
+        path: 'local'
     },
     output: {
         path: path.join(__dirname, 'data'),

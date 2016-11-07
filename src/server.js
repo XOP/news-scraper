@@ -25,7 +25,9 @@ const paths = {
     templates: path.resolve(root, 'templates'),
     data: cfg.output.path,
     publish: cfg.publish.path,
-    resources: path.resolve(root, 'data.json')
+    resources: path.resolve(root, 'data.json'),
+    repoDirectives: path.join(cfg.source.path, cfg.repo.name),
+    localDirectives: path.join(cfg.source.path, cfg.local.path)
 };
 
 // requesting resources
@@ -198,8 +200,8 @@ server.register([
                 scripts: ['main']
             };
 
-            const repoDirectives = formatDirectives(path.join(cfg.source.path, cfg.repo.name));
-            const localDirectives = formatDirectives(cfg.source.path);
+            const repoDirectives = formatDirectives(paths.repoDirectives);
+            const localDirectives = formatDirectives(paths.localDirectives);
 
             ctx.directives = repoDirectives.concat(localDirectives);
 
