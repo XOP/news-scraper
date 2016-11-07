@@ -200,10 +200,18 @@ server.register([
                 scripts: ['main']
             };
 
-            const repoDirectives = formatDirectives(paths.repoDirectives);
-            const localDirectives = formatDirectives(paths.localDirectives);
+            const repoDirectives = cfg.repo.use && formatDirectives(paths.repoDirectives);
+            const localDirectives = cfg.local.use && formatDirectives(paths.localDirectives);
 
-            ctx.directives = repoDirectives.concat(localDirectives);
+            ctx.directives = [];
+
+            if (repoDirectives && repoDirectives.length) {
+                ctx.directives = ctx.directives.concat(repoDirectives);
+            }
+
+            if (localDirectives && localDirectives.length) {
+                ctx.directives = ctx.directives.concat(localDirectives);
+            }
 
             reply.view('scraper', ctx);
         }

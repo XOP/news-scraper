@@ -6,6 +6,7 @@
     </div>
 
     <div class="scraper__form">
+        {{#if directives}}
         <form class="form" action="/scraper" method="post" data-id="scraper-form">
             <div class="form__row" data-id="scraper-error" style="display: none;">
                 <div class="form__error"></div>
@@ -22,5 +23,10 @@
         <strong data-id="scraper-spinner" style="display: none;">
             {{> spinner screen=true}}
         </strong>
+        {{else}}
+            <div class="message">
+                No directives found :(
+            </div>
+        {{/if}}
     </div>
 </div>

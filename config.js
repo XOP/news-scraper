@@ -33,10 +33,12 @@ var config = {
     repo: {
         name: REPO_NAME,
         path: HOST_NAME + '/' + REPO_NAME,
-        file: REPO_FILES // todo: remove and leave dir only
+        file: REPO_FILES, // todo: remove and leave dir only
+        use: true
     },
     local: {
-        path: 'local'
+        path: 'local',
+        use: true
     },
     output: {
         path: path.join(__dirname, 'data'),
@@ -54,7 +56,7 @@ var config = {
     sourceFormats: ['json', 'yml'],
     limit: 3,
     absLimit: 50,
-    localOnly: false,
+    localOnly: false, // todo: remove in favor of individual selection
     silent: false,
     updateStrategy: 'scratch' // scratch | compare
 };

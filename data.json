@@ -12,6 +12,5 @@
     "footer": {
         "github": "<a href='https://github.com/XOP/news-scraper' target='_blank'>Github</a>",
         "copy": "© \"NewScraper\" 2016"
-    },
-    "version": "1234"
+    }
 }
