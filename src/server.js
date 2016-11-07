@@ -199,8 +199,9 @@ server.register([
             };
 
             const repoDirectives = formatDirectives(path.join(cfg.source.path, cfg.repo.name));
+            const localDirectives = formatDirectives(cfg.source.path);
 
-            ctx.directives = repoDirectives;
+            ctx.directives = repoDirectives.concat(localDirectives);
 
             reply.view('scraper', ctx);
         }
