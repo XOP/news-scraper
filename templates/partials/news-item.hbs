@@ -1,20 +1,24 @@
 <article class="news-item">
     <a class="news-item__link" href="{{href}}" title="{{title}}" target="_blank">
         {{#if imageSrc}}
-            <figure class="news-item__image">
-                <img class="news-item__image__pic" src="{{imageSrc}}" width="100">
+            <figure 
+                class="news-item__image"
+                style="background-image:url({{imageSrc}})"
+            >
             </figure>
         {{/if}}
-        <div class="news-item__heading">
-            {{#>heading tag='h3' level=3}}
-                {{text}}
-            {{/heading}}
+        <div class="news-item__main">
+            {{#if time}}
+                <div class="news-item__date">{{time}}</div>
+            {{/if}}
+            <div class="news-item__heading">
+                {{#>heading tag='h3' level=3}}
+                    {{text}}
+                {{/heading}}
+            </div>
+            {{#if author}}
+                <div class="news-item__author">{{author}}</div>
+            {{/if}}
         </div>
-        {{#if author}}
-            <div class="news-item__author">{{author}}</div>
-        {{/if}}
-        {{#if time}}
-            <div class="news-item__date">{{time}}</div>
-        {{/if}}
     </a>
 </article>

@@ -56,6 +56,7 @@ $font-family-fallback: 'Helvetica Neue', Arial, sans-serif;
 
 $font-size-n: 1em;
 $font-size-s: .85em;
+$font-size-p: .7em;
 $font-size-l: 1.25em;
 $font-size-xl: 1.45em;
 
@@ -99,7 +100,7 @@ $offset-xxl: 12 * $grid-quant;
 /* Media queries
 -------------------------------------------------- */
 
-$mq-desktop: 960px;
+$mq-desktop: 800px;
 $mq-wide: 1200px;
 
 /* /Media queries
