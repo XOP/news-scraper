@@ -21,6 +21,7 @@ var source = require('vinyl-source-stream');
 var buffer = require('vinyl-buffer');
 var browserify = require('browserify');
 var watchify = require('watchify');
+var vueify = require('vueify');
 var babel = require('babelify');
 
 // config
@@ -157,11 +158,12 @@ function compile (watch) {
         browserify({
             entries: [paths.js.input + '/client.js'],
             debug: true,
-            extensions: ['js']
+            extensions: ['js', 'vue']
         })
             .transform(babel, {
                 presets: ['es2015']
             })
+            .transform(vueify)
     );
 
     function rebundle () {

@@ -1,9 +1,28 @@
+/* eslint no-new: 0 */
+
+import Vue from 'vue';
 import 'whatwg-fetch';
 import * as $ from 'xop-module-utils';
 
 import sourceObjectToArray from './utils/source-obj-to-array.js';
 
+import UpdateType from './components/update-type.vue';
+
 console.log('NewScraper client is up and running!');
+
+// ++ vue.js scaffolding
+
+new Vue({
+    el: '.scraper__settings',
+    data: {},
+    computed: {},
+    methods: {},
+    components: {
+        'update-type': UpdateType
+    }
+});
+
+// -- vue.js scaffolding
 
 const scraperSubmit = $.find('[data-id=scraper-submit]');
 const scraperSpinner = $.find('[data-id=scraper-spinner]');

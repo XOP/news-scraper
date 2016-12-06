@@ -47,11 +47,17 @@
     "url": "https://github.com/XOP/news-scraper/issues"
   },
   "homepage": "https://github.com/XOP/news-scraper#readme",
+  "browser": {
+    "vue": "vue/dist/vue.common"
+  },
   "devDependencies": {
     "autoprefixer": "^6.4.1",
     "babel-cli": "^6.16.0",
+    "babel-core": "^6.18.2",
     "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-plugin-transform-runtime": "^6.15.0",
     "babel-preset-es2015": "^6.16.0",
+    "babel-runtime": "^6.18.0",
     "babelify": "^7.3.0",
     "browser-sync": "^2.14.0",
     "browserify": "^13.1.0",
@@ -74,6 +80,7 @@
     "run-sequence": "^1.2.2",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
+    "vueify": "^9.3.0",
     "watchify": "^3.7.0"
   },
   "dependencies": {
@@ -95,6 +102,7 @@
     "tape": "^4.5.1",
     "trash-cli": "^1.3.0",
     "vision": "^4.1.0",
+    "vue": "^2.1.4",
     "whatwg-fetch": "^1.0.0",
     "xop-module-utils": "^0.2.1",
     "yamljs": "^0.2.7"
