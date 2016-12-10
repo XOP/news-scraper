@@ -1,0 +1,37 @@
+.update-type {
+    
+    padding: $offset-n;
+
+    background: $color-bg-light;
+
+    text-align: center;
+}
+
+.update-type__heading {
+    display: inline-block;
+}
+
+
+.update-type__control {
+    display: inline-block;
+}
+
+.update-type__select {
+    appearance: none;
+
+    margin-left: $offset-s;
+    padding: $offset-xs $page-side-padding;
+    border: 1px solid $color-brand-main-dark;
+    background: transparent;
+
+    color: $color-brand-main-dark;
+    font-weight: bold;
+
+    cursor: pointer;
+    
+    @include respond($mq-desktop) {
+        &:hover {
+            color: $color-brand-main;
+        }
+    }
+}

@@ -1,10 +1,13 @@
 /*! main styles */
 
+// mixins
 @import "assets";
 
+// core
 @import "core";
 @import "layout";
 
+// atoms
 @import "button";
 @import "checkbox";
 @import "form";
@@ -14,11 +17,16 @@
 @import "spinner";
 @import "version";
 
+// molecules
 @import "content";
 @import "header";
 @import "footer";
 
+// organisms
 @import "directive-group";
 @import "news-item";
 @import "news-section";
 @import "scraper";
+
+// vue components
+@import "v_update-type";
