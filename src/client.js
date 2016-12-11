@@ -29,6 +29,7 @@ const scraperSpinner = $.find('[data-id=scraper-spinner]');
 const scraperError = $.find('[data-id=scraper-error]');
 
 const directiveGroups = $.findAll('[data-id=directive-group-check]');
+const updateType = $.find('[data-id=update-type-value]');
 
 directiveGroups.forEach(elem => {
     elem.addEventListener('change', function () {
@@ -61,6 +62,12 @@ scraperSubmit.addEventListener('click', function (evt) {
     );
 
     directivesBody.append('directives', JSON.stringify(directiveGroupsData));
+
+    const updateTypeValue = updateType.value;
+
+    directivesBody.append('userCfg', JSON.stringify({
+        limit: updateTypeValue
+    }));
 
     fetch('/scraper', {
         method: 'POST',

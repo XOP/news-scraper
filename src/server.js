@@ -221,11 +221,14 @@ server.register([
         method: 'POST',
         path: '/scraper',
         handler: function (request, reply) {
-            const rawInput = request.payload.directives;
+            const payload = request.payload;
+
+            const rawInput = payload.directives;
+            const userCfg = JSON.parse(payload.userCfg);
             const parsedInput = JSON.parse(rawInput);
             const wrappedInput = is.array(parsedInput) ? parsedInput : [parsedInput];
 
-            const data = scraper(wrappedInput, cfg);
+            const data = scraper(wrappedInput, Object.assign(cfg, userCfg));
 
             return data.then(data => {
                 const newsId = data.meta.date;

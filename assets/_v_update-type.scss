@@ -22,16 +22,22 @@
     margin-left: $offset-s;
     padding: $offset-xs $page-side-padding;
     border: 1px solid $color-brand-main-dark;
+    border-radius: $radius-heavy;
     background: transparent;
 
     color: $color-brand-main-dark;
     font-weight: bold;
 
     cursor: pointer;
+
+    transition: 
+            background $transition-duration $transition-effect, 
+            color $transition-duration $transition-effect;
     
     @include respond($mq-desktop) {
         &:hover {
-            color: $color-brand-main;
+            background: $color-brand-main-dark;
+            color: $color-text-inverse-strong;
         }
     }
 }
