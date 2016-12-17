@@ -228,9 +228,14 @@ server.register([
             const parsedInput = JSON.parse(rawInput);
             const wrappedInput = is.array(parsedInput) ? parsedInput : [parsedInput];
 
-            const data = scraper(wrappedInput, Object.assign(cfg, userCfg));
+            const newScraper = scraper(wrappedInput, Object.assign(cfg, userCfg));
+            const scraperEvents = newScraper.events;
 
-            return data.then(data => {
+            scraperEvents.on('scrapingStart', log.info);
+            scraperEvents.on('scrapingEnd', log.info);
+            scraperEvents.on('scrapingError', log.error);
+
+            return newScraper.data.then(data => {
                 const newsId = data.meta.date;
 
                 reply.redirect(`/news/${newsId}`);
