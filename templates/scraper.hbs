@@ -9,12 +9,23 @@
         <update-type />    
     </div>
     
+    <div class="scraper__progress">
+        <div class="progress" data-id="scraper-progress" style="display: none;">
+            <!-- hidden until implementation is complete -->
+            <div class="progress__element" style="display: none;">
+                <progress value="1" max="250"></progress>
+            </div>
+            <div class="progress__message"></div>
+        </div>
+    </div>
+
+    <div class="scraper__error" data-id="scraper-error" style="display: none;">
+        <div class="message message--error"></div>
+    </div>
+    
     <div class="scraper__form">
         {{#if directives}}
         <form class="form" action="/scraper" method="post" data-id="scraper-form">
-            <div class="form__row" data-id="scraper-error" style="display: none;">
-                <div class="form__error"></div>
-            </div>
             <div class="form__row">
                 {{#each directives}}
                     {{> directive-group}}

@@ -9,7 +9,7 @@
 }
 
 .form__row {
-    & + & {
+    &:not(:empty) + &:not(:empty) {
         margin-top: $offset-n;
     }
 }

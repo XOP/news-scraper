@@ -1,0 +1,22 @@
+/* Message
+---------------------------------------------------------------------------------- */
+
+.message {
+    font-size: $font-size-s;
+    color: $color-text-regular;
+}
+
+.message--error {
+    color: $color-util-error;
+}
+
+.message--info {
+    color: $color-util-info;
+}
+
+.message--success {
+    color: $color-util-success;
+}
+
+/* /Message
+---------------------------------------------------------------------------------- */

@@ -2,6 +2,7 @@
 
 import Vue from 'vue';
 import 'whatwg-fetch';
+import Nes from 'nes';
 import * as $ from 'xop-module-utils';
 
 import sourceObjectToArray from './utils/source-obj-to-array.js';
@@ -24,9 +25,16 @@ new Vue({
 
 // -- vue.js scaffolding
 
+const client = new Nes.Client('ws://localhost:9000/scraper/');
+
+// const scraperProgressElement = $.find('progress', scraperProgress);
+const scraperProgress = $.find('[data-id=scraper-progress]');
+const scraperProgressMessage = $.find('.progress__message', scraperProgress);
+
 const scraperSubmit = $.find('[data-id=scraper-submit]');
 const scraperSpinner = $.find('[data-id=scraper-spinner]');
 const scraperError = $.find('[data-id=scraper-error]');
+const scraperErrorMessage = $.find('.message', scraperError);
 
 const directiveGroups = $.findAll('[data-id=directive-group-check]');
 const updateType = $.find('[data-id=update-type-value]');
@@ -46,6 +54,9 @@ scraperSubmit.addEventListener('click', function (evt) {
 
     scraperError.style.display = 'none';
     scraperSpinner.style.display = 'block';
+    scraperProgress.style.display = 'block';
+
+    scraperProgressMessage.innerText = '...';
 
     const directivesBody = new FormData();
 
@@ -69,6 +80,35 @@ scraperSubmit.addEventListener('click', function (evt) {
         limit: updateTypeValue
     }));
 
+    client.connect(function (err) {
+        if (err) {
+            console.error(err);
+
+            return;
+        }
+
+        client.onUpdate = ({ message, type }) => {
+            switch (type) {
+                case 'scrapingStart':
+                    scraperProgressMessage.innerText = `Now scraping from: ${message}`;
+                    break;
+
+                case 'scrapingEnd':
+                    scraperProgressMessage.innerText = `Done! ${message.length} news scraped`;
+                    break;
+
+                case 'scrapingError':
+                    scraperError.style.display = 'block';
+                    scraperErrorMessage.innerText = `Oops, an error occurred: ${message} :(`;
+                    scraperProgressMessage.innerText = 'Refresh the page and give it another try!';
+                    break;
+
+                default:
+                    scraperProgressMessage.innerText = message;
+            }
+        };
+    });
+
     fetch('/scraper', {
         method: 'POST',
         body: directivesBody
@@ -77,10 +117,11 @@ scraperSubmit.addEventListener('click', function (evt) {
     }).catch(err => {
         console.error(err);
 
-        $.find('.form__error', scraperError).innerText = `Something went wrong: ${err}`;
+        scraperErrorMessage.innerText = `Something went wrong: ${err}`;
 
         scraperError.style.display = 'block';
         scraperSpinner.style.display = 'none';
+        scraperProgress.style.display = 'none';
     });
 });
 

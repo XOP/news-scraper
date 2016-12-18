@@ -5,6 +5,7 @@ import is from 'is';
 import Hapi from 'hapi';
 import inert from 'inert';
 import vision from 'vision';
+import nes from 'nes';
 import handlebars from 'handlebars';
 
 import scraper from 'news-scraper-core';
@@ -43,10 +44,13 @@ server.connection({
 
 server.register([
     {
-        register: vision
+        register: vision // template support
     },
     {
-        register: inert
+        register: inert // static assets serving
+    },
+    {
+        register: nes // websockets implementation (same for client)
     }
 ], (err) => {
 
@@ -231,14 +235,18 @@ server.register([
             const newScraper = scraper(wrappedInput, Object.assign(cfg, userCfg));
             const scraperEvents = newScraper.events;
 
-            scraperEvents.on('scrapingStart', log.info);
-            scraperEvents.on('scrapingEnd', log.info);
-            scraperEvents.on('scrapingError', log.error);
+            scraperEvents.on('scrapingStart', msg => broadcast(msg, 'scrapingStart'));
+            scraperEvents.on('scrapingEnd', msg => broadcast(msg, 'scrapingEnd'));
+            scraperEvents.on('scrapingError', msg => broadcast(msg, 'scrapingError'));
 
             return newScraper.data.then(data => {
                 const newsId = data.meta.date;
 
-                reply.redirect(`/news/${newsId}`);
+                broadcast('Redirecting to the results page...');
+
+                setTimeout(() => {
+                    reply.redirect(`/news/${newsId}`);
+                }, 1500);
             });
         }
     });
@@ -269,6 +277,15 @@ server.start((err) => {
 
     log.info(`Server running at: ${server.info.uri}`);
 });
+
+function broadcast (message, type) {
+    server.broadcast({
+        message,
+        type
+    });
+
+    return message;
+}
 
 function renderTimeDate (timestamp) {
     timestamp = +timestamp;

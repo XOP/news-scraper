@@ -9,8 +9,20 @@
     margin-bottom: $offset-l;
 }
 
+.scraper__settings {
+    border-bottom: 1px solid $color-border-regular;
+}
+
+.scraper__error {
+    padding: $offset-s;
+    background: $color-bg-light;
+}
+
 .scraper__form {
     position: relative; // spinner context
+}
+
+.scraper__progress {
 }
 
 /* /Scraper
