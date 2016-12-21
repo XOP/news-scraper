@@ -118,8 +118,12 @@ scraperSubmit.addEventListener('click', function (evt) {
         console.error(err);
 
         scraperErrorMessage.innerText = `Something went wrong: ${err}`;
-
         scraperError.style.display = 'block';
+    }).then(() => {
+        directiveGroups.forEach(elem => {
+            elem.checked = false;
+        });
+
         scraperSpinner.style.display = 'none';
         scraperProgress.style.display = 'none';
     });
