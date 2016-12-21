@@ -1,7 +1,12 @@
 <div class="progress">
-    <!-- hidden until implementation is complete -->
-    <div class="progress__element" style="display: none;">
-        <progress value="1" max="250"></progress>
+    <div class="progress__content">
+        <!-- hidden until implementation is complete -->
+        <div class="progress__element" style="display: none;">
+            <progress value="1" max="250"></progress>
+        </div>
+        <div class="progress__message"></div>
     </div>
-    <div class="progress__message"></div>
+    <div class="progress__control" style="display: none;">
+        <button class="button" data-id="scraper-cancel">Cancel</button>
+    </div>
 </div>

@@ -32,6 +32,7 @@ const scraperProgress = $.find('[data-id=scraper-progress]');
 const scraperProgressMessage = $.find('.progress__message', scraperProgress);
 
 const scraperSubmit = $.find('[data-id=scraper-submit]');
+const scraperCancel = $.find('[data-id=scraper-cancel]');
 const scraperSpinner = $.find('[data-id=scraper-spinner]');
 const scraperError = $.find('[data-id=scraper-error]');
 const scraperErrorMessage = $.find('.message', scraperError);
@@ -46,6 +47,25 @@ directiveGroups.forEach(elem => {
         } else {
             scraperSubmit.disabled = 'disabled';
         }
+    });
+});
+
+scraperCancel.addEventListener('click', function (evt) {
+    evt.preventDefault();
+
+    client.message('scrapingCancel', (err, msg) => {
+        if (err) {
+            console.error(err);
+
+            return;
+        }
+
+        console.log(msg);
+
+        // todo: server callback
+
+        scraperSpinner.style.display = 'none';
+        scraperProgress.style.display = 'none';
     });
 });
 

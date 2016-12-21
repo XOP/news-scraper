@@ -2,10 +2,22 @@
 ---------------------------------------------------------------------------------- */
 
 .progress {
+    display: flex;
+    
     padding: $offset-s;
     
     background: $color-bg-inverse-light;
     color: $color-text-inverse-light;
+}
+
+.progress__content {
+    flex: 1 1 auto;
+}
+
+.progress__control {
+    flex: 0 1 auto;
+
+    margin-left: $offset-n;
 }
 
 .progress__element {
@@ -31,6 +43,8 @@
 }
 
 .progress__message {
+    @include truncate();
+
     font-size: $font-size-s;
 }
 
