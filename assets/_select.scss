@@ -1,0 +1,52 @@
+/* Select
+---------------------------------------------------------------------------------- */
+
+select,
+.select {
+    width: 100%;
+    padding: $offset-s $offset-n;
+    border-radius: $radius-regular;
+    border: 1px solid $color-brand-main-dark;
+    background: $color-bg-regular;
+    
+    font-family: #{$font-family-main}, #{$font-family-fallback};
+    font-size: $font-size-n;
+    line-height: 1;
+    color: $color-brand-main-dark;
+    
+    appearance: none;
+    cursor: pointer;
+    user-select: none;
+
+    transition: background $transition-duration $transition-effect;
+    
+    &:hover {
+        border-color: darken($color-brand-main-dark, 14%);
+        color: darken($color-brand-main-dark, 14%);
+    }
+
+    &:active {
+        background: $color-bg-lightest;
+    }
+
+    &[disabled],
+    &.button--is-disabled {
+        background: $color-bg-light;
+        border-color: $color-bg-strong;
+
+        color: $color-text-light;
+
+        cursor: not-allowed;
+    }
+}
+
+.select--small {
+    font-size: $font-size-s;
+}
+
+.select--big {
+    font-size: $font-size-l;
+}
+
+/* /Button
+---------------------------------------------------------------------------------- */

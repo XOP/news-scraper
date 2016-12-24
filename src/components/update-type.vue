@@ -6,11 +6,13 @@
         
         <div class="update-type__control">
             <input type="hidden" v-model="typeValue" data-id="update-type-value" />
-            <select class="update-type__select" v-model="selected">
-                <option value="month">Monthly</option>
-                <option value="week">Weekly</option>
-                <option value="day">Daily</option>
-            </select>
+            <div class="update-type__select">
+                <select v-model="selected">
+                    <option value="month">Monthly</option>
+                    <option value="week">Weekly</option>
+                    <option value="day">Daily</option>
+                </select>
+            </div>
         </div>
     </div>
 </template>
