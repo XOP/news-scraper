@@ -71,8 +71,16 @@ server.register([
     {
         register: nes, // websockets implementation (same for client)
         options: {
-            onMessage: function (socket, message, next) {
+            onMessage: (socket, message, next) => {
                 eventsNormalize(message, next);
+            },
+
+            onConnection: () => {
+                log.verbose('Socket connected');
+            },
+
+            onDisconnection: () => {
+                log.verbose('Socket disconnnected');
             }
         }
     }
@@ -268,17 +276,17 @@ server.register([
 
                 // todo: scraper core integration
                 // currently process is not interrupted
-
-                reply.close();
             });
 
-            return newScraper.data.then(data => {
+            newScraper.data.then(data => {
                 const newsId = data.meta.date;
 
                 broadcast('Redirecting to the results page...');
 
                 setTimeout(() => {
-                    reply.redirect(`/news/${newsId}`);
+                    reply()
+                        .header('success', true)
+                        .redirect(`/news/${newsId}`);
                 }, 1500);
             });
         }

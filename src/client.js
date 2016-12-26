@@ -93,43 +93,45 @@ scraperSubmit.addEventListener('click', function (evt) {
         limit: updateTypeValue
     }));
 
-    client.connect(function (err) {
+    client.connect(err => {
+        console.log('connect');
+
         if (err) {
-            console.error(err);
-
-            return;
+            console.error('Socket connection error', err);
         }
-
-        client.onUpdate = ({ message, type }) => {
-            switch (type) {
-                case 'scrapingStart':
-                    scraperProgressMessage.innerText = `Now scraping from: ${message}`;
-                    break;
-
-                case 'scrapingEnd':
-                    scraperProgressMessage.innerText = `Done! ${message.length} news scraped`;
-                    break;
-
-                case 'scrapingAbort':
-                    scraperProgressMessage.innerText = message;
-                    break;
-
-                case 'scrapingError':
-                    scraperError.style.display = 'block';
-                    scraperErrorMessage.innerText = `Oops, an error occurred: ${message} :(`;
-                    scraperProgressMessage.innerText = 'Refresh the page and give it another try!';
-                    break;
-
-                default:
-                    scraperProgressMessage.innerText = message;
-            }
-        };
     });
+
+    client.onUpdate = ({ message, type }) => {
+        switch (type) {
+            case 'scrapingStart':
+                scraperProgressMessage.innerText = `Now scraping from: ${message}`;
+                break;
+
+            case 'scrapingEnd':
+                scraperProgressMessage.innerText = `Done! ${message.length} news scraped`;
+                break;
+
+            case 'scrapingAbort':
+                scraperProgressMessage.innerText = message;
+                break;
+
+            case 'scrapingError':
+                scraperError.style.display = 'block';
+                scraperErrorMessage.innerText = `Oops, an error occurred: ${message} :(`;
+                scraperProgressMessage.innerText = 'Refresh the page and give it another try!';
+                break;
+
+            default:
+                scraperProgressMessage.innerText = message;
+        }
+    };
 
     fetch('/scraper', {
         method: 'POST',
         body: directivesBody
     }).then(res => {
+        // todo: filter cancel header
+
         window.location = res.url;
     }).catch(err => {
         console.error(err);
@@ -137,9 +139,13 @@ scraperSubmit.addEventListener('click', function (evt) {
         scraperErrorMessage.innerText = `Something went wrong: ${err}`;
         scraperError.style.display = 'block';
     }).then(() => {
+        client.disconnect();
+
         directiveGroups.forEach(elem => {
             elem.checked = false;
         });
+
+        scraperSubmit.disabled = 'disabled';
 
         scraperSpinner.style.display = 'none';
         scraperProgress.style.display = 'none';
