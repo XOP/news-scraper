@@ -37,11 +37,30 @@ const resources = parseFile(paths.resources);
 // extending with dynamic data
 resources.header.version = pkg.version;
 
+// connect
 server.connection({
     port: 9000,
     host: 'localhost'
 });
 
+// custom events
+server.event('scrapingCancel');
+
+const eventMap = {
+    scrapingCancel: {
+        response: 'Scraping process cancelled'
+    }
+};
+
+// custom events callback
+const eventsNormalize = (event, cb) => {
+    const response = eventMap[event].response;
+
+    server.emit(event, response);
+    cb(response);
+};
+
+// plugins and routes
 server.register([
     {
         register: vision // template support
@@ -50,7 +69,12 @@ server.register([
         register: inert // static assets serving
     },
     {
-        register: nes // websockets implementation (same for client)
+        register: nes, // websockets implementation (same for client)
+        options: {
+            onMessage: function (socket, message, next) {
+                eventsNormalize(message, next);
+            }
+        }
     }
 ], (err) => {
 
@@ -238,6 +262,15 @@ server.register([
             scraperEvents.on('scrapingStart', msg => broadcast(msg, 'scrapingStart'));
             scraperEvents.on('scrapingEnd', msg => broadcast(msg, 'scrapingEnd'));
             scraperEvents.on('scrapingError', msg => broadcast(msg, 'scrapingError'));
+
+            server.on('scrapingCancel', (msg) => {
+                broadcast(msg, 'scrapingAbort');
+
+                // todo: scraper core integration
+                // currently process is not interrupted
+
+                reply.close();
+            });
 
             return newScraper.data.then(data => {
                 const newsId = data.meta.date;

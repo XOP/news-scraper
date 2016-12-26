@@ -53,19 +53,12 @@ directiveGroups.forEach(elem => {
 scraperCancel.addEventListener('click', function (evt) {
     evt.preventDefault();
 
-    client.message('scrapingCancel', (err, msg) => {
+    client.message('scrapingCancel', (err) => {
         if (err) {
             console.error(err);
-
-            return;
         }
 
-        console.log(msg);
-
-        // todo: server callback
-
-        scraperSpinner.style.display = 'none';
-        scraperProgress.style.display = 'none';
+        // todo: retry process
     });
 });
 
@@ -115,6 +108,10 @@ scraperSubmit.addEventListener('click', function (evt) {
 
                 case 'scrapingEnd':
                     scraperProgressMessage.innerText = `Done! ${message.length} news scraped`;
+                    break;
+
+                case 'scrapingAbort':
+                    scraperProgressMessage.innerText = message;
                     break;
 
                 case 'scrapingError':
