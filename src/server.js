@@ -8,7 +8,7 @@ import vision from 'vision';
 import nes from 'nes';
 import handlebars from 'handlebars';
 
-import scraper from 'news-scraper-core';
+import Scraper from 'news-scraper-core';
 
 import log from './utils/log-wrapper';
 import parseFile from './utils/parse-file.js';
@@ -264,30 +264,47 @@ server.register([
             const parsedInput = JSON.parse(rawInput);
             const wrappedInput = is.array(parsedInput) ? parsedInput : [parsedInput];
 
-            const newScraper = scraper(wrappedInput, Object.assign(cfg, userCfg));
+            const newScraper = new Scraper(wrappedInput, Object.assign(cfg, userCfg));
+
             const scraperEvents = newScraper.events;
+            const scraperData = newScraper.data;
 
             scraperEvents.on('scrapingStart', msg => broadcast(msg, 'scrapingStart'));
             scraperEvents.on('scrapingEnd', msg => broadcast(msg, 'scrapingEnd'));
             scraperEvents.on('scrapingError', msg => broadcast(msg, 'scrapingError'));
 
             server.on('scrapingCancel', (msg) => {
-                broadcast(msg, 'scrapingAbort');
+                newScraper.state = 'abort';
 
-                // todo: scraper core integration
-                // currently process is not interrupted
+                scraperEvents.removeAllListeners('scrapingStart');
+                scraperEvents.removeAllListeners('scrapingEnd');
+
+                broadcast(msg, 'scrapingAbort');
             });
 
-            newScraper.data.then(data => {
+            scraperData.then(data => {
                 const newsId = data.meta.date;
+                const state = newScraper.state;
 
-                broadcast('Redirecting to the results page...');
+                if (state === 'abort') {
+                    broadcast('Cancelling...');
 
-                setTimeout(() => {
-                    reply()
-                        .header('success', true)
-                        .redirect(`/news/${newsId}`);
-                }, 1500);
+                    setTimeout(() => {
+                        reply(data)
+                            .header('X-Scraping-State', 'abort');
+                    }, 1500);
+                } else {
+                    broadcast('Redirecting to the results page...');
+
+                    const response = reply(data)
+                        .header('X-Scraping-State', 'done')
+                        .header('X-Scraping-Redirect', `/news/${newsId}`)
+                        .hold();
+
+                    setTimeout(() => {
+                        return response.send();
+                    }, 1500);
+                }
             });
         }
     });

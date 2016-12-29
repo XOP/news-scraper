@@ -1,6 +1,6 @@
 {
   "name": "news-scraper",
-  "version": "0.8.0-beta.0",
+  "version": "0.9.0-beta.0",
   "description": "news-scraper",
   "main": "index.js",
   "scripts": {
@@ -97,7 +97,7 @@
     "lodash.merge": "^4.5.1",
     "log-util": "^1.1.1",
     "nes": "^6.4.0",
-    "news-scraper-core": "^1.2.0",
+    "news-scraper-core": "^2.0.0",
     "normalize.css": "^4.2.0",
     "prompt": "^1.0.0",
     "tape": "^4.5.1",

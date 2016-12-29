@@ -130,9 +130,19 @@ scraperSubmit.addEventListener('click', function (evt) {
         method: 'POST',
         body: directivesBody
     }).then(res => {
-        // todo: filter cancel header
+        const redirectUrl = res.headers.get('X-Scraping-Redirect');
 
-        window.location = res.url;
+        // const state = res.headers.get('X-Scraping-State');
+
+        if (res.ok) {
+            if (redirectUrl) {
+                window.location = redirectUrl;
+            }
+
+            return res.text();
+        }
+    }).then(textData => {
+        console.log('data', JSON.parse(textData));
     }).catch(err => {
         console.error(err);
 
