@@ -10,26 +10,25 @@
 // atoms
 @import "button";
 @import "checkbox";
-@import "form";
 @import "heading";
 @import "link";
+@import "select";
+@import "spinner";
+@import "textarea";
+
+// molecules
 @import "menu";
 @import "message";
 @import "progress";
-@import "select";
-@import "spinner";
+@import "update-type";
 @import "version";
 
-// molecules
-@import "content";
-@import "header";
-@import "footer";
-
 // organisms
+@import "content";
 @import "directive-group";
+@import "footer";
+@import "form";
+@import "header";
 @import "news-item";
 @import "news-section";
 @import "scraper";
-
-// vue components
-@import "v_update-type";
