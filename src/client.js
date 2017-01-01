@@ -12,9 +12,15 @@ import Progress from './components/progress.vue';
 
 console.log('NewScraper client is up and running!');
 
+const client = new Nes.Client('ws://localhost:9000/scraper/');
+
 // ++ vue.js scaffolding
 
 const appData = {
+    settings: {
+        isHidden: false
+    },
+
     progress: {
         message: '...',
         initial: 0,
@@ -28,7 +34,17 @@ new Vue({
     el: '.scraper',
     data: appData,
     computed: {},
-    methods: {},
+    methods: {
+        scrapingCancel: () => {
+            client.message('scrapingCancel', (err) => {
+                if (err) {
+                    console.error(err);
+                }
+
+                // todo: retry process
+            });
+        }
+    },
     components: {
         'update-type': UpdateType,
         'progress-bar': Progress
@@ -36,8 +52,6 @@ new Vue({
 });
 
 // -- vue.js scaffolding
-
-const client = new Nes.Client('ws://localhost:9000/scraper/');
 
 const scraperSubmit = $.find('[data-id=scraper-submit]');
 const scraperSpinner = $.find('[data-id=scraper-spinner]');
@@ -56,20 +70,6 @@ directiveGroups.forEach(elem => {
         }
     });
 });
-
-// const scraperCancel = $.find('[data-id=scraper-cancel]');
-//
-// scraperCancel.addEventListener('click', function (evt) {
-//     evt.preventDefault();
-//
-//     client.message('scrapingCancel', (err) => {
-//         if (err) {
-//             console.error(err);
-//         }
-//
-//         // todo: retry process
-//     });
-// });
 
 scraperSubmit.addEventListener('click', function (evt) {
     evt.preventDefault();

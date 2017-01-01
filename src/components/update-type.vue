@@ -21,9 +21,7 @@
     export default {
         name: 'update-type',
  
-        props: [
-
-        ],
+        props: {},
     
         data () {
             return {
@@ -54,8 +52,6 @@
             }
         },
     
-        methods: {
-
-        }
+        methods: {}
     }
 </script>

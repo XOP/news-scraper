@@ -5,7 +5,7 @@
         {{/heading}}
     </div>
 
-    <div class="scraper__settings">
+    <div class="scraper__settings" v-if="!settings.isHidden">
         <update-type></update-type>    
     </div>
     
@@ -13,7 +13,8 @@
         <progress-bar 
             :current-value="progress.current"
             :total-value="progress.total"
-            :message="progress.message" 
+            :message="progress.message"
+            @progress-abort="scrapingCancel"
         ></progress-bar>
     </div>
 

@@ -32,17 +32,13 @@
         },
     
         data () {
-            return {
-
-            }
+            return {}
         },
         
-        computed: {
-            
-        },
+        computed: {},
     
         methods: {
-            cancelHandler: () => {
+            cancelHandler: function () {
                 this.$emit('progress-abort');
             }
         }
