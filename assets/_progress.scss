@@ -21,9 +21,13 @@
 }
 
 .progress__element {
+    height: $offset-s;
+    margin-bottom: $offset-s;
+    
     progress {
         appearance: none;
-
+        vertical-align: super;
+        
         width: 100%;
         height: $offset-s;
 

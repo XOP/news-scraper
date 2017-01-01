@@ -19,6 +19,8 @@
 
 <script>
     export default {
+        name: 'update-type',
+ 
         props: [
 
         ],

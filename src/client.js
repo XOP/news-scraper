@@ -8,18 +8,30 @@ import * as $ from 'xop-module-utils';
 import sourceObjectToArray from './utils/source-obj-to-array.js';
 
 import UpdateType from './components/update-type.vue';
+import Progress from './components/progress.vue';
 
 console.log('NewScraper client is up and running!');
 
 // ++ vue.js scaffolding
 
+const appData = {
+    progress: {
+        message: '...',
+        initial: 0,
+        current: 0,
+        total: 50,
+        isHidden: true
+    }
+};
+
 new Vue({
-    el: '.scraper__settings',
-    data: {},
+    el: '.scraper',
+    data: appData,
     computed: {},
     methods: {},
     components: {
-        'update-type': UpdateType
+        'update-type': UpdateType,
+        'progress-bar': Progress
     }
 });
 
@@ -27,12 +39,7 @@ new Vue({
 
 const client = new Nes.Client('ws://localhost:9000/scraper/');
 
-// const scraperProgressElement = $.find('progress', scraperProgress);
-const scraperProgress = $.find('[data-id=scraper-progress]');
-const scraperProgressMessage = $.find('.progress__message', scraperProgress);
-
 const scraperSubmit = $.find('[data-id=scraper-submit]');
-const scraperCancel = $.find('[data-id=scraper-cancel]');
 const scraperSpinner = $.find('[data-id=scraper-spinner]');
 const scraperError = $.find('[data-id=scraper-error]');
 const scraperErrorMessage = $.find('.message', scraperError);
@@ -50,26 +57,25 @@ directiveGroups.forEach(elem => {
     });
 });
 
-scraperCancel.addEventListener('click', function (evt) {
-    evt.preventDefault();
-
-    client.message('scrapingCancel', (err) => {
-        if (err) {
-            console.error(err);
-        }
-
-        // todo: retry process
-    });
-});
+// const scraperCancel = $.find('[data-id=scraper-cancel]');
+//
+// scraperCancel.addEventListener('click', function (evt) {
+//     evt.preventDefault();
+//
+//     client.message('scrapingCancel', (err) => {
+//         if (err) {
+//             console.error(err);
+//         }
+//
+//         // todo: retry process
+//     });
+// });
 
 scraperSubmit.addEventListener('click', function (evt) {
     evt.preventDefault();
 
     scraperError.style.display = 'none';
     scraperSpinner.style.display = 'block';
-    scraperProgress.style.display = 'block';
-
-    scraperProgressMessage.innerText = '...';
 
     const directivesBody = new FormData();
 
@@ -93,6 +99,13 @@ scraperSubmit.addEventListener('click', function (evt) {
         limit: updateTypeValue
     }));
 
+    const directiveGroupsTotal = directiveGroupsData.length;
+
+    if (directiveGroupsTotal > 1) {
+        appData.progress.isHidden = false;
+        appData.progress.total = directiveGroupsTotal * 2; // showing progress for both start and finish
+    }
+
     client.connect(err => {
         console.log('connect');
 
@@ -104,25 +117,27 @@ scraperSubmit.addEventListener('click', function (evt) {
     client.onUpdate = ({ message, type }) => {
         switch (type) {
             case 'scrapingStart':
-                scraperProgressMessage.innerText = `Now scraping from: ${message}`;
+                appData.progress.message = `Now scraping from: ${message}`;
+                appData.progress.current++;
                 break;
 
             case 'scrapingEnd':
-                scraperProgressMessage.innerText = `Done! ${message.length} news scraped`;
+                appData.progress.message = `Done! ${message.length} news scraped`;
+                appData.progress.current++;
                 break;
 
             case 'scrapingAbort':
-                scraperProgressMessage.innerText = message;
+                appData.progress.message = message;
                 break;
 
             case 'scrapingError':
                 scraperError.style.display = 'block';
                 scraperErrorMessage.innerText = `Oops, an error occurred: ${message} :(`;
-                scraperProgressMessage.innerText = 'Refresh the page and give it another try!';
+                appData.progress.message = 'Refresh the page and give it another try!';
                 break;
 
             default:
-                scraperProgressMessage.innerText = message;
+                appData.progress.message = message;
         }
     };
 
@@ -156,9 +171,10 @@ scraperSubmit.addEventListener('click', function (evt) {
         });
 
         scraperSubmit.disabled = 'disabled';
-
         scraperSpinner.style.display = 'none';
-        scraperProgress.style.display = 'none';
+
+        appData.progress.isHidden = true;
+        appData.progress.current = appData.progress.initial;
     });
 });
 

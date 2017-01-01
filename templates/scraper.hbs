@@ -6,11 +6,15 @@
     </div>
 
     <div class="scraper__settings">
-        <update-type />    
+        <update-type></update-type>    
     </div>
     
-    <div class="scraper__progress" data-id="scraper-progress" style="display: none;">
-        {{> progress}}
+    <div class="scraper__progress" v-if="!progress.isHidden">
+        <progress-bar 
+            :current-value="progress.current"
+            :total-value="progress.total"
+            :message="progress.message" 
+        ></progress-bar>
     </div>
 
     <div class="scraper__error" data-id="scraper-error" style="display: none;">
