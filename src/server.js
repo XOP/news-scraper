@@ -294,7 +294,7 @@ server.register([
                             .header('X-Scraping-State', 'abort');
                     }, 1500);
                 } else {
-                    broadcast('Redirecting to the results page...');
+                    broadcast('Scraping successfully completed!');
 
                     const response = reply(data)
                         .header('X-Scraping-State', 'done')

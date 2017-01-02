@@ -14,7 +14,9 @@
             :current-value="progress.current"
             :total-value="progress.total"
             :message="progress.message"
+            :results-href="progress.resultsHref"
             @progress-abort="scrapingCancel"
+            @progress-close="progressSetup"
         ></progress-bar>
     </div>
 

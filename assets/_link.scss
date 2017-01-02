@@ -23,5 +23,13 @@ a,
     user-select: none;
 }
 
+.link--inverse {
+    color: $color-text-inverse;
+
+    &:hover {
+        color: $color-text-inverse-strong;
+    }
+}
+
 /* /Link
 ---------------------------------------------------------------------------------- */

@@ -14,7 +14,9 @@ console.log('NewScraper client is up and running!');
 
 const client = new Nes.Client('ws://localhost:9000/scraper/');
 
+//
 // ++ vue.js scaffolding
+//
 
 const appData = {
     settings: {
@@ -25,7 +27,8 @@ const appData = {
         message: '...',
         initial: 0,
         current: 0,
-        total: 50,
+        total: 0,
+        resultsHref: '#',
         isHidden: true
     }
 };
@@ -35,14 +38,17 @@ new Vue({
     data: appData,
     computed: {},
     methods: {
-        scrapingCancel: () => {
+        scrapingCancel: function () {
             client.message('scrapingCancel', (err) => {
                 if (err) {
                     console.error(err);
                 }
 
-                // todo: retry process
+                appData.progress.isHidden = true;
             });
+        },
+        progressSetup: function () {
+            appData.progress.isHidden = true;
         }
     },
     components: {
@@ -51,7 +57,9 @@ new Vue({
     }
 });
 
+//
 // -- vue.js scaffolding
+//
 
 const scraperSubmit = $.find('[data-id=scraper-submit]');
 const scraperSpinner = $.find('[data-id=scraper-spinner]');
@@ -76,6 +84,10 @@ scraperSubmit.addEventListener('click', function (evt) {
 
     scraperError.style.display = 'none';
     scraperSpinner.style.display = 'block';
+
+    appData.progress.isHidden = false;
+    appData.progress.current = appData.progress.initial;
+    appData.progress.total = appData.progress.initial;
 
     const directivesBody = new FormData();
 
@@ -102,7 +114,6 @@ scraperSubmit.addEventListener('click', function (evt) {
     const directiveGroupsTotal = directiveGroupsData.length;
 
     if (directiveGroupsTotal > 1) {
-        appData.progress.isHidden = false;
         appData.progress.total = directiveGroupsTotal * 2; // showing progress for both start and finish
     }
 
@@ -150,8 +161,10 @@ scraperSubmit.addEventListener('click', function (evt) {
         // const state = res.headers.get('X-Scraping-State');
 
         if (res.ok) {
+            appData.progress.current++;
+
             if (redirectUrl) {
-                window.location = redirectUrl;
+                appData.progress.resultsHref = redirectUrl;
             }
 
             return res.text();
@@ -172,9 +185,6 @@ scraperSubmit.addEventListener('click', function (evt) {
 
         scraperSubmit.disabled = 'disabled';
         scraperSpinner.style.display = 'none';
-
-        appData.progress.isHidden = true;
-        appData.progress.current = appData.progress.initial;
     });
 });
 

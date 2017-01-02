@@ -52,5 +52,22 @@
     font-size: $font-size-s;
 }
 
+.progress__feedback {
+    display: flex;
+    
+    justify-content: center;
+    align-items: center;
+
+    font-size: $font-size-s;
+}
+
+.progress__feedback__item {
+    flex: 0 1 auto;
+    
+    & + & {
+        margin-left: $offset-n;
+    }
+}
+
 /* /Progress
 ---------------------------------------------------------------------------------- */
