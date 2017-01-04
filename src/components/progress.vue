@@ -5,7 +5,7 @@
                 <progress :value="currentValue" :max="totalValue"></progress>
             </div>
             <div class="progress__message">{{ message }}</div>
-            <div class="progress__feedback" v-if="currentValue > totalValue">
+            <div class="progress__feedback" v-show="showFeedback">
                 <div class="progress__feedback__item">
                     <a class="link link--inverse" :href="resultsHref">
                         To the results
@@ -16,7 +16,7 @@
                 </div>
             </div>
         </div>
-        <div class="progress__control" v-if="currentValue < totalValue">
+        <div class="progress__control" v-show="showCancelButton">
             <button class="button" @click.prevent="cancelHandler">Cancel</button>
         </div>
     </div>
@@ -54,6 +54,14 @@
         computed: {
             showProgressElement: function () {
                 return this.totalValue > 2 && this.currentValue <= this.totalValue
+            },
+            
+            showCancelButton: function () {
+                return this.totalValue > 2 && this.currentValue < this.totalValue
+            },
+
+            showFeedback: function () {
+                return this.totalValue > 0 && this.currentValue > this.totalValue
             }
         },
     

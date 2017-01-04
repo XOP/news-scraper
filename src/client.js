@@ -123,9 +123,7 @@ scraperSubmit.addEventListener('click', function (evt) {
 
     const directiveGroupsTotal = directiveGroupsData.length;
 
-    if (directiveGroupsTotal > 1) {
-        appData.progress.total = directiveGroupsTotal * 2; // showing progress for both start and finish
-    }
+    appData.progress.total = directiveGroupsTotal * 2; // showing progress for both start and finish
 
     client.connect(err => {
         console.log('connect');
