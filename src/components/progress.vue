@@ -31,14 +31,17 @@
                 type: Number,
                 default: 1
             },
+
             totalValue: {
                 type: Number,
                 default: 50
             },
+
             message: {
                 type: String,
                 default: '...'
             },
+
             resultsHref: {
                 type: String
             }
@@ -56,10 +59,11 @@
     
         methods: {
             cancelHandler: function () {
-                this.$emit('progress-abort');
+                this.EventBus.$emit('progress-abort');
             },
+
             closeHandler: function () {
-                this.$emit('progress-close');
+                this.EventBus.$emit('progress-close');
             }
         }
     }

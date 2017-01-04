@@ -7,6 +7,7 @@ import * as $ from 'xop-module-utils';
 
 import sourceObjectToArray from './utils/source-obj-to-array.js';
 
+import VueEvents from './event-bus';
 import UpdateType from './components/update-type.vue';
 import Progress from './components/progress.vue';
 
@@ -33,6 +34,9 @@ const appData = {
     }
 };
 
+// event-bus init
+Vue.use(VueEvents);
+
 new Vue({
     el: '.scraper',
     data: appData,
@@ -47,6 +51,7 @@ new Vue({
                 appData.progress.isHidden = true;
             });
         },
+
         progressSetup: function () {
             appData.progress.isHidden = true;
         }
@@ -54,6 +59,11 @@ new Vue({
     components: {
         'update-type': UpdateType,
         'progress-bar': Progress
+    },
+
+    created () {
+        this.EventBus.$on('progress-abort', this.scrapingCancel);
+        this.EventBus.$on('progress-close', this.progressSetup);
     }
 });
 
