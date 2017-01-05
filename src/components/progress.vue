@@ -4,7 +4,11 @@
             <div class="progress__element" v-show="showProgressElement">
                 <progress :value="currentValue" :max="totalValue"></progress>
             </div>
-            <div class="progress__message">{{ message }}</div>
+            <div :class="messageClass" @click="messageToggle" title="Toggle full scraping log">
+                <div class="progress__message__content">
+                    <div v-for="message in messages">{{ message }}</div>
+                </div>
+            </div>
             <div class="progress__feedback" v-show="showFeedback">
                 <div class="progress__feedback__item">
                     <a class="link link--inverse" :href="resultsHref">
@@ -23,6 +27,8 @@
 </template>
 
 <script>
+    import cls from 'classnames';
+
     export default {
         name: 'progress',
     
@@ -37,9 +43,9 @@
                 default: 50
             },
 
-            message: {
-                type: String,
-                default: '...'
+            messages: {
+                type: Array,
+                default: []
             },
 
             resultsHref: {
@@ -48,10 +54,18 @@
         },
     
         data () {
-            return {}
+            return {
+                isMessageExpanded: false
+            }
         },
         
         computed: {
+            messageClass: function () {
+                return cls('progress__message', {
+                    'progress__message--is-expanded': this.isMessageExpanded
+                });
+            },
+
             showProgressElement: function () {
                 return this.totalValue > 2 && this.currentValue <= this.totalValue
             },
@@ -72,6 +86,10 @@
 
             closeHandler: function () {
                 this.EventBus.$emit('progress-close');
+            },
+            
+            messageToggle: function () {
+                this.isMessageExpanded = !this.isMessageExpanded;    
             }
         }
     }

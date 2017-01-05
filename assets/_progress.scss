@@ -8,6 +8,8 @@
     
     background: $color-bg-inverse-light;
     color: $color-text-inverse-light;
+
+    line-height: $line-height-n;
 }
 
 .progress__content {
@@ -47,9 +49,58 @@
 }
 
 .progress__message {
-    @include truncate();
+    display: flex;
+    
+    align-items: flex-end;
 
+    height: $font-size-s * $line-height-n;
+    overflow: hidden;
+    
     font-size: $font-size-s;
+    
+    transition: color $transition-duration $transition-duration;
+    
+    &:hover {
+        color: $color-text-inverse-strong;
+        
+        cursor: s-resize;
+    }
+}
+
+.progress__message--is-expanded {
+    height: auto;
+
+    &:hover {
+        color: $color-text-inverse-light;
+
+        cursor: n-resize;
+    }
+}
+
+.progress__message__content {
+    width: 100%;
+
+    & > div {
+        @include truncate();
+    }
+}
+
+.progress__message--is-expanded .progress__message__content {
+    max-height: 5.5 * $font-size-s * $line-height-n;
+
+    overflow-y: auto;
+    
+    & > div {
+        color: $color-text-inverse-light;
+
+        &:nth-last-child(2) {
+            color: $color-text-inverse;
+        }
+        
+        &:last-child {
+            color: $color-text-inverse-strong;
+        }
+    }
 }
 
 .progress__feedback {

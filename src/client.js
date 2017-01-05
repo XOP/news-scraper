@@ -25,7 +25,7 @@ const appData = {
     },
 
     progress: {
-        message: '...',
+        messages: [],
         initial: 0,
         current: 0,
         total: 0,
@@ -136,27 +136,27 @@ scraperSubmit.addEventListener('click', function (evt) {
     client.onUpdate = ({ message, type }) => {
         switch (type) {
             case 'scrapingStart':
-                appData.progress.message = `Now scraping from: ${message}`;
+                appData.progress.messages.push(`Now scraping from: ${message}`);
                 appData.progress.current++;
                 break;
 
             case 'scrapingEnd':
-                appData.progress.message = `Done! ${message.length} news scraped`;
+                appData.progress.messages.push(`Done! ${message.length} news scraped`);
                 appData.progress.current++;
                 break;
 
             case 'scrapingAbort':
-                appData.progress.message = message;
+                appData.progress.messages.push(message);
                 break;
 
             case 'scrapingError':
                 scraperError.style.display = 'block';
                 scraperErrorMessage.innerText = `Oops, an error occurred: ${message} :(`;
-                appData.progress.message = 'Refresh the page and give it another try!';
+                appData.progress.messages.push('Refresh the page and give it another try!');
                 break;
 
             default:
-                appData.progress.message = message;
+                appData.progress.messages.push(message);
         }
     };
 

@@ -84,6 +84,7 @@
     "watchify": "^3.7.0"
   },
   "dependencies": {
+    "classnames": "^2.2.5",
     "cross-env": "^1.0.8",
     "date-format": "0.0.2",
     "fs-extra": "^0.30.0",
