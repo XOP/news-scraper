@@ -62,6 +62,7 @@ gulp.task('styles', function () {
     ];
 
     return merge(
+
         // normalize
         gulp.src(path.resolve(__dirname, 'node_modules/normalize.css/normalize.css')),
 
@@ -75,6 +76,14 @@ gulp.task('styles', function () {
         }))
         .pipe($.postcss(postCssPlugins))
         .pipe(gulp.dest(paths.assets.output));
+});
+
+//
+// Fonts
+
+gulp.task('fonts', function () {
+    return gulp.src([path.join(paths.assets.input, 'fonts/*')])
+            .pipe(gulp.dest(path.join(paths.assets.output, 'fonts')));
 });
 
 // -----------------------------------------------------------------------------------------------------------------
@@ -209,7 +218,8 @@ gulp.task('js-watch', function () {
 
 gulp.task('assets', function () {
     return runSequence(
-        'styles'
+        'styles',
+        'fonts'
     );
 });
 

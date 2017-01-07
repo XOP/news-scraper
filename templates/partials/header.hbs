@@ -2,7 +2,10 @@
     <div class="header__content">
         {{#if link}}
             <div class="header__link">
-                <a class="header__link__elem" href="{{link.href}}" title="{{link.title}}">{{link.title}}</a>
+                <a class="link link--brand-inverse link--tdn" href="{{link.href}}" title="{{link.title}}">
+                    <span class="icon icon--arrow-left"></span>
+                    {{link.title}}
+                </a>
             </div>
         {{/if}}
         <div class="header__heading">

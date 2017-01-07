@@ -14,13 +14,13 @@ a,
     cursor: pointer;
 }
 
+.link--tdn {
+    text-decoration: none !important;
+}
+
 .link--pseudo {
     text-decoration: none !important;
     border-bottom: 1px dashed;
-}
-
-[data-id*=trigger] {
-    user-select: none;
 }
 
 .link--inverse {
@@ -29,6 +29,26 @@ a,
     &:hover {
         color: $color-text-inverse-strong;
     }
+}
+
+.link--brand {
+    color: $color-brand-main-dark;
+    
+    &:hover {
+        color: $color-brand-main;
+    }
+}
+
+.link--brand-inverse {
+    color: $color-brand-main-dark;
+
+    &:hover {
+        color: $color-text-inverse-strong;
+    }
+}
+
+[data-id*=trigger] {
+    user-select: none;
 }
 
 /* /Link
