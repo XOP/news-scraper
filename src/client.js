@@ -98,6 +98,7 @@ scraperSubmit.addEventListener('click', function (evt) {
     appData.progress.isHidden = false;
     appData.progress.current = appData.progress.initial;
     appData.progress.total = appData.progress.initial;
+    appData.progress.messages = [];
 
     const directivesBody = new FormData();
 
