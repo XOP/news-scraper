@@ -17,6 +17,14 @@
 
     align-items: center;
     justify-content: center;
+    
+    opacity: 0;
+    visibility: hidden;
+}
+
+.spinner--is-active {
+    opacity: 1;
+    visibility: visible;
 }
 
 .spinner__element {

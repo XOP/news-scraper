@@ -308,6 +308,37 @@ server.register([
             });
         }
     });
+
+    server.route({
+        method: 'POST',
+        path: '/scraper/directives',
+        config: {
+            pre: [
+                {
+                    method: function (request, reply) {
+                        let directives = [];
+
+                        const repoDirectives = cfg.repo.use && formatDirectives(paths.repoDirectives);
+                        const localDirectives = cfg.local.use && formatDirectives(paths.localDirectives);
+
+                        if (repoDirectives && repoDirectives.length) {
+                            directives = directives.concat(repoDirectives);
+                        }
+
+                        if (localDirectives && localDirectives.length) {
+                            directives = directives.concat(localDirectives);
+                        }
+
+                        reply(directives);
+                    },
+                    assign: 'directives'
+                }
+            ],
+            handler: function (request, reply) {
+                reply(request.pre.directives);
+            }
+        }
+    });
 });
 
 server.ext('onPreResponse', function (request, reply) {

@@ -48,6 +48,8 @@ const formatDirectives = (directivesPath) => {
             const formattedGroupDirectives = {
                 name: groupInfo.name || name,
                 description: groupInfo.description || description,
+
+                // fixme: stringify required for using in input value
                 directives: JSON.stringify(pureGroupDirectives)
             };
 

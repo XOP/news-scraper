@@ -8,8 +8,9 @@ import * as $ from 'xop-module-utils';
 import sourceObjectToArray from './utils/source-obj-to-array.js';
 
 import VueEvents from './event-bus';
-import UpdateType from './components/update-type.vue';
 import Progress from './components/progress.vue';
+import Spinner from './components/spinner.vue';
+import UpdateType from './components/update-type.vue';
 
 console.log('NewScraper client is up and running!');
 
@@ -31,13 +32,17 @@ const appData = {
         total: 0,
         resultsHref: '#',
         isHidden: true
-    }
+    },
+
+    isBusy: false,
+
+    directives: []
 };
 
 // event-bus init
 Vue.use(VueEvents);
 
-new Vue({
+const app = new Vue({
     el: '.scraper',
     data: appData,
     computed: {},
@@ -54,14 +59,39 @@ new Vue({
 
         progressSetup: function () {
             appData.progress.isHidden = true;
+        },
+
+        getDirectives: function () {
+            this.isBusy = true;
+
+            return fetch('/scraper/directives', {
+                method: 'POST'
+            }).then(res => {
+                if (res.ok) {
+                    return res.text();
+                }
+            }).then(textData => {
+                this.directives = JSON.parse(textData);
+            }).catch(err => {
+                console.error(err);
+            }).then(() => {
+                this.isBusy = false;
+            });
+        },
+
+        loadDirectives: function () {
+            this.getDirectives();
         }
     },
     components: {
-        'update-type': UpdateType,
-        'progress-bar': Progress
+        'progress-bar': Progress,
+        spinner: Spinner,
+        'update-type': UpdateType
     },
 
     created () {
+        this.getDirectives();
+
         this.EventBus.$on('progress-abort', this.scrapingCancel);
         this.EventBus.$on('progress-close', this.progressSetup);
     }
@@ -72,7 +102,6 @@ new Vue({
 //
 
 const scraperSubmit = $.find('[data-id=scraper-submit]');
-const scraperSpinner = $.find('[data-id=scraper-spinner]');
 const scraperError = $.find('[data-id=scraper-error]');
 const scraperErrorMessage = $.find('.message', scraperError);
 
@@ -93,7 +122,8 @@ scraperSubmit.addEventListener('click', function (evt) {
     evt.preventDefault();
 
     scraperError.style.display = 'none';
-    scraperSpinner.style.display = 'block';
+
+    app.isBusy = true;
 
     appData.progress.isHidden = false;
     appData.progress.current = appData.progress.initial;
@@ -193,7 +223,8 @@ scraperSubmit.addEventListener('click', function (evt) {
         });
 
         scraperSubmit.disabled = 'disabled';
-        scraperSpinner.style.display = 'none';
+
+        app.isBusy = false;
     });
 });
 

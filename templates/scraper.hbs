@@ -24,19 +24,17 @@
     
     <div class="scraper__form">
         {{#if directives}}
-        <form class="form" action="/scraper" method="post" data-id="scraper-form">
-            <div class="form__row">
-                {{#each directives}}
-                    {{> directive-group}}
-                {{/each}}
-            </div>
-            <div class="form__row">
-                <input type="submit" data-id="scraper-submit" disabled value="Get news!"/>
-            </div>
-        </form>
-        <strong data-id="scraper-spinner" style="display: none;">
-            {{> spinner screen=true}}
-        </strong>
+            <form class="form" action="/scraper" method="post" data-id="scraper-form">
+                <div class="form__row">
+                    {{#each directives}}
+                        {{> directive-group}}
+                    {{/each}}
+                </div>
+                <div class="form__row">
+                    <input type="submit" data-id="scraper-submit" disabled value="Get news!"/>
+                </div>
+            </form>
+            <spinner :is-active="isBusy" :screen="true"></spinner>
         {{else}}
             {{#>message}}
                 No directives found :(
