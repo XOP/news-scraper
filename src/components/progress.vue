@@ -11,7 +11,7 @@
             </div>
             <div class="progress__feedback" v-show="showFeedback">
                 <div class="progress__feedback__item">
-                    <a class="link link--inverse" :href="resultsHref">
+                    <a class="link link--inverse" :href="resultsHref" v-if="resultsHref !== ''">
                         To the results
                     </a>
                 </div>
@@ -49,7 +49,8 @@
             },
 
             resultsHref: {
-                type: String
+                type: String,
+                default: ''
             }
         },
     

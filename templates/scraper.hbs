@@ -41,4 +41,12 @@
             {{/message}}
         {{/if}}
     </div>
+    
+    <div class="scraper__results" v-if="!result.isHidden" v-for="section in result.pages">
+        <news-section
+            :data="section.data"
+            :title="section.title"
+            :url="section.url"
+        ></news-section>
+    </div>
 </div>

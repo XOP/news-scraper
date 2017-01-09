@@ -22,6 +22,7 @@
     position: relative; // spinner context
     
     min-height: $offset-n * 10;
+    margin-bottom: $offset-l;
 }
 
 .scraper__progress {

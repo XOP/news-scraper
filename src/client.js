@@ -8,6 +8,7 @@ import * as $ from 'xop-module-utils';
 import sourceObjectToArray from './utils/source-obj-to-array.js';
 
 import VueEvents from './event-bus';
+import NewsSection from './components/news-section.vue';
 import Progress from './components/progress.vue';
 import Spinner from './components/spinner.vue';
 import UpdateType from './components/update-type.vue';
@@ -16,10 +17,7 @@ console.log('NewScraper client is up and running!');
 
 const client = new Nes.Client('ws://localhost:9000/scraper/');
 
-//
-// ++ vue.js scaffolding
-//
-
+// vue app data
 const appData = {
     settings: {
         isHidden: false
@@ -30,7 +28,13 @@ const appData = {
         initial: 0,
         current: 0,
         total: 0,
-        resultsHref: '#',
+        resultsHref: '',
+        isHidden: true
+    },
+
+    result: {
+        current: {},
+        pages: [],
         isHidden: true
     },
 
@@ -42,10 +46,14 @@ const appData = {
 // event-bus init
 Vue.use(VueEvents);
 
+// app init
 const app = new Vue({
     el: '.scraper',
+
     data: appData,
+
     computed: {},
+
     methods: {
         scrapingCancel: function () {
             client.message('scrapingCancel', (err) => {
@@ -83,7 +91,9 @@ const app = new Vue({
             this.getDirectives();
         }
     },
+
     components: {
+        'news-section': NewsSection,
         'progress-bar': Progress,
         spinner: Spinner,
         'update-type': UpdateType
@@ -96,10 +106,6 @@ const app = new Vue({
         this.EventBus.$on('progress-close', this.progressSetup);
     }
 });
-
-//
-// -- vue.js scaffolding
-//
 
 const scraperSubmit = $.find('[data-id=scraper-submit]');
 const scraperError = $.find('[data-id=scraper-error]');
@@ -209,7 +215,14 @@ scraperSubmit.addEventListener('click', function (evt) {
             return res.text();
         }
     }).then(textData => {
-        console.log('data', JSON.parse(textData));
+        const parsedData = JSON.parse(textData);
+
+        console.log('data', parsedData);
+
+        if (parsedData.pages) {
+            appData.result.current = parsedData;
+            appData.result.pages = parsedData.pages;
+        }
     }).catch(err => {
         console.error(err);
 
