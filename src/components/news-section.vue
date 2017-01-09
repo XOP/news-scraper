@@ -1,7 +1,12 @@
 <template>
     <section class="news-section">
         <div class="news-section__heading">
-            {{ title }}
+            <heading
+                :level="2"
+                tag="h"
+            >
+                {{ title }}
+            </heading>
         </div>
         <div class="news-section__url">{{ url }}</div>
         <div class="news-section__content" v-show="false">
@@ -12,6 +17,8 @@
 
 <script>
     import cls from 'classnames';
+    
+    import Heading from './heading';
 
     export default {
         name: 'news-section',
@@ -37,6 +44,10 @@
         
         computed: {},
     
-        methods: {}
+        methods: {},
+        
+        components: {
+            heading: Heading
+        }
     }
 </script>

@@ -8,6 +8,8 @@ import * as $ from 'xop-module-utils';
 import sourceObjectToArray from './utils/source-obj-to-array.js';
 
 import VueEvents from './event-bus';
+
+import Heading from './components/heading';
 import NewsSection from './components/news-section.vue';
 import Progress from './components/progress.vue';
 import Spinner from './components/spinner.vue';
@@ -93,6 +95,7 @@ const app = new Vue({
     },
 
     components: {
+        heading: Heading,
         'news-section': NewsSection,
         'progress-bar': Progress,
         spinner: Spinner,
