@@ -1,7 +1,9 @@
 const Heading = {
     render: function (createElement) {
+        const tagName = this.tag === 'h' ? `${this.tag}${this.level}` : this.tag;
+
         return createElement(
-            `${this.tag}${this.level}`,
+            tagName,
             {
                 attrs: {
                     class: `heading heading--${this.level}`
@@ -14,7 +16,7 @@ const Heading = {
     props: {
         tag: {
             type: String,
-            default: 'div'
+            default: 'h'
         },
 
         level: {
