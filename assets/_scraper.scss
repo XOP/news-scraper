@@ -9,6 +9,17 @@
     margin-bottom: $offset-l;
 }
 
+.scraper__debug {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    
+    width: 50%;
+    padding: $offset-n;
+
+    text-align: right;
+}
+
 .scraper__settings {
     border-bottom: 1px solid $color-border-regular;
 }

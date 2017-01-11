@@ -10,6 +10,7 @@ import sourceObjectToArray from './utils/source-obj-to-array.js';
 import VueEvents from './event-bus';
 
 import Heading from './components/heading';
+import Icon from './components/icon.vue';
 import NewsSection from './components/news-section.vue';
 import Progress from './components/progress.vue';
 import Spinner from './components/spinner.vue';
@@ -21,6 +22,8 @@ const client = new Nes.Client('ws://localhost:9000/scraper/');
 
 // vue app data
 const appData = {
+    debug: true,
+
     settings: {
         isHidden: false
     },
@@ -91,11 +94,24 @@ const app = new Vue({
 
         loadDirectives: function () {
             this.getDirectives();
+        },
+
+        debugSaveData: function () {
+            return false;
+        },
+
+        debugLoadData: function () {
+            return false;
+        },
+
+        debugClearData: function () {
+            return false;
         }
     },
 
     components: {
         heading: Heading,
+        icon: Icon,
         'news-section': NewsSection,
         'progress-bar': Progress,
         spinner: Spinner,

@@ -49,4 +49,16 @@
             :url="section.url"
         ></news-section>
     </div>
+
+    <div class="scraper__debug" v-if="debug">
+        <button class="button button--small" @click="debugSaveData">
+            <icon name="download"></icon>
+        </button>
+        <button class="button button--small" @click="debugLoadData">
+            <icon name="upload"></icon>
+        </button>
+        <button class="button button--small" @click="debugClearData">
+            <icon name="trash"></icon>
+        </button>
+    </div>
 </div>

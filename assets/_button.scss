@@ -8,6 +8,7 @@ input[type=submit],
     display: inline-block;
     vertical-align: top;
 
+    height: $offset-s * 2 + $font-size-n;
     padding: $offset-s $offset-n;
     border: 1px solid transparent;
     border-bottom-color: darken($color-brand-secondary, 25%);
@@ -76,10 +77,14 @@ input[type=submit].button--secondary,
 }
 
 .button--small {
+    height: $offset-s * 2 + $font-size-s;
+
     font-size: $font-size-s;
 }
 
 .button--big {
+    height: $offset-s * 2 + $font-size-l;
+
     font-size: $font-size-l;
 }
 
