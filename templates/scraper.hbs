@@ -17,9 +17,14 @@
             :results-href="progress.resultsHref"
         ></progress-bar>
     </div>
-
-    <div class="scraper__error" data-id="scraper-error" style="display: none;">
-        {{> message type='error'}}
+    
+    <div class="scraper__error" v-if="!error.isHidden">
+        <message
+            icon
+            type="error"
+            v-text="error.value"
+        >
+        </message>
     </div>
     
     <div class="scraper__form">
@@ -50,6 +55,7 @@
         ></news-section>
     </div>
 
+    <!-- debug/ -->
     <div class="scraper__debug" v-if="debug">
         <button class="button button--small" @click="debugSaveData">
             <icon name="download"></icon>
@@ -61,4 +67,5 @@
             <icon name="trash"></icon>
         </button>
     </div>
+    <!-- /debug -->
 </div>

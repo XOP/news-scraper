@@ -2,7 +2,6 @@
 ---------------------------------------------------------------------------------- */
 
 .message {
-    font-size: $font-size-s;
     color: $color-text-regular;
 }
 
@@ -16,6 +15,10 @@
 
 .message--success {
     color: $color-util-success;
+}
+
+.message__content {
+    font-size: $font-size-s;
 }
 
 /* /Message

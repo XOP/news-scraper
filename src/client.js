@@ -11,6 +11,7 @@ import VueEvents from './event-bus';
 
 import Heading from './components/heading';
 import Icon from './components/icon.vue';
+import Message from './components/message.vue';
 import NewsSection from './components/news-section.vue';
 import Progress from './components/progress.vue';
 import Spinner from './components/spinner.vue';
@@ -22,10 +23,15 @@ const client = new Nes.Client('ws://localhost:9000/scraper/');
 
 // vue app data
 const appData = {
-    debug: true,
+    debug: false,
 
     settings: {
         isHidden: false
+    },
+
+    error: {
+        isHidden: true,
+        value: ''
     },
 
     progress: {
@@ -112,6 +118,7 @@ const app = new Vue({
     components: {
         heading: Heading,
         icon: Icon,
+        message: Message,
         'news-section': NewsSection,
         'progress-bar': Progress,
         spinner: Spinner,
@@ -127,9 +134,6 @@ const app = new Vue({
 });
 
 const scraperSubmit = $.find('[data-id=scraper-submit]');
-const scraperError = $.find('[data-id=scraper-error]');
-const scraperErrorMessage = $.find('.message', scraperError);
-
 const directiveGroups = $.findAll('[data-id=directive-group-check]');
 const updateType = $.find('[data-id=update-type-value]');
 
@@ -146,10 +150,9 @@ directiveGroups.forEach(elem => {
 scraperSubmit.addEventListener('click', function (evt) {
     evt.preventDefault();
 
-    scraperError.style.display = 'none';
-
     app.isBusy = true;
 
+    appData.error.isHidden = true;
     appData.progress.isHidden = false;
     appData.progress.current = appData.progress.initial;
     appData.progress.total = appData.progress.initial;
@@ -206,8 +209,8 @@ scraperSubmit.addEventListener('click', function (evt) {
                 break;
 
             case 'scrapingError':
-                scraperError.style.display = 'block';
-                scraperErrorMessage.innerText = `Oops, an error occurred: ${message} :(`;
+                appData.error.isHidden = false;
+                appData.error.value = `Oops, an error occurred: ${message} :(`;
                 appData.progress.messages.push('Refresh the page and give it another try!');
                 break;
 
@@ -245,8 +248,8 @@ scraperSubmit.addEventListener('click', function (evt) {
     }).catch(err => {
         console.error(err);
 
-        scraperErrorMessage.innerText = `Something went wrong: ${err}`;
-        scraperError.style.display = 'block';
+        appData.error.isHidden = false;
+        appData.error.value = `Something went wrong: ${err}`;
     }).then(() => {
         client.disconnect();
 
