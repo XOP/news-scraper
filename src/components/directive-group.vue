@@ -9,6 +9,7 @@
                     :name="name" 
                     type="checkbox" 
                     :value="directives"
+                    @change="directiveGroupCheckHandler"
                 />
                 <span class="checkbox__text">
                     <div class="directive-group__name">
@@ -60,7 +61,9 @@
     
         data () {
             return {
-                isCodeOpened: false
+                isCodeOpened: false,
+                
+                isSelected: false,
             }
         },
         
@@ -85,11 +88,29 @@
         methods: {
             codeToggleHandler: function () {
                 this.isCodeOpened = !this.isCodeOpened
+            },
+            
+            directiveGroupCheckHandler: function (e) {
+                const isChecked = e.target.checked;
+                
+                if (isChecked) {
+                    this.EventBus.$emit('directive-group-select');
+                    this.isSelected = true;
+                } else {
+                    this.EventBus.$emit('directive-group-deselect');
+                    this.isSelected = false;
+                }
             }
         },
         
         components: {
             icon: Icon
+        },
+        
+        created: function () {
+            this.EventBus.$on('all-deselect', function () {
+                this.isSelected = false; 
+            });
         }
     }
 </script>

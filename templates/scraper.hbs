@@ -29,7 +29,7 @@
     
     <div class="scraper__form">
         {{#if directives}}
-            <form class="form" action="/scraper" method="post" data-id="scraper-form">
+            <form class="form" action="/scraper" method="post">
                 <div class="form__row">
                     <directive-group
                         v-for="group in directives"
@@ -39,7 +39,7 @@
                     ></directive-group>
                 </div>
                 <div class="form__row">
-                    <input type="submit" data-id="scraper-submit" disabled value="Get news!"/>
+                    <input type="submit" data-id="scraper-submit" :disabled="isSubmitDisabled" value="Get news!"/>
                 </div>
             </form>
             <spinner :is-active="isBusy" :screen="true"></spinner>

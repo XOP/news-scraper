@@ -35,6 +35,10 @@ const appData = {
         value: ''
     },
 
+    form: {
+
+    },
+
     progress: {
         messages: [],
         initial: 0,
@@ -52,7 +56,8 @@ const appData = {
 
     isBusy: false,
 
-    directives: []
+    directives: [],
+    directiveGroupsChecked: 0
 };
 
 // event-bus init
@@ -64,7 +69,11 @@ const app = new Vue({
 
     data: appData,
 
-    computed: {},
+    computed: {
+        isSubmitDisabled: function () {
+            return this.directiveGroupsChecked === 0 ? 'disabled' : false;
+        }
+    },
 
     methods: {
         scrapingCancel: function () {
@@ -103,6 +112,18 @@ const app = new Vue({
 
         debugClearData: function () {
             return false;
+        },
+
+        directiveGroupSelect: function () {
+            this.directiveGroupsChecked += 1;
+        },
+
+        directiveGroupDeSelect: function () {
+            this.directiveGroupsChecked -= 1;
+        },
+
+        deselectAll: function () {
+            this.EventBus.$emit('all-deselect');
         }
     },
 
@@ -130,22 +151,14 @@ const app = new Vue({
 
         this.EventBus.$on('progress-abort', this.scrapingCancel);
         this.EventBus.$on('progress-close', this.progressSetup);
+
+        this.EventBus.$on('directive-group-select', this.directiveGroupSelect);
+        this.EventBus.$on('directive-group-deselect', this.directiveGroupDeSelect);
     }
 });
 
 const scraperSubmit = $.find('[data-id=scraper-submit]');
-const directiveGroups = $.findAll('[data-id=directive-group-check]');
 const updateType = $.find('[data-id=update-type-value]');
-
-directiveGroups.forEach(elem => {
-    elem.addEventListener('change', function () {
-        if (validateChecked(directiveGroups)) {
-            scraperSubmit.disabled = '';
-        } else {
-            scraperSubmit.disabled = 'disabled';
-        }
-    });
-});
 
 scraperSubmit.addEventListener('click', function (evt) {
     evt.preventDefault();
@@ -160,7 +173,9 @@ scraperSubmit.addEventListener('click', function (evt) {
 
     const directivesBody = new FormData();
 
+    const directiveGroups = $.findAll('.directive-group input[type=checkbox]');
     const directiveGroupsChecked = directiveGroups.filter(elem => elem.checked);
+
     const directiveGroupsData = directiveGroupsChecked.reduce(
         (total, elem) => {
             let groupData = JSON.parse(elem.value);
@@ -253,28 +268,9 @@ scraperSubmit.addEventListener('click', function (evt) {
     }).then(() => {
         client.disconnect();
 
-        directiveGroups.forEach(elem => {
-            elem.checked = false;
-        });
+        app.deselectAll();
 
-        scraperSubmit.disabled = 'disabled';
-
+        app.isSubmitDisabled = true;
         app.isBusy = false;
     });
 });
-
-const groupCodeTrigger = $.findAll('[data-id=group-code-trigger]');
-
-groupCodeTrigger.forEach(elem => {
-    elem.addEventListener('click', function (evt) {
-        evt.preventDefault();
-
-        const groupCode = elem.parentNode;
-
-        groupCode.classList.toggle('directive-group__code--is-opened');
-    });
-});
-
-function validateChecked (group) {
-    return group.filter(elem => elem.checked).length > 0;
-}
