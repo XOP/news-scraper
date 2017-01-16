@@ -31,9 +31,12 @@
         {{#if directives}}
             <form class="form" action="/scraper" method="post" data-id="scraper-form">
                 <div class="form__row">
-                    {{#each directives}}
-                        {{> directive-group}}
-                    {{/each}}
+                    <directive-group
+                        v-for="group in directives"
+                        :description="group.description"
+                        :directives="group.directives"
+                        :name="group.name"
+                    ></directive-group>
                 </div>
                 <div class="form__row">
                     <input type="submit" data-id="scraper-submit" disabled value="Get news!"/>
@@ -41,9 +44,11 @@
             </form>
             <spinner :is-active="isBusy" :screen="true"></spinner>
         {{else}}
-            {{#>message}}
+            <message
+                icon="sad"
+            >
                 No directives found :(
-            {{/message}}
+            </message>
         {{/if}}
     </div>
     

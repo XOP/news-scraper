@@ -11,6 +11,7 @@ import VueEvents from './event-bus';
 
 import Heading from './components/heading';
 import Icon from './components/icon.vue';
+import DirectiveGroup from './components/directive-group.vue';
 import Message from './components/message.vue';
 import NewsSection from './components/news-section.vue';
 import Progress from './components/progress.vue';
@@ -81,25 +82,15 @@ const app = new Vue({
         },
 
         getDirectives: function () {
-            this.isBusy = true;
-
             return fetch('/scraper/directives', {
                 method: 'POST'
             }).then(res => {
                 if (res.ok) {
                     return res.text();
                 }
-            }).then(textData => {
-                this.directives = JSON.parse(textData);
             }).catch(err => {
                 console.error(err);
-            }).then(() => {
-                this.isBusy = false;
             });
-        },
-
-        loadDirectives: function () {
-            this.getDirectives();
         },
 
         debugSaveData: function () {
@@ -118,6 +109,7 @@ const app = new Vue({
     components: {
         heading: Heading,
         icon: Icon,
+        'directive-group': DirectiveGroup,
         message: Message,
         'news-section': NewsSection,
         'progress-bar': Progress,
@@ -126,7 +118,15 @@ const app = new Vue({
     },
 
     created () {
-        this.getDirectives();
+        this.isBusy = true;
+
+        this.getDirectives()
+            .then(textData => {
+                this.directives = JSON.parse(textData);
+            })
+            .then(() => {
+                this.isBusy = false;
+            });
 
         this.EventBus.$on('progress-abort', this.scrapingCancel);
         this.EventBus.$on('progress-close', this.progressSetup);
