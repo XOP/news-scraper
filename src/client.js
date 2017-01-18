@@ -15,6 +15,7 @@ import DirectiveGroup from './components/directive-group.vue';
 import Message from './components/message.vue';
 import NewsSection from './components/news-section.vue';
 import Progress from './components/progress.vue';
+import ScraperForm from './components/scraper-form.vue';
 import Spinner from './components/spinner.vue';
 import UpdateType from './components/update-type.vue';
 
@@ -140,6 +141,7 @@ const app = new Vue({
         message: Message,
         'news-section': NewsSection,
         'progress-bar': Progress,
+        'scraper-form': ScraperForm,
         spinner: Spinner,
         'update-type': UpdateType
     },

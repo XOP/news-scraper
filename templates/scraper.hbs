@@ -28,6 +28,8 @@
     </div>
     
     <div class="scraper__form">
+        <scraper-form v-show="false"></scraper-form>
+        
         {{#if directives}}
             <form class="form" action="/scraper" method="post">
                 <div class="form__row">
