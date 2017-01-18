@@ -57,7 +57,7 @@ const appData = {
     isBusy: false,
 
     directives: [],
-    directiveGroupsChecked: 0
+    directiveGroupsSelected: []
 };
 
 // event-bus init
@@ -71,7 +71,7 @@ const app = new Vue({
 
     computed: {
         isSubmitDisabled: function () {
-            return this.directiveGroupsChecked === 0 ? 'disabled' : false;
+            return this.directiveGroupsSelected.length === 0 ? 'disabled' : false;
         }
     },
 
@@ -114,12 +114,18 @@ const app = new Vue({
             return false;
         },
 
-        directiveGroupSelect: function () {
-            this.directiveGroupsChecked += 1;
+        directiveGroupSelect: function (id) {
+            this.directives[id].isSelected = true;
+            this.updateSelectedGroups();
         },
 
-        directiveGroupDeSelect: function () {
-            this.directiveGroupsChecked -= 1;
+        directiveGroupDeSelect: function (id) {
+            this.directives[id].isSelected = false;
+            this.updateSelectedGroups();
+        },
+
+        updateSelectedGroups: function () {
+            return this.directiveGroupsSelected = this.directives.filter(item => item.isSelected);
         },
 
         deselectAll: function () {

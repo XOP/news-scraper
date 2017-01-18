@@ -32,9 +32,10 @@
             <form class="form" action="/scraper" method="post">
                 <div class="form__row">
                     <directive-group
-                        v-for="group in directives"
+                        v-for="(group, idx) in directives"
                         :description="group.description"
                         :directives="group.directives"
+                        :id="idx"
                         :name="group.name"
                     ></directive-group>
                 </div>

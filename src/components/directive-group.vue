@@ -53,6 +53,8 @@
             
             directives: [String, Array, Object],
             
+            id: [Number, String],
+            
             name: {
                 type: String,
                 required: true
@@ -94,10 +96,10 @@
                 const isChecked = e.target.checked;
                 
                 if (isChecked) {
-                    this.EventBus.$emit('directive-group-select');
+                    this.EventBus.$emit('directive-group-select', this.id);
                     this.isSelected = true;
                 } else {
-                    this.EventBus.$emit('directive-group-deselect');
+                    this.EventBus.$emit('directive-group-deselect', this.id);
                     this.isSelected = false;
                 }
             }
