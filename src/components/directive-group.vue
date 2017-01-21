@@ -109,7 +109,7 @@
             icon: Icon
         },
         
-        created: function () {
+        mounted () {
             this.EventBus.$on('all-deselect', function () {
                 this.isSelected = false; 
             });

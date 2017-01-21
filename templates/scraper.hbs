@@ -23,36 +23,16 @@
             icon
             type="error"
             v-text="error.value"
-        >
-        </message>
+        ></message>
     </div>
     
     <div class="scraper__form">
-        <scraper-form v-show="false"></scraper-form>
-        
-        {{#if directives}}
-            <form class="form" action="/scraper" method="post">
-                <div class="form__row">
-                    <directive-group
-                        v-for="(group, idx) in directives"
-                        :description="group.description"
-                        :directives="group.directives"
-                        :id="idx"
-                        :name="group.name"
-                    ></directive-group>
-                </div>
-                <div class="form__row">
-                    <input type="submit" data-id="scraper-submit" :disabled="isSubmitDisabled" value="Get news!"/>
-                </div>
-            </form>
-            <spinner :is-active="isBusy" :screen="true"></spinner>
-        {{else}}
-            <message
-                icon="sad"
-            >
-                No directives found :(
-            </message>
-        {{/if}}
+        <scraper-form
+            :directives="directives"
+            :directive-groups-selected="directiveGroupsSelected"
+            :directives-selected="directivesSelected"
+            :is-busy="isBusy"
+        ></scraper-form>
     </div>
     
     <div class="scraper__results" v-if="!result.isHidden" v-for="section in result.pages">

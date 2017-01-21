@@ -11,12 +11,10 @@ import VueEvents from './event-bus';
 
 import Heading from './components/heading';
 import Icon from './components/icon.vue';
-import DirectiveGroup from './components/directive-group.vue';
 import Message from './components/message.vue';
 import NewsSection from './components/news-section.vue';
 import Progress from './components/progress.vue';
 import ScraperForm from './components/scraper-form.vue';
-import Spinner from './components/spinner.vue';
 import UpdateType from './components/update-type.vue';
 
 console.log('NewScraper client is up and running!');
@@ -58,7 +56,8 @@ const appData = {
     isBusy: false,
 
     directives: [],
-    directiveGroupsSelected: []
+    directiveGroupsSelected: [],
+    directivesSelected: []
 };
 
 // event-bus init
@@ -69,12 +68,6 @@ const app = new Vue({
     el: '.scraper',
 
     data: appData,
-
-    computed: {
-        isSubmitDisabled: function () {
-            return this.directiveGroupsSelected.length === 0 ? 'disabled' : false;
-        }
-    },
 
     methods: {
         scrapingCancel: function () {
@@ -117,32 +110,147 @@ const app = new Vue({
 
         directiveGroupSelect: function (id) {
             this.directives[id].isSelected = true;
-            this.updateSelectedGroups();
+
+            return this.updateSelectedGroups();
         },
 
         directiveGroupDeSelect: function (id) {
             this.directives[id].isSelected = false;
-            this.updateSelectedGroups();
+
+            return this.updateSelectedGroups();
         },
 
         updateSelectedGroups: function () {
-            return this.directiveGroupsSelected = this.directives.filter(item => item.isSelected);
+            this.directiveGroupsSelected = this.directives.filter(item => item.isSelected);
         },
 
         deselectAll: function () {
             this.EventBus.$emit('all-deselect');
+        },
+
+        handleFormSubmit: function () {
+            const updateType = $.find('[data-id=update-type-value]');
+
+            app.isBusy = true;
+
+            appData.error.isHidden = true;
+            appData.progress.isHidden = false;
+            appData.progress.current = appData.progress.initial;
+            appData.progress.total = appData.progress.initial;
+            appData.progress.messages = [];
+
+            const directivesBody = new FormData();
+
+            const directiveGroups = $.findAll('.directive-group input[type=checkbox]');
+            const directiveGroupsChecked = directiveGroups.filter(elem => elem.checked);
+
+            const directiveGroupsData = directiveGroupsChecked.reduce(
+                (total, elem) => {
+                    let groupData = JSON.parse(elem.value);
+
+                    groupData = sourceObjectToArray(groupData);
+
+                    return total.concat(groupData);
+                },
+                []
+            );
+
+            directivesBody.append('directives', JSON.stringify(directiveGroupsData));
+
+            const updateTypeValue = updateType.value;
+
+            directivesBody.append('userCfg', JSON.stringify({
+                limit: updateTypeValue
+            }));
+
+            const directiveGroupsTotal = directiveGroupsData.length;
+
+            appData.progress.total = directiveGroupsTotal * 2; // showing progress for both start and finish
+
+            client.connect(err => {
+                console.log('connect');
+
+                if (err) {
+                    console.error('Socket connection error', err);
+                }
+            });
+
+            client.onUpdate = ({ message, type }) => {
+                switch (type) {
+                    case 'scrapingStart':
+                        appData.progress.messages.push(`Now scraping from: ${message}`);
+                        appData.progress.current++;
+                        break;
+
+                    case 'scrapingEnd':
+                        appData.progress.messages.push(`Done! ${message.length} news scraped`);
+                        appData.progress.current++;
+                        break;
+
+                    case 'scrapingAbort':
+                        appData.progress.messages.push(message);
+                        break;
+
+                    case 'scrapingError':
+                        appData.error.isHidden = false;
+                        appData.error.value = `Oops, an error occurred: ${message} :(`;
+                        appData.progress.messages.push('Refresh the page and give it another try!');
+                        break;
+
+                    default:
+                        appData.progress.messages.push(message);
+                }
+            };
+
+            fetch('/scraper', {
+                method: 'POST',
+                body: directivesBody
+            }).then(res => {
+                const redirectUrl = res.headers.get('X-Scraping-Redirect');
+
+                // const state = res.headers.get('X-Scraping-State');
+
+                if (res.ok) {
+                    appData.progress.current++;
+
+                    if (redirectUrl) {
+                        appData.progress.resultsHref = redirectUrl;
+                    }
+
+                    return res.text();
+                }
+            }).then(textData => {
+                const parsedData = JSON.parse(textData);
+
+                console.log('data', parsedData);
+
+                if (parsedData.pages) {
+                    appData.result.current = parsedData;
+                    appData.result.pages = parsedData.pages;
+                }
+            }).catch(err => {
+                console.error(err);
+
+                appData.error.isHidden = false;
+                appData.error.value = `Something went wrong: ${err}`;
+            }).then(() => {
+                client.disconnect();
+
+                app.deselectAll();
+
+                app.isSubmitDisabled = true;
+                app.isBusy = false;
+            });
         }
     },
 
     components: {
         heading: Heading,
         icon: Icon,
-        'directive-group': DirectiveGroup,
         message: Message,
         'news-section': NewsSection,
         'progress-bar': Progress,
         'scraper-form': ScraperForm,
-        spinner: Spinner,
         'update-type': UpdateType
     },
 
@@ -156,129 +264,15 @@ const app = new Vue({
             .then(() => {
                 this.isBusy = false;
             });
+    },
 
+    mounted () {
         this.EventBus.$on('progress-abort', this.scrapingCancel);
         this.EventBus.$on('progress-close', this.progressSetup);
 
         this.EventBus.$on('directive-group-select', this.directiveGroupSelect);
         this.EventBus.$on('directive-group-deselect', this.directiveGroupDeSelect);
+
+        this.EventBus.$on('form-submit', this.handleFormSubmit);
     }
-});
-
-const scraperSubmit = $.find('[data-id=scraper-submit]');
-const updateType = $.find('[data-id=update-type-value]');
-
-scraperSubmit.addEventListener('click', function (evt) {
-    evt.preventDefault();
-
-    app.isBusy = true;
-
-    appData.error.isHidden = true;
-    appData.progress.isHidden = false;
-    appData.progress.current = appData.progress.initial;
-    appData.progress.total = appData.progress.initial;
-    appData.progress.messages = [];
-
-    const directivesBody = new FormData();
-
-    const directiveGroups = $.findAll('.directive-group input[type=checkbox]');
-    const directiveGroupsChecked = directiveGroups.filter(elem => elem.checked);
-
-    const directiveGroupsData = directiveGroupsChecked.reduce(
-        (total, elem) => {
-            let groupData = JSON.parse(elem.value);
-
-            groupData = sourceObjectToArray(groupData);
-
-            return total.concat(groupData);
-        },
-        []
-    );
-
-    directivesBody.append('directives', JSON.stringify(directiveGroupsData));
-
-    const updateTypeValue = updateType.value;
-
-    directivesBody.append('userCfg', JSON.stringify({
-        limit: updateTypeValue
-    }));
-
-    const directiveGroupsTotal = directiveGroupsData.length;
-
-    appData.progress.total = directiveGroupsTotal * 2; // showing progress for both start and finish
-
-    client.connect(err => {
-        console.log('connect');
-
-        if (err) {
-            console.error('Socket connection error', err);
-        }
-    });
-
-    client.onUpdate = ({ message, type }) => {
-        switch (type) {
-            case 'scrapingStart':
-                appData.progress.messages.push(`Now scraping from: ${message}`);
-                appData.progress.current++;
-                break;
-
-            case 'scrapingEnd':
-                appData.progress.messages.push(`Done! ${message.length} news scraped`);
-                appData.progress.current++;
-                break;
-
-            case 'scrapingAbort':
-                appData.progress.messages.push(message);
-                break;
-
-            case 'scrapingError':
-                appData.error.isHidden = false;
-                appData.error.value = `Oops, an error occurred: ${message} :(`;
-                appData.progress.messages.push('Refresh the page and give it another try!');
-                break;
-
-            default:
-                appData.progress.messages.push(message);
-        }
-    };
-
-    fetch('/scraper', {
-        method: 'POST',
-        body: directivesBody
-    }).then(res => {
-        const redirectUrl = res.headers.get('X-Scraping-Redirect');
-
-        // const state = res.headers.get('X-Scraping-State');
-
-        if (res.ok) {
-            appData.progress.current++;
-
-            if (redirectUrl) {
-                appData.progress.resultsHref = redirectUrl;
-            }
-
-            return res.text();
-        }
-    }).then(textData => {
-        const parsedData = JSON.parse(textData);
-
-        console.log('data', parsedData);
-
-        if (parsedData.pages) {
-            appData.result.current = parsedData;
-            appData.result.pages = parsedData.pages;
-        }
-    }).catch(err => {
-        console.error(err);
-
-        appData.error.isHidden = false;
-        appData.error.value = `Something went wrong: ${err}`;
-    }).then(() => {
-        client.disconnect();
-
-        app.deselectAll();
-
-        app.isSubmitDisabled = true;
-        app.isBusy = false;
-    });
 });
