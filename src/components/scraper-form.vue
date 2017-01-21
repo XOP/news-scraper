@@ -1,37 +1,41 @@
 <template>
     <section class="scraper-form">
 
-        <form 
-            class="form" 
-            action="/scraper" 
-            method="post"
-            v-if="directives.length"
-            @submit.prevent="handleSubmit"
-        >
-            <div class="form__row">
-                <directive-group
-                    v-for="(group, idx) in directives"
-                    :description="group.description"
-                    :directives="group.directives"
-                    :id="idx"
-                    :name="group.name"
-                ></directive-group>
-            </div>
-            <div class="form__row">
-                <input 
-                    type="submit"
-                    :disabled="isDisabled" 
-                    value="Get news!"
-                />
-            </div>
-        </form>
-        
-        <message
-            icon="sad"
-            v-if="directives.length === 0"
-        >
-            No directives :(
-        </message>
+        <div class="scraper-form__form">
+            <form 
+                class="form" 
+                action="/scraper" 
+                method="post"
+                v-if="directives.length"
+                @submit.prevent="handleSubmit"
+            >
+                <div class="form__row">
+                    <directive-group
+                        v-for="(group, idx) in directives"
+                        :description="group.description"
+                        :directives="group.directives"
+                        :id="idx"
+                        :name="group.name"
+                    ></directive-group>
+                </div>
+                <div class="form__row">
+                    <input 
+                        type="submit"
+                        :disabled="isDisabled" 
+                        value="Get news!"
+                    />
+                </div>
+            </form>
+        </div>
+
+        <div class="scraper-form__empty">
+            <message
+                icon="sad"
+                v-if="directives.length === 0"
+            >
+                No directives
+            </message>
+        </div>
 
         <spinner :is-active="isBusy" :screen="true"></spinner>
     </section>
@@ -46,7 +50,7 @@
 
     export default {
         name: 'scraper-form',
-    
+
         props: {
             directives: {
                 type: Array,
@@ -73,29 +77,29 @@
                 type: Boolean
             }
         },
-    
+
         data () {
             return {
-            
+
             }
         },
-        
+
         computed: {
             isDisabled: function () {
                 return this.directiveGroupsSelected.length === 0 ? 'disabled' : false;
             }
         },
-    
-        methods: {
-            handleSubmit: function () {
-                this.EventBus.$emit('form-submit');
-            }
-        },
-        
+
         components: {
             'directive-group': DirectiveGroup,
             message: Message,
             spinner: Spinner
+        },
+
+        methods: {
+            handleSubmit: function () {
+                this.EventBus.$emit('form-submit');
+            }
         }
     }
 </script>

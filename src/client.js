@@ -26,7 +26,8 @@ const appData = {
     debug: false,
 
     settings: {
-        isHidden: false
+        isHidden: false,
+        limit: 0
     },
 
     error: {
@@ -69,6 +70,46 @@ const app = new Vue({
 
     data: appData,
 
+    components: {
+        heading: Heading,
+        icon: Icon,
+        message: Message,
+        'news-section': NewsSection,
+        'progress-bar': Progress,
+        'scraper-form': ScraperForm,
+        'update-type': UpdateType
+    },
+
+    created () {
+        this.isBusy = true;
+
+        this.getDirectives()
+            .then(textData => {
+                this.directives = JSON.parse(textData);
+            })
+            .then(() => {
+                this.isBusy = false;
+            });
+    },
+
+    mounted () {
+        const _this = this;
+
+        this.EventBus.$on('progress-abort', this.scrapingCancel);
+        this.EventBus.$on('progress-close', this.progressSetup);
+
+        this.EventBus.$on('form-submit', this.handleFormSubmit);
+
+        // storage operations
+        this.EventBus.$on('directive-group-select', this.directiveGroupSelect);
+        this.EventBus.$on('directive-group-deselect', this.directiveGroupDeSelect);
+
+        // settings
+        this.EventBus.$on('settings-update-limit', (limit) => {
+            _this.handleSettingsUpdate({ limit });
+        });
+    },
+
     methods: {
         scrapingCancel: function () {
             client.message('scrapingCancel', (err) => {
@@ -108,6 +149,10 @@ const app = new Vue({
             return false;
         },
 
+        handleSettingsUpdate: function (update) {
+            app.$data.settings = Object.assign(app.$data.settings, update);
+        },
+
         directiveGroupSelect: function (id) {
             this.directives[id].isSelected = true;
 
@@ -129,9 +174,7 @@ const app = new Vue({
         },
 
         handleFormSubmit: function () {
-            const updateType = $.find('[data-id=update-type-value]');
-
-            app.isBusy = true;
+            app.$data.isBusy = true;
 
             appData.error.isHidden = true;
             appData.progress.isHidden = false;
@@ -157,10 +200,8 @@ const app = new Vue({
 
             directivesBody.append('directives', JSON.stringify(directiveGroupsData));
 
-            const updateTypeValue = updateType.value;
-
             directivesBody.append('userCfg', JSON.stringify({
-                limit: updateTypeValue
+                limit: app.$data.settings.limit
             }));
 
             const directiveGroupsTotal = directiveGroupsData.length;
@@ -237,42 +278,8 @@ const app = new Vue({
                 client.disconnect();
 
                 app.deselectAll();
-
-                app.isSubmitDisabled = true;
-                app.isBusy = false;
+                app.$data.isBusy = false;
             });
         }
-    },
-
-    components: {
-        heading: Heading,
-        icon: Icon,
-        message: Message,
-        'news-section': NewsSection,
-        'progress-bar': Progress,
-        'scraper-form': ScraperForm,
-        'update-type': UpdateType
-    },
-
-    created () {
-        this.isBusy = true;
-
-        this.getDirectives()
-            .then(textData => {
-                this.directives = JSON.parse(textData);
-            })
-            .then(() => {
-                this.isBusy = false;
-            });
-    },
-
-    mounted () {
-        this.EventBus.$on('progress-abort', this.scrapingCancel);
-        this.EventBus.$on('progress-close', this.progressSetup);
-
-        this.EventBus.$on('directive-group-select', this.directiveGroupSelect);
-        this.EventBus.$on('directive-group-deselect', this.directiveGroupDeSelect);
-
-        this.EventBus.$on('form-submit', this.handleFormSubmit);
     }
 });

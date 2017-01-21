@@ -5,9 +5,9 @@
         </div>
         
         <div class="update-type__control">
-            <input type="hidden" v-model="typeValue" data-id="update-type-value" />
+            <input type="hidden" v-model="typeValue" />
             <div class="update-type__select">
-                <select v-model="selected">
+                <select v-model="selected" @change="handleSelect">
                     <option value="month">Monthly</option>
                     <option value="week">Weekly</option>
                     <option value="day">Daily</option>
@@ -52,6 +52,10 @@
             }
         },
     
-        methods: {}
+        methods: {
+            handleSelect: function () {
+                this.EventBus.$emit('settings-update-limit', this.typeValue);
+            }
+        }
     }
 </script>

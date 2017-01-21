@@ -1,0 +1,25 @@
+/* Scraper form
+---------------------------------------------------------------------------------- */
+
+.scraper-form {
+    display: flex;
+    
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+
+    position: relative; // spinner context
+
+    min-height: $offset-n * 10;
+}
+
+.scraper-form__form {
+    width: 100%;
+}
+
+.scraper-form__empty {
+    
+}
+
+/* /Scraper form
+---------------------------------------------------------------------------------- */
