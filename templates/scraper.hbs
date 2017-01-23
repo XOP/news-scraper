@@ -4,7 +4,7 @@
             Let's get some News!
         {{/heading}}
     </div>
-
+    
     <div class="scraper__settings" v-if="!data.settings.isHidden">
         <update-type></update-type>    
     </div>
@@ -45,18 +45,18 @@
 
     <!-- debug/ -->
     <div class="scraper__debug">
-        <button class="button button--small" @click="debugToggle">
+        <btn size="small" type="secondary" @click.native="debugToggle">
             <icon name="bug"></icon>
-        </button>
-        <button class="button button--small" @click="debugSaveData" v-if="data.debug">
+        </btn>
+        <btn size="small" @click.native="debugSaveData" v-if="data.debug">
             <icon name="download"></icon>
-        </button>
-        <button class="button button--small" @click="debugLoadData" v-if="data.debug">
+        </btn>
+        <btn size="small" @click.native="debugLoadData" v-if="data.debug">
             <icon name="upload"></icon>
-        </button>
-        <button class="button button--small" @click="debugClearData" v-if="data.debug">
+        </btn>
+        <btn size="small" @click.native="debugClearData" v-if="data.debug">
             <icon name="trash"></icon>
-        </button>
+        </btn>
     </div>
     <!-- /debug -->
 </div>

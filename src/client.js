@@ -9,6 +9,7 @@ import sourceObjectToArray from './utils/source-obj-to-array.js';
 
 import VueEvents from './event-bus';
 
+import Button from './components/button.vue';
 import Heading from './components/heading';
 import Icon from './components/icon.vue';
 import Message from './components/message.vue';
@@ -76,6 +77,7 @@ new Vue({
     },
 
     components: {
+        btn: Button,
         heading: Heading,
         icon: Icon,
         message: Message,
