@@ -17,12 +17,12 @@ import Progress from './components/progress.vue';
 import ScraperForm from './components/scraper-form.vue';
 import UpdateType from './components/update-type.vue';
 
-console.log('NewScraper client is up and running!');
+console.info('NewScraper client is up and running!');
 
 const client = new Nes.Client('ws://localhost:9000/scraper/');
 
 // vue app data
-const appData = {
+const APP_DATA = {
     debug: false,
 
     settings: {
@@ -48,27 +48,32 @@ const appData = {
         isHidden: true
     },
 
+    isBusy: false
+};
+
+const STORAGE = {
+    directives: [],
+    directiveGroupsSelected: [],
+    directivesSelected: [],
+
     result: {
         current: {},
         pages: [],
         isHidden: true
-    },
-
-    isBusy: false,
-
-    directives: [],
-    directiveGroupsSelected: [],
-    directivesSelected: []
+    }
 };
 
 // event-bus init
 Vue.use(VueEvents);
 
 // app init
-const app = new Vue({
+new Vue({
     el: '.scraper',
 
-    data: appData,
+    data: {
+        data: APP_DATA,
+        storage: STORAGE
+    },
 
     components: {
         heading: Heading,
@@ -81,14 +86,14 @@ const app = new Vue({
     },
 
     created () {
-        this.isBusy = true;
+        this.data.isBusy = true;
 
         this.getDirectives()
             .then(textData => {
-                this.directives = JSON.parse(textData);
+                STORAGE.directives = JSON.parse(textData);
             })
             .then(() => {
-                this.isBusy = false;
+                this.data.isBusy = false;
             });
     },
 
@@ -108,6 +113,10 @@ const app = new Vue({
         this.EventBus.$on('settings-update-limit', (limit) => {
             _this.handleSettingsUpdate({ limit });
         });
+
+        if (this.data.debug) {
+            console.debug('application data', this.$data);
+        }
     },
 
     methods: {
@@ -117,12 +126,12 @@ const app = new Vue({
                     console.error(err);
                 }
 
-                appData.progress.isHidden = true;
+                this.data.progress.isHidden = true;
             });
         },
 
         progressSetup: function () {
-            appData.progress.isHidden = true;
+            this.data.progress.isHidden = true;
         },
 
         getDirectives: function () {
@@ -135,6 +144,10 @@ const app = new Vue({
             }).catch(err => {
                 console.error(err);
             });
+        },
+
+        debugToggle: function () {
+            return this.data.debug = !this.data.debug;
         },
 
         debugSaveData: function () {
@@ -150,23 +163,23 @@ const app = new Vue({
         },
 
         handleSettingsUpdate: function (update) {
-            app.$data.settings = Object.assign(app.$data.settings, update);
+            this.data.settings = Object.assign(this.data.settings, update);
         },
 
         directiveGroupSelect: function (id) {
-            this.directives[id].isSelected = true;
+            STORAGE.directives[id].isSelected = true;
 
             return this.updateSelectedGroups();
         },
 
         directiveGroupDeSelect: function (id) {
-            this.directives[id].isSelected = false;
+            STORAGE.directives[id].isSelected = false;
 
             return this.updateSelectedGroups();
         },
 
         updateSelectedGroups: function () {
-            this.directiveGroupsSelected = this.directives.filter(item => item.isSelected);
+            STORAGE.directiveGroupsSelected = STORAGE.directives.filter(item => item.isSelected);
         },
 
         deselectAll: function () {
@@ -174,13 +187,13 @@ const app = new Vue({
         },
 
         handleFormSubmit: function () {
-            app.$data.isBusy = true;
+            this.data.isBusy = true;
 
-            appData.error.isHidden = true;
-            appData.progress.isHidden = false;
-            appData.progress.current = appData.progress.initial;
-            appData.progress.total = appData.progress.initial;
-            appData.progress.messages = [];
+            this.data.error.isHidden = true;
+            this.data.progress.isHidden = false;
+            this.data.progress.current = this.data.progress.initial;
+            this.data.progress.total = this.data.progress.initial;
+            this.data.progress.messages = [];
 
             const directivesBody = new FormData();
 
@@ -201,15 +214,15 @@ const app = new Vue({
             directivesBody.append('directives', JSON.stringify(directiveGroupsData));
 
             directivesBody.append('userCfg', JSON.stringify({
-                limit: app.$data.settings.limit
+                limit: this.data.settings.limit
             }));
 
             const directiveGroupsTotal = directiveGroupsData.length;
 
-            appData.progress.total = directiveGroupsTotal * 2; // showing progress for both start and finish
+            this.data.progress.total = directiveGroupsTotal * 2; // showing progress for both start and finish
 
             client.connect(err => {
-                console.log('connect');
+                console.log('socket connect...');
 
                 if (err) {
                     console.error('Socket connection error', err);
@@ -219,27 +232,27 @@ const app = new Vue({
             client.onUpdate = ({ message, type }) => {
                 switch (type) {
                     case 'scrapingStart':
-                        appData.progress.messages.push(`Now scraping from: ${message}`);
-                        appData.progress.current++;
+                        this.data.progress.messages.push(`Now scraping from: ${message}`);
+                        this.data.progress.current++;
                         break;
 
                     case 'scrapingEnd':
-                        appData.progress.messages.push(`Done! ${message.length} news scraped`);
-                        appData.progress.current++;
+                        this.data.progress.messages.push(`Done! ${message.length} news scraped`);
+                        this.data.progress.current++;
                         break;
 
                     case 'scrapingAbort':
-                        appData.progress.messages.push(message);
+                        this.data.progress.messages.push(message);
                         break;
 
                     case 'scrapingError':
-                        appData.error.isHidden = false;
-                        appData.error.value = `Oops, an error occurred: ${message} :(`;
-                        appData.progress.messages.push('Refresh the page and give it another try!');
+                        this.data.error.isHidden = false;
+                        this.data.error.value = `Oops, an error occurred: ${message} :(`;
+                        this.data.progress.messages.push('Refresh the page and give it another try!');
                         break;
 
                     default:
-                        appData.progress.messages.push(message);
+                        this.data.progress.messages.push(message);
                 }
             };
 
@@ -252,10 +265,10 @@ const app = new Vue({
                 // const state = res.headers.get('X-Scraping-State');
 
                 if (res.ok) {
-                    appData.progress.current++;
+                    this.data.progress.current++;
 
                     if (redirectUrl) {
-                        appData.progress.resultsHref = redirectUrl;
+                        this.data.progress.resultsHref = redirectUrl;
                     }
 
                     return res.text();
@@ -263,22 +276,22 @@ const app = new Vue({
             }).then(textData => {
                 const parsedData = JSON.parse(textData);
 
-                console.log('data', parsedData);
+                console.debug('result data', parsedData);
 
                 if (parsedData.pages) {
-                    appData.result.current = parsedData;
-                    appData.result.pages = parsedData.pages;
+                    STORAGE.result.current = parsedData;
+                    STORAGE.result.pages = parsedData.pages;
                 }
             }).catch(err => {
                 console.error(err);
 
-                appData.error.isHidden = false;
-                appData.error.value = `Something went wrong: ${err}`;
+                this.data.error.isHidden = false;
+                this.data.error.value = `Something went wrong: ${err}`;
             }).then(() => {
                 client.disconnect();
 
-                app.deselectAll();
-                app.$data.isBusy = false;
+                this.deselectAll();
+                this.data.isBusy = false;
             });
         }
     }
