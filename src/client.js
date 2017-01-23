@@ -99,7 +99,7 @@ new Vue({
             });
     },
 
-    mounted () {
+    beforeMount () {
         const _this = this;
 
         this.EventBus.$on('progress-abort', this.scrapingCancel);
@@ -115,7 +115,9 @@ new Vue({
         this.EventBus.$on('settings-update-limit', (limit) => {
             _this.handleSettingsUpdate({ limit });
         });
+    },
 
+    mounted () {
         if (this.data.debug) {
             console.debug('application data', this.$data);
         }
@@ -149,7 +151,9 @@ new Vue({
         },
 
         debugToggle: function () {
-            return this.data.debug = !this.data.debug;
+            this.data.debug = !this.data.debug;
+
+            return this.data.debug && console.debug('application data', this.$data);
         },
 
         debugSaveData: function () {

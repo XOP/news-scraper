@@ -64,11 +64,11 @@
                 return this.imageSrc ? `background-image: url(${this.imageSrc})` : null
             }
         },
-    
-        methods: {},
-        
+
         components: {
             heading: Heading
-        }
+        },
+
+        methods: {}
     }
 </script>

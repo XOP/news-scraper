@@ -56,13 +56,13 @@
         },
         
         computed: {},
-    
-        methods: {},
-        
+
         components: {
             heading: Heading,
             'news-item': NewsItem,
             spinner: Spinner
-        }
+        },
+
+        methods: {}
     }
 </script>

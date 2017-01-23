@@ -35,7 +35,7 @@
         ></scraper-form>
     </div>
     
-    <div class="scraper__results" v-if="!result.isHidden" v-for="section in storage.result.pages">
+    <div class="scraper__results" v-if="!storage.result.isHidden" v-for="section in storage.result.pages">
         <news-section
             :news="section.data"
             :title="section.title"

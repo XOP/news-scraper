@@ -51,6 +51,10 @@
                 return this.types[this.selected]['value'];
             }
         },
+ 
+        mounted () {
+            this.handleSelect();
+        },
     
         methods: {
             handleSelect: function () {

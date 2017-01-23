@@ -55,11 +55,11 @@
                 });
             }
         },
-    
-        methods: {},
-        
+
         components: {
             icon: Icon
-        }
+        },
+
+        methods: {}
     }
 </script>

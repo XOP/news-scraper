@@ -86,7 +86,17 @@
                 return this.directives;
             }
         },
-    
+        
+        components: {
+            icon: Icon
+        },
+        
+        mounted () {
+            this.EventBus.$on('all-deselect', function () {
+                this.isSelected = false; 
+            });
+        },
+        
         methods: {
             codeToggleHandler: function () {
                 this.isCodeOpened = !this.isCodeOpened
@@ -103,16 +113,6 @@
                     this.isSelected = false;
                 }
             }
-        },
-        
-        components: {
-            icon: Icon
-        },
-        
-        mounted () {
-            this.EventBus.$on('all-deselect', function () {
-                this.isSelected = false; 
-            });
         }
     }
 </script>
