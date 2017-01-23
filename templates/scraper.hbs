@@ -5,37 +5,37 @@
         {{/heading}}
     </div>
 
-    <div class="scraper__settings" v-if="!settings.isHidden">
+    <div class="scraper__settings" v-if="!data.settings.isHidden">
         <update-type></update-type>    
     </div>
     
-    <div class="scraper__progress" v-if="!progress.isHidden">
+    <div class="scraper__progress" v-if="!data.progress.isHidden">
         <progress-bar 
-            :current-value="progress.current"
-            :total-value="progress.total"
-            :messages="progress.messages"
-            :results-href="progress.resultsHref"
+            :current-value="data.progress.current"
+            :total-value="data.progress.total"
+            :messages="data.progress.messages"
+            :results-href="data.progress.resultsHref"
         ></progress-bar>
     </div>
     
-    <div class="scraper__error" v-if="!error.isHidden">
+    <div class="scraper__error" v-if="!data.error.isHidden">
         <message
             icon
             type="error"
-            v-text="error.value"
+            v-text="data.error.value"
         ></message>
     </div>
     
     <div class="scraper__form">
         <scraper-form
-            :directives="directives"
-            :directive-groups-selected="directiveGroupsSelected"
-            :directives-selected="directivesSelected"
-            :is-busy="isBusy"
+            :directives="storage.directives"
+            :directive-groups-selected="storage.directiveGroupsSelected"
+            :directives-selected="storage.directivesSelected"
+            :is-busy="data.isBusy"
         ></scraper-form>
     </div>
     
-    <div class="scraper__results" v-if="!result.isHidden" v-for="section in result.pages">
+    <div class="scraper__results" v-if="!result.isHidden" v-for="section in storage.result.pages">
         <news-section
             :news="section.data"
             :title="section.title"
@@ -44,14 +44,17 @@
     </div>
 
     <!-- debug/ -->
-    <div class="scraper__debug" v-if="debug">
-        <button class="button button--small" @click="debugSaveData">
+    <div class="scraper__debug">
+        <button class="button button--small" @click="debugToggle">
+            <icon name="bug"></icon>
+        </button>
+        <button class="button button--small" @click="debugSaveData" v-if="data.debug">
             <icon name="download"></icon>
         </button>
-        <button class="button button--small" @click="debugLoadData">
+        <button class="button button--small" @click="debugLoadData" v-if="data.debug">
             <icon name="upload"></icon>
         </button>
-        <button class="button button--small" @click="debugClearData">
+        <button class="button button--small" @click="debugClearData" v-if="data.debug">
             <icon name="trash"></icon>
         </button>
     </div>
