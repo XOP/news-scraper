@@ -132,9 +132,10 @@ server.register([
         method: 'GET',
         path: '/',
         handler: function (request, reply) {
-            const ctx = {
+            const pageCtx = getResources('index');
+
+            const ctx = Object.assign(pageCtx, {
                 header: Object.assign({}, resources.header, {
-                    heading: 'Index',
                     link: false
                 }),
                 links: [
@@ -147,7 +148,7 @@ server.register([
                         name: 'News Directory'
                     }
                 ]
-            };
+            });
 
             reply.view('index', ctx);
         }
@@ -157,6 +158,8 @@ server.register([
         method: 'GET',
         path: '/news',
         handler: function (request, reply) {
+            const pageCtx = getResources('directory');
+
             let newsFiles = fs.readdirSync(paths.data);
 
             newsFiles = newsFiles.filter(item => item.indexOf('.json') > -1);
@@ -193,13 +196,10 @@ server.register([
                 };
             });
 
-            const ctx = {
-                header: Object.assign({}, resources.header, {
-                    heading: 'News Directory'
-                }),
+            const ctx = Object.assign(pageCtx, {
                 latest: newsFiles,
                 others: null
-            };
+            });
 
             reply.view('directory', ctx);
         }
@@ -209,16 +209,16 @@ server.register([
         method: 'GET',
         path: '/news/{id}',
         handler: function (request, reply) {
+            const pageCtx = getResources('news');
+
             const timestamp = request.params.id;
             const fileName = `${timestamp}.json`;
             const timeDate = renderTimeDate(timestamp);
 
             const pageData = parseFile(path.join(paths.data, fileName));
 
-            const ctx = Object.assign({}, pageData, {
-                header: Object.assign({}, resources.header, {
-                    heading: `News for ${timeDate}`
-                })
+            const ctx = Object.assign(pageCtx, pageData, {
+                heading: `News for ${timeDate}`
             });
 
             reply.view('news', ctx);
@@ -229,12 +229,10 @@ server.register([
         method: 'GET',
         path: '/scraper',
         handler: function (request, reply) {
-            const ctx = {
-                header: Object.assign({}, resources.header, {
-                    heading: 'Scraper'
-                }),
+            const pageCtx = getResources('scraper');
+            const ctx = Object.assign(pageCtx, {
                 scripts: ['main']
-            };
+            });
 
             const repoDirectives = cfg.repo.use && formatDirectives(paths.repoDirectives);
             const localDirectives = cfg.local.use && formatDirectives(paths.localDirectives);
@@ -347,7 +345,6 @@ server.ext('onPreResponse', function (request, reply) {
     if (request.response.isBoom) {
         const ctx = {
             header: Object.assign({}, resources.header, {
-                heading: 'Oops!',
                 link: false
             }),
             message: `${status.statusCode}: ${status.payload.error}`
@@ -383,4 +380,8 @@ function renderTimeDate (timestamp) {
     const time = getTime(timestamp);
 
     return `${date} [${time}]`;
+}
+
+function getResources (key) {
+    return JSON.parse(JSON.stringify(resources[key]));
 }

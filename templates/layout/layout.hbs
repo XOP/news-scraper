@@ -11,6 +11,13 @@
 <div class="page">
     {{> header header}}
     <main class="content">
+        {{#if heading}}
+            <div class="content__heading">
+                {{#>heading tag="h2" level=2}}
+                    {{heading}}
+                {{/heading}}
+            </div>
+        {{/if}}
         <div class="content__content">
             {{{content}}}
         </div>

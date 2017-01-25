@@ -5,10 +5,16 @@
 
 }
 
+.content__heading {
+    max-width: $page-max-width;
+    margin: $offset-n auto;
+    padding: 0 $page-side-padding;
+}
+
 .content__content {
     max-width: $page-max-width;
-    margin: 0 auto;
-    padding: $offset-n $page-side-padding;
+    margin: $offset-n auto;
+    padding: 0 $page-side-padding;
 }
 
 /* /Main
