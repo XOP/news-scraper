@@ -19,20 +19,16 @@
             </label>
 
             <div class="directive-group__description" v-if="description">
-                {{ description }}
+                <span v-for="(value, key) in directivesParsed">{{ key }}&nbsp;</span>
             </div>
             
             <div :class="directiveGroupCodeClass">
                 <span class="directive-group__code__trigger" @click="codeToggleHandler">
-                    
                     <span class="link link--pseudo">
                         <icon name="layers"></icon>&nbsp;code        
                     </span>
-                    
                 </span>
-                <code class="directive-group__code__content">
-                    {{ directivesFormatted }}
-                </code>
+                <code class="directive-group__code__content"><pre>{{ directivesParsed }}</pre></code>
             </div>
         </div>
     </section>
@@ -72,7 +68,7 @@
         computed: {
             directiveGroupClass: function () {
                 return cls('directive-group', {
-
+                    'directive-group--is-selected': this.isSelected
                 });
             },
             
@@ -82,8 +78,8 @@
                 });
             },
             
-            directivesFormatted: function () {
-                return this.directives;
+            directivesParsed: function () {
+                return JSON.parse(this.directives);
             }
         },
         

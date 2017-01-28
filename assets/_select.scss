@@ -3,6 +3,8 @@
 
 select,
 .select {
+    @include transition(background);
+
     width: 100%;
     padding: $offset-s $offset-n;
     border-radius: $radius-regular;
@@ -18,8 +20,6 @@ select,
     cursor: pointer;
     user-select: none;
 
-    transition: background $transition-duration $transition-effect;
-    
     &:hover {
         border-color: darken($color-brand-main-dark, 14%);
         color: darken($color-brand-main-dark, 14%);

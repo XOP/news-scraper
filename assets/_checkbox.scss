@@ -11,25 +11,6 @@
     vertical-align: top;
 
     height: 1em * $line-height-n;
-    
-    // fixme: move to --is-active mod
-    
-    &:before {
-        @include cover();
-
-        z-index: -1;
-        
-        content: "";
-    
-        background: $color-brand-main-light;
-        
-        opacity: 0;
-        pointer-events: none;
-    }
-    
-    &:checked:before {
-        opacity: 1;
-    }
 }
 
 .checkbox__text {

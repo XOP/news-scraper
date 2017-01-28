@@ -1,5 +1,9 @@
 <template>
-    <button :class="buttonClass">
+    <button 
+        :class="buttonClass" 
+        :disabled="disabled"
+        :type="type"
+    >
         <slot></slot>
     </button>
 </template>
@@ -13,9 +17,9 @@
         props: {
             full: Boolean,
             
-            isDisabled: Boolean,
+            disabled: Boolean,
             
-            type: {
+            mode: {
                 type: String,
                 default: 'primary'
             },
@@ -23,6 +27,11 @@
             size: {
                 type: String,
                 default: 'regular'
+            },
+            
+            type: {
+                type: String,
+                default: 'button'
             }
         },
     
@@ -35,8 +44,8 @@
                 return cls('button', {
                     'button--full': this.full,
                     [`button--${this.size}`]: this.size,
-                    [`button--${this.type}`]: this.type,
-                    'button--is-disabled': this.isDisabled
+                    [`button--${this.mode}`]: this.mode,
+                    'button--is-disabled': this.disabled
                 });
             }
         },

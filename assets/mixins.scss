@@ -58,5 +58,11 @@
     border: 0;
 }
 
+@mixin transition ($prop: all, $multi: 1, $effect: $transition-effect) {
+    $duration: $transition-duration * $multi;
+
+    transition: $prop $duration $effect;
+}
+
 /* /Mixins
 ---------------------------------------------------------------------------------- */

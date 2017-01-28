@@ -19,11 +19,12 @@
                     ></directive-group>
                 </div>
                 <div class="form__row">
-                    <input 
+                    <btn
+                        :disabled="isDisabled"
                         type="submit"
-                        :disabled="isDisabled" 
-                        value="Get news!"
-                    />
+                    >
+                        Get news!
+                    </btn>
                 </div>
             </form>
         </div>
@@ -42,6 +43,7 @@
 </template>
 
 <script>
+    import Button from './button.vue';
     import DirectiveGroup from './directive-group.vue';
     import Message from './message.vue';
     import Spinner from './spinner.vue';
@@ -91,6 +93,7 @@
         },
 
         components: {
+            btn: Button,
             'directive-group': DirectiveGroup,
             message: Message,
             spinner: Spinner

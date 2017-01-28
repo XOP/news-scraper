@@ -5,6 +5,8 @@ button,
 input[type=button],
 input[type=submit],
 .button {
+    @include transition(background);
+    
     display: inline-block;
     vertical-align: top;
 
@@ -24,8 +26,6 @@ input[type=submit],
     appearance: none;
     cursor: pointer;
     user-select: none;
-
-    transition: background $transition-duration $transition-effect;
 
     &:hover {
         background: darken($color-brand-secondary, 6%);
