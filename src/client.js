@@ -3,7 +3,6 @@
 import Vue from 'vue';
 import 'whatwg-fetch';
 import Nes from 'nes';
-import * as $ from 'xop-module-utils';
 
 import sourceObjectToArray from './utils/source-obj-to-array.js';
 
@@ -203,14 +202,10 @@ new Vue({
 
             const directivesBody = new FormData();
 
-            const directiveGroups = $.findAll('.directive-group input[type=checkbox]');
-            const directiveGroupsChecked = directiveGroups.filter(elem => elem.checked);
-
-            const directiveGroupsData = directiveGroupsChecked.reduce(
-                (total, elem) => {
-                    let groupData = JSON.parse(elem.value);
-
-                    groupData = sourceObjectToArray(groupData);
+            const directiveGroupsData = this.storage.directiveGroupsSelected.reduce(
+                (total, item) => {
+                    const directives = JSON.parse(item.directives);
+                    const groupData = sourceObjectToArray(directives);
 
                     return total.concat(groupData);
                 },
@@ -228,7 +223,7 @@ new Vue({
             this.data.progress.total = directiveGroupsTotal * 2; // showing progress for both start and finish
 
             client.connect(err => {
-                console.log('socket connect...');
+                console.log('socket connected!');
 
                 if (err) {
                     console.error('Socket connection error', err);

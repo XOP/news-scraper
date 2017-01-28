@@ -8,7 +8,7 @@
                     class="checkbox__element" 
                     :name="name" 
                     type="checkbox" 
-                    :value="directives"
+                    :value="name"
                     @change="directiveGroupCheckHandler"
                 />
                 <span class="checkbox__text">
