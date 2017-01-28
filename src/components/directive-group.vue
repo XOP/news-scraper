@@ -19,7 +19,7 @@
             </label>
 
             <div class="directive-group__description" v-if="description">
-                <span v-for="(value, key) in directivesParsed">{{ key }}&nbsp;</span>
+                <span v-for="(value, key) in directives">{{ key }}&nbsp;</span>
             </div>
             
             <div :class="directiveGroupCodeClass">
@@ -28,7 +28,7 @@
                         <icon name="layers"></icon>&nbsp;code        
                     </span>
                 </span>
-                <code class="directive-group__code__content"><pre>{{ directivesParsed }}</pre></code>
+                <code class="directive-group__code__content"><pre>{{ directives }}</pre></code>
             </div>
         </div>
     </section>
@@ -47,7 +47,7 @@
                 type: String
             },
             
-            directives: [String, Array, Object],
+            directives: [Array, Object],
             
             id: [Number, String],
             
@@ -76,10 +76,6 @@
                 return cls('directive-group__code', {
                     'directive-group__code--is-opened': this.isCodeOpened
                 });
-            },
-            
-            directivesParsed: function () {
-                return JSON.parse(this.directives);
             }
         },
         
