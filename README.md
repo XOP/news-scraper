@@ -3,7 +3,7 @@
 > IMPORTANT!
 
 Current version is work in progress, documentation is not up-to-date.  
-If you want to try stable working example, check out [latest release](https://github.com/XOP/news-scraper/tree/0.5.0-beta). 
+If you want to try stable working example, check out [latest release](https://github.com/XOP/news-scraper/releases/tag/0.10.0) and follow installation instructions. 
 
 > Why?
 
@@ -150,6 +150,8 @@ After that starting is pretty straightforward:
 ```
 $ npm start
 ```
+
+and go to `http://localhost:9000`.
 
 
 ### Generating index
@@ -303,32 +305,7 @@ $ npm run dev
 
 ### Debug
 
-Debug mode is the development mode with DEBUG flag.  
-It results in multiple helpful data output throughout the process.
-
-```
-$ npm run build
-$ npm run debug
-```
-
-To limit the debugging stage up to the certain process you can use env variables,  
-for instance:
-
-```
-$ STAGE=refine npm run debug
-```
-
-This command will start the debugging mode and end it **after** the refining procedure.
-
-Available `STAGE` values:
-- `paths`
-- `sources`
-- `data`
-- `limit`
-- `refine`
-- `compare`
-- `render`
-
+:construction::construction::construction:
 
 
 
@@ -338,6 +315,7 @@ Available `STAGE` values:
 $ npm run build
 $ npm test
 ```
+
 
 
 ## Dependencies
