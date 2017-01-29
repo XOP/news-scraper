@@ -3,7 +3,7 @@ var path = require('path');
 
 var test = require('tape');
 
-var parseFileData = require('../dist/utils/parse-filedata.js');
+var parseFileData = require('../dist/server/parse-filedata.js');
 
 var data;
 var dataPath = path.resolve(__dirname, 'fixtures/data');

@@ -1,7 +1,7 @@
 import is from 'is';
 
-import log from './utils/log-wrapper.js';
-import parseFile from './utils/parse-file.js';
+import log from './log-wrapper.js';
+import parseFile from './parse-file.js';
 
 const fetchPaths = (local, repo) => {
     if (!repo) {

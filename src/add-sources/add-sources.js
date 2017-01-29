@@ -2,7 +2,7 @@ import path from 'path';
 
 import prompt from 'prompt';
 
-import log from '../utils/log-wrapper.js';
+import log from '../server/log-wrapper.js';
 
 import cfg from '../../config.js';
 

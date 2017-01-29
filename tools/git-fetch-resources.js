@@ -1,5 +1,5 @@
 var path = require('path');
-var log = require('../dist/utils/log-wrapper');
+var log = require('../dist/server/log-wrapper');
 var Git = require('git-wrapper');
 
 var cfg = require('../config.js');

@@ -4,8 +4,8 @@ import fs from 'fs-extra';
 import _get from 'lodash.get';
 import _keys from 'lodash.keys';
 
-import log from '../utils/log-wrapper';
-import parseFile from '../utils/parse-file.js';
+import log from './log-wrapper';
+import parseFile from './parse-file.js';
 
 // import { getDate, getTime} from '../utils/date-utils.js';
 

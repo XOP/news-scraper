@@ -2,7 +2,7 @@ var path = require('path');
 
 var test = require('tape');
 
-var fetchPaths = require('../dist/fetch-paths.js');
+var fetchPaths = require('../dist/server/fetch-paths.js');
 
 
 var pathRoot = path.resolve(__dirname, 'fixtures/paths');

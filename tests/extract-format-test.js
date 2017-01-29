@@ -1,6 +1,6 @@
 var test = require('tape');
 
-var extractFormat = require('../dist/utils/extract-format.js');
+var extractFormat = require('../dist/server/extract-format.js');
 
 test('Extract format test', function (t) {
     t.equal(

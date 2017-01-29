@@ -4,18 +4,18 @@ import Vue from 'vue';
 import 'whatwg-fetch';
 import Nes from 'nes';
 
-import sourceObjectToArray from './utils/source-obj-to-array.js';
+import sourceObjectToArray from '../utils/source-obj-to-array.js';
 
 import VueEvents from './event-bus';
 
-import Button from './components/button.vue';
-import Heading from './components/heading';
-import Icon from './components/icon.vue';
-import Message from './components/message.vue';
-import NewsSection from './components/news-section.vue';
-import Progress from './components/progress.vue';
-import ScraperForm from './components/scraper-form.vue';
-import UpdateType from './components/update-type.vue';
+import Button from '../components/button.vue';
+import Heading from '../components/heading';
+import Icon from '../components/icon.vue';
+import Message from '../components/message.vue';
+import NewsSection from '../components/news-section.vue';
+import Progress from '../components/progress.vue';
+import ScraperForm from '../components/scraper-form.vue';
+import UpdateType from '../components/update-type.vue';
 
 console.info('NewScraper client is up and running!');
 

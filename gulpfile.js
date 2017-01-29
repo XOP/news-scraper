@@ -12,7 +12,6 @@ var gulp = require('gulp');
 var $ = require('gulp-load-plugins')();
 
 // other modules
-var del = require('del');
 var runSequence = require('run-sequence');
 var merge = require('merge2');
 
@@ -102,7 +101,7 @@ gulp.task('sync', ['demon'], function () {
         },
         port: 3000,
         files: [
-            paths.js.output + '/server.js',
+            paths.js.output + '/server/**/*.js',
             paths.data + '/**/*.*',
             paths.publish + '/**/*.*',
             paths.templates + '/**/*.*'
@@ -117,9 +116,9 @@ gulp.task('sync', ['demon'], function () {
 
 gulp.task('demon', function (cb) {
     return $.nodemon({
-        script: paths.js.output + '/server.js',
+        script: paths.js.output + '/server/index.js',
         watch: [
-            paths.js.output + '/server.js',
+            paths.js.output + '/server/**/*.js',
             paths.templates + '/**/*.*'
         ]
     })
@@ -141,7 +140,12 @@ gulp.task('demon', function (cb) {
 // transpile
 
 gulp.task('transpile', () => {
-    return gulp.src(paths.js.input + '/**/*.js')
+    return gulp.src([
+        paths.js.input + '/add-sources/**/*.js',
+        paths.js.input + '/helpers/**/*.js',
+        paths.js.input + '/server/**/*.js',
+        paths.js.input + '/utils/**/*.js'
+    ], { base: path.join('./', paths.js.input) })
         .pipe($.babel({
             presets: ['es2015'],
             plugins: ['add-module-exports']
@@ -150,11 +154,11 @@ gulp.task('transpile', () => {
 });
 
 gulp.task('transpile-server', () => {
-    return gulp.src(paths.js.input + '/server.js')
+    return gulp.src(paths.js.input + '/server/index.js')
         .pipe($.babel({
             presets: ['es2015']
         }))
-        .pipe(gulp.dest(paths.js.output));
+        .pipe(gulp.dest(path.join(paths.js.output, 'server')));
 });
 
 // -----------------------------------------------------------------------------------------------------------------
@@ -165,7 +169,7 @@ gulp.task('transpile-server', () => {
 function compile (watch) {
     var bundler = watchify(
         browserify({
-            entries: [paths.js.input + '/client.js'],
+            entries: [paths.js.input + '/client/index.js'],
             debug: true,
             extensions: ['js', 'vue']
         })
@@ -230,8 +234,12 @@ gulp.task('default', ['assets'], function () {
         'sync',
         function () {
             gulp.watch(paths.assets.input + '/**/*.scss', ['styles']);
-            gulp.watch(paths.js.input + '/**/*.js', ['transpile']);
-            gulp.watch(paths.js.input + '/server.js', ['transpile-server']);
+
+            gulp.watch(paths.js.input + '/helpers/**/*.js', ['transpile']);
+            gulp.watch(paths.js.input + '/server/**/*.js', ['transpile']);
+            gulp.watch(paths.js.input + '/utils/**/*.js', ['transpile']);
+
+            gulp.watch(paths.js.input + '/server/index.js', ['transpile-server']);
         }
     );
 });

@@ -1,8 +1,8 @@
 var fs = require('fs-extra');
 
-var log = require('../utils/log-wrapper');
+var log = require('../server/log-wrapper');
 
-import parseFile from '../utils/parse-file.js';
+import parseFile from '../server/parse-file.js';
 
 const writeResult = (result, filePath) => {
     let exists = false;

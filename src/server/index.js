@@ -10,18 +10,18 @@ import handlebars from 'handlebars';
 
 import Scraper from 'news-scraper-core';
 
-import log from './utils/log-wrapper';
-import parseFile from './utils/parse-file.js';
-import { getDate, getTime} from './utils/date-utils.js';
+import log from './log-wrapper';
+import parseFile from './parse-file.js';
+import { getDate, getTime} from '../utils/date-utils.js';
 
-import formatDirectives from './server/format-directives.js';
+import formatDirectives from './format-directives.js';
 
-import cfg from '../config';
-import pkg from '../package.json';
+import cfg from '../../config';
+import pkg from '../../package.json';
 
 const server = new Hapi.Server();
 
-const root = path.resolve(__dirname, '../');
+const root = path.resolve(__dirname, '../../');
 const paths = {
     templates: path.resolve(root, 'templates'),
     data: cfg.output.path,

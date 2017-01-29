@@ -1,6 +1,6 @@
 {
   "name": "news-scraper",
-  "version": "0.9.5-beta.0",
+  "version": "0.10.0",
   "description": "news-scraper",
   "main": "index.js",
   "scripts": {
@@ -16,15 +16,13 @@
     "precommit": "npm run lint",
     "prepublish": "npm run build",
     "prestart": "npm run fetch",
-    "start": "node dist",
-    "dev": "node dist",
+    "start": "gulp",
+    "dev": "gulp",
     "debug": "cross-env DEBUG=true node dist",
-    "index": "node dist/re-render-index.js",
-    "pages": "node dist/re-render-pages.js",
     "deploy": "$(./bin/deploy.js)",
     "add": "node dist/add-sources",
     "assets": "gulp assets && gulp js",
-    "server": "node dist/server.js",
+    "server": "node dist/server",
     "build-server": "npm run build && npm run server"
   },
   "repository": {
