@@ -17,15 +17,15 @@
 }
 
 .news-section__url {
-    margin-top: $offset-n;
+    margin-top: $offset-s;
 
     font-size: $font-size-s;
 }
 
 .news-section__news {
-    margin-top: $offset-l;
-    margin-left: -$page-side-padding;
-    margin-right: -$page-side-padding;
+    margin-top: $offset-n;
+    margin-left: -$offset-s;
+    margin-right: -$offset-s;
 }
 
 .news-section__news__content {

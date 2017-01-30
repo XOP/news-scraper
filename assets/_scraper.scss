@@ -5,6 +5,12 @@
 
 }
 
+.scraper__sidebar {
+}
+
+.scraper__main {
+}
+
 .scraper__heading {
     margin-bottom: $offset-l;
 }
@@ -12,7 +18,7 @@
 .scraper__debug {
     position: fixed;
     right: 0;
-    bottom: 0;
+    top: $offset-n;
     
     width: 50%;
     padding: $offset-n;
@@ -25,15 +31,35 @@
 }
 
 .scraper__error {
+    margin-bottom: $offset-l;
     padding: $offset-s;
+
     background: $color-bg-light;
 }
 
 .scraper__form {
-    margin-bottom: $offset-l;
 }
 
 .scraper__progress {
+    margin-bottom: $offset-l;
+}
+
+.scraper__results {
+}
+
+.scraper__results__empty-message {
+    padding: $offset-l;
+    min-height: 90vh;
+
+    border: 1px dashed $color-border-regular;
+    border-radius: $radius-medium;
+
+    font-size: $font-size-xl;
+    text-align: center;
+    
+    @include respond($mq-desktop) {
+        min-height: $offset-n * 6;
+    }
 }
 
 /* /Scraper

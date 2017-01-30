@@ -1,0 +1,41 @@
+/* Columns
+---------------------------------------------------------------------------------- */
+
+$columns-count: 12;
+$columns-gap: $offset-n;
+
+.columns {
+    display: flex;
+
+    flex-flow: column;
+    
+    @include respond($mq-desktop) {
+        flex-flow: row;
+    }
+}
+
+.columns__item {
+    flex: 1 1 auto;
+    
+    margin-bottom: $offset-l;
+    
+    @include respond($mq-desktop) {
+        min-width: 0;
+        margin-right: $offset-n;
+        
+        &:last-child {
+            margin-right: 0;
+        }
+    }
+}
+
+.columns__item--3 {
+    flex-basis: calc(#{round(100% * 3 / $columns-count)} - #{$columns-gap});
+}
+
+.columns__item--9 {
+    flex-basis: calc(#{round(100% * 9 / $columns-count)} - #{$columns-gap});
+}
+
+/* /Columns
+---------------------------------------------------------------------------------- */

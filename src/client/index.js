@@ -59,7 +59,7 @@ const STORAGE = {
     result: {
         current: {},
         pages: [],
-        isHidden: true
+        isHidden: false
     }
 };
 
@@ -204,7 +204,7 @@ new Vue({
 
             const directiveGroupsData = this.storage.directiveGroupsSelected.reduce(
                 (total, item) => {
-                    const directives = JSON.parse(item.directives);
+                    const directives = item.directives;
                     const groupData = sourceObjectToArray(directives);
 
                     return total.concat(groupData);
@@ -261,16 +261,11 @@ new Vue({
                 method: 'POST',
                 body: directivesBody
             }).then(res => {
-                const redirectUrl = res.headers.get('X-Scraping-Redirect');
-
+                // const redirectUrl = res.headers.get('X-Scraping-Redirect');
                 // const state = res.headers.get('X-Scraping-State');
 
                 if (res.ok) {
                     this.data.progress.current++;
-
-                    if (redirectUrl) {
-                        this.data.progress.resultsHref = redirectUrl;
-                    }
 
                     return res.text();
                 }

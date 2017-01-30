@@ -5,6 +5,7 @@
 
 // core
 @import "core";
+@import "columns";
 @import "layout";
 @import "typography";
 
@@ -35,3 +36,6 @@
 @import "news-section";
 @import "scraper";
 @import "scraper-form";
+
+// utils
+@import "utils";

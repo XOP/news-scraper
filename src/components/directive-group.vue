@@ -25,7 +25,7 @@
             <div :class="directiveGroupCodeClass">
                 <span class="directive-group__code__trigger" @click="codeToggleHandler">
                     <span class="link link--pseudo">
-                        <icon name="layers"></icon>&nbsp;code        
+                        <icon name="code"></icon>&nbsp;code        
                     </span>
                 </span>
                 <code class="directive-group__code__content"><pre>{{ directives }}</pre></code>
@@ -84,8 +84,12 @@
         },
         
         mounted () {
+            const _this = this;
+
+            // fixme: change value on selected state change
             this.EventBus.$on('all-deselect', function () {
-                this.isSelected = false; 
+                _this.EventBus.$emit('directive-group-deselect', _this.id);
+                _this.isSelected = false;
             });
         },
         

@@ -21,6 +21,8 @@
                 <div class="form__row">
                     <btn
                         :disabled="isDisabled"
+                        :full="true"
+                        size="big"
                         type="submit"
                     >
                         Get news!
