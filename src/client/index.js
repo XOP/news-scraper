@@ -214,6 +214,11 @@ new Vue({
 
             directivesBody.append('directives', JSON.stringify(directiveGroupsData));
 
+            if (this.data.debug) {
+                console.debug('directives', this.$data);
+                return false;
+            }
+
             directivesBody.append('userCfg', JSON.stringify({
                 limit: this.data.settings.limit
             }));
@@ -264,6 +269,10 @@ new Vue({
                 // const redirectUrl = res.headers.get('X-Scraping-Redirect');
                 // const state = res.headers.get('X-Scraping-State');
 
+                if (this.data.debug) {
+                    console.debug('response', res);
+                }
+
                 if (res.ok) {
                     this.data.progress.current++;
 
@@ -272,7 +281,9 @@ new Vue({
             }).then(textData => {
                 const parsedData = JSON.parse(textData);
 
-                console.debug('result data', parsedData);
+                if (this.data.debug) {
+                    console.debug('result data', parsedData);
+                }
 
                 if (parsedData.pages) {
                     STORAGE.result.current = parsedData;

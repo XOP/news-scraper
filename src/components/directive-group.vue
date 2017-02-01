@@ -8,6 +8,7 @@
                     class="checkbox__element" 
                     :name="name" 
                     type="checkbox" 
+                    v-model="isSelected"
                     :value="name"
                     @change="directiveGroupCheckHandler"
                 />
