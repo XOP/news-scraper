@@ -6,6 +6,10 @@
     
     top: $offset-n;
     right: $offset-n;
+    
+    @include respond($mq-desktop) {
+        position: static;
+    }
 }
 
 .sidebar__open {
@@ -13,6 +17,10 @@
     color: $color-text-inverse-strong;
 
     cursor: pointer;
+    
+    @include respond($mq-desktop) {
+        display: none;
+    }
 }
 
 .sidebar__close {
@@ -23,9 +31,15 @@
     font-size: $font-size-l;
 
     cursor: pointer;
+
+    @include respond($mq-desktop) {
+        display: none;
+    }
 }
 
 .sidebar__content {
+    @include transition(transform, 1.5);
+    
     position: fixed;
     top: 0;
     bottom: 0;
@@ -43,6 +57,18 @@
 
     .sidebar--is-opened & {
         transform: translateX(0);
+        transition-delay: $transition-duration / 2;
+    }
+    
+    @include respond($mq-desktop) {
+        position: static;
+        
+        padding: 0;
+        
+        background: transparent;
+        box-shadow: none;
+        
+        transform: none;
     }
 }
 

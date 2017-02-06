@@ -19,6 +19,10 @@
 
 .scraper-form__submit {
     padding: 0 $offset-n;
+    
+    @include respond($mq-desktop) {
+        padding: 0;
+    }
 }
 
 .scraper-form__empty {

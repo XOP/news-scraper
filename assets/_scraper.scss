@@ -2,7 +2,7 @@
 ---------------------------------------------------------------------------------- */
 
 .scraper {
-
+    
 }
 
 .scraper__sidebar {
@@ -25,6 +25,13 @@
     padding: $offset-n;
 
     text-align: right;
+    
+    @include respond($mq-desktop) {
+        bottom: auto;
+        top: $offset-n;
+
+        width: 50%;
+    }
 }
 
 .scraper__settings {
@@ -59,7 +66,7 @@
     text-align: center;
     
     @include respond($mq-desktop) {
-        min-height: $offset-n * 6;
+        min-height: 20vh;
     }
 }
 
