@@ -1,0 +1,50 @@
+/* Sidebar
+---------------------------------------------------------------------------------- */
+
+.sidebar {
+    position: absolute;
+    
+    top: $offset-n;
+    right: $offset-n;
+}
+
+.sidebar__open {
+    font-size: $font-size-xl;
+    color: $color-text-inverse-strong;
+
+    cursor: pointer;
+}
+
+.sidebar__close {
+    position: absolute;
+    top: $offset-n;
+    right: $offset-n;
+
+    font-size: $font-size-l;
+
+    cursor: pointer;
+}
+
+.sidebar__content {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 15vw;
+    z-index: $z-index-modal;
+    
+    padding: $offset-n 0;
+    padding-top: $offset-n * 3;
+
+    background: $color-bg-light;
+    box-shadow: -1px 0 15px -1px $overlay-color;
+    
+    transform: translateX(105%);
+
+    .sidebar--is-opened & {
+        transform: translateX(0);
+    }
+}
+
+/* /Sidebar
+---------------------------------------------------------------------------------- */

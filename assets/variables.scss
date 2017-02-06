@@ -13,7 +13,7 @@ $color-text-inverse-light: #ccc;
 $color-text-inverse-strong: #fff;
 
 $color-bg-regular: #fff;
-$color-bg-light: #eee;
+$color-bg-light: #e5e5e5;
 $color-bg-lightest: #f4f4f4;
 $color-bg-strong: #aaa;
 $color-bg-stronger: #777;
@@ -40,6 +40,7 @@ $color-border-dark: $color-brand-main-dark;
 $color-border-strong: $color-bg-stronger;
 
 $screen-color: transparentize($color-bg-lightest, .4);
+$overlay-color: transparentize($color-bg-inverse-strong, .2);
 
 /* /Colors
 -------------------------------------------------- */
@@ -95,6 +96,17 @@ $offset-xxl: 12 * $grid-quant;
 
 /* /Offset
 -------------------------------------------------- */
+
+
+/* Z-index
+-------------------------------------------------- */
+
+$z-index-suggest: 1000;
+$z-index-sticky: 2000;
+$z-index-modal: 3000;
+$z-index-notification: 4000;
+
+/* /Z-index */
 
 
 /* Media queries

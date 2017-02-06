@@ -15,6 +15,7 @@ import Message from '../components/message.vue';
 import NewsSection from '../components/news-section.vue';
 import Progress from '../components/progress.vue';
 import ScraperForm from '../components/scraper-form.vue';
+import Sidebar from '../components/sidebar.vue';
 import UpdateType from '../components/update-type.vue';
 
 console.info('NewScraper client is up and running!');
@@ -83,6 +84,7 @@ new Vue({
         'news-section': NewsSection,
         'progress-bar': Progress,
         'scraper-form': ScraperForm,
+        sidebar: Sidebar,
         'update-type': UpdateType
     },
 

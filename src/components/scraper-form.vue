@@ -19,14 +19,16 @@
                     ></directive-group>
                 </div>
                 <div class="form__row">
-                    <btn
-                        :disabled="isDisabled"
-                        :full="true"
-                        size="big"
-                        type="submit"
-                    >
-                        Get news!
-                    </btn>
+                    <div class="scraper-form__submit">
+                        <btn
+                            :disabled="isDisabled"
+                            :full="true"
+                            size="big"
+                            type="submit"
+                        >
+                            Get news!
+                        </btn>
+                    </div>
                 </div>
             </form>
         </div>

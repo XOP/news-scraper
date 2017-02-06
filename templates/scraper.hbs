@@ -1,69 +1,60 @@
 <div class="scraper">
-    
-    <div class="columns">
-        <div class="columns__item columns__item--3">
 
-            <div class="scraper__sidebar">
-                <div class="scraper__settings" v-if="!data.settings.isHidden">
-                    <update-type></update-type>
-                </div>
-
-                <div class="scraper__form">
-                    <scraper-form
-                        :directives="storage.directives"
-                        :directive-groups-selected="storage.directiveGroupsSelected"
-                        :directives-selected="storage.directivesSelected"
-                        :is-busy="data.isBusy"
-                    ></scraper-form>
-                </div>    
-            </div>
-            
+    <div class="scraper__main">
+        <div class="scraper__error" v-if="!data.error.isHidden">
+            <message
+                icon
+                type="error"
+                v-text="data.error.value"
+            ></message>
         </div>
-        <div class="columns__item columns__item--9">
-            
-            <div class="scraper__main">
-                <div class="scraper__error" v-if="!data.error.isHidden">
-                    <message
-                        icon
-                        type="error"
-                        v-text="data.error.value"
-                    ></message>
-                </div>
-                <div class="scraper__progress" v-if="!data.progress.isHidden">
-                    <progress-bar
-                        :current-value="data.progress.current"
-                        :total-value="data.progress.total"
-                        :messages="data.progress.messages"
-                        :results-href="data.progress.resultsHref"
-                    ></progress-bar>
-                </div>
-                <div class="scraper__results" v-if="!storage.result.isHidden">
-                    <div class="scraper__results__empty-message" v-if="storage.result.pages.length === 0 && !data.isBusy">
-                        <message
-                            icon="heart-pulse"
-                        >
-                            <div class="u-fs-l u-c-strong">
-                                No results yet!
-                            </div>
-                            <div>
-                                Select favourite news channels and start scraping
-                            </div>
-                        </message>
+        <div class="scraper__progress" v-if="!data.progress.isHidden">
+            <progress-bar
+                :current-value="data.progress.current"
+                :total-value="data.progress.total"
+                :messages="data.progress.messages"
+                :results-href="data.progress.resultsHref"
+            ></progress-bar>
+        </div>
+        <div class="scraper__results" v-if="!storage.result.isHidden">
+            <div class="scraper__results__empty-message" v-if="storage.result.pages.length === 0 && !data.isBusy">
+                <message
+                    icon="heart-pulse"
+                >
+                    <div class="u-fs-l u-c-strong">
+                        No results yet!
                     </div>
-                    <news-section
-                        v-for="section in storage.result.pages"
-                        :news="section.data"
-                        :title="section.title"
-                        :url="section.url"
-                    ></news-section>
-                </div>
+                    <div>
+                        Select favourite news channels and start scraping
+                    </div>
+                </message>
             </div>
-            
+            <news-section
+                v-for="section in storage.result.pages"
+                :news="section.data"
+                :title="section.title"
+                :url="section.url"
+            ></news-section>
         </div>
     </div>
+    
+    <sidebar>
+        <div class="scraper__settings" v-if="!data.settings.isHidden">
+            <update-type></update-type>
+        </div>
+
+        <div class="scraper__form">
+            <scraper-form
+                :directives="storage.directives"
+                :directive-groups-selected="storage.directiveGroupsSelected"
+                :directives-selected="storage.directivesSelected"
+                :is-busy="data.isBusy"
+            ></scraper-form>
+        </div>
+    </sidebar>
 
     <!-- debug/ -->
-    <div class="scraper__debug">
+    <aside class="scraper__debug">
         <btn size="small" mode="secondary" @click.native="debugToggle">
             <icon name="bug"></icon>
         </btn>
@@ -76,6 +67,7 @@
         <btn size="small" @click.native="debugClearData" v-if="data.debug">
             <icon name="trash"></icon>
         </btn>
-    </div>
+    </aside>
     <!-- /debug -->
+
 </div>

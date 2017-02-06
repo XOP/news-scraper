@@ -18,9 +18,10 @@
 .scraper__debug {
     position: fixed;
     right: 0;
-    top: $offset-n;
+    bottom: 0;
+    z-index: $z-index-sticky;
     
-    width: 50%;
+    width: 100%;
     padding: $offset-n;
 
     text-align: right;
@@ -49,7 +50,7 @@
 
 .scraper__results__empty-message {
     padding: $offset-l;
-    min-height: 90vh;
+    min-height: 50vh;
 
     border: 1px dashed $color-border-regular;
     border-radius: $radius-medium;
