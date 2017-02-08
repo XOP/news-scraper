@@ -2,7 +2,6 @@
 ---------------------------------------------------------------------------------- */
 
 .scraper {
-    
 }
 
 .scraper__sidebar {
@@ -46,6 +45,15 @@
 }
 
 .scraper__form {
+    display: flex;
+    flex-flow: column;
+    
+    max-height: 75vh;
+    
+    @include respond($mq-desktop) {
+        min-height: 21rem;
+        max-height: 65vh;
+    }
 }
 
 .scraper__progress {

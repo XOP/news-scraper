@@ -44,8 +44,6 @@
 }
 
 .directive-group__description {
-    margin-top: $offset-s;
-
     font-size: $font-size-s;
     color: $color-text-light;
     line-height: $line-height-s;
@@ -53,8 +51,6 @@
 
 .directive-group__code {
     flex: 1 0 100%;
-
-    margin-top: $offset-s;
 
     font-size: $font-size-s;
     text-align: right;

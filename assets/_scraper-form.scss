@@ -9,19 +9,29 @@
     justify-content: center;
 
     position: relative; // spinner context
-
+    
     min-height: $offset-n * 10;
 }
 
 .scraper-form__form {
+    flex: 1 1 auto;
+    
     width: 100%;
+
+    overflow: hidden;
+    overflow-y: auto;
 }
 
 .scraper-form__submit {
-    padding: 0 $offset-n;
+    flex: 0 1 auto;
+    
+    width: 100%;
+    padding: $offset-n;
+    border-top: 1px solid $color-border-regular;
     
     @include respond($mq-desktop) {
-        padding: 0;
+        padding-left: 0;
+        padding-right: 0;
     }
 }
 

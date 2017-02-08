@@ -18,21 +18,20 @@
                         :name="group.name"
                     ></directive-group>
                 </div>
-                <div class="form__row">
-                    <div class="scraper-form__submit">
-                        <btn
-                            :disabled="isDisabled"
-                            :full="true"
-                            size="big"
-                            type="submit"
-                        >
-                            Get news!
-                        </btn>
-                    </div>
-                </div>
             </form>
         </div>
 
+        <div class="scraper-form__submit">
+            <btn
+                :disabled="isDisabled"
+                :full="true"
+                size="big"
+                type="submit"
+            >
+                Get news!
+            </btn>
+        </div>
+        
         <div class="scraper-form__empty">
             <message
                 icon="sad"
